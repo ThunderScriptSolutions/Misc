@@ -1,3 +1,4 @@
+--by @Bolts.Reborn
 local playersFolder = game:GetService("Workspace").Players --game:GetService("Workspace"):GetChildren()[4] Also works sometimes
 local checkedParts = {}
 local function createBillboard(part)
