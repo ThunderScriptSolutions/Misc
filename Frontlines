@@ -1,0 +1,46 @@
+local soldiersFolder = game:GetService("Workspace")
+local checkedParts = {}
+local function createBillboard(part)
+    if not part:FindFirstChild("ESPBillboard") then
+        local billboard = Instance.new("BillboardGui")
+        billboard.Name = "ESPBillboard"
+        billboard.Adornee = part
+        billboard.Size = UDim2.new(3.8, 0, 6.8, 0)
+        billboard.AlwaysOnTop = true
+        billboard.Parent = part
+        local frame = Instance.new("Frame")
+        frame.Size = UDim2.new(1, 0, 1, 0)
+        frame.BackgroundTransparency = 0.5
+        frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        frame.BorderSizePixel = 0
+        frame.Parent = billboard
+    end
+end
+local function applyESPToSoldier(soldier)
+    if soldier:FindFirstChild("friendly_marker") then
+        return
+    end
+    local humanoidRootPart = soldier:FindFirstChild("HumanoidRootPart")
+    if humanoidRootPart and not checkedParts[humanoidRootPart] then
+        createBillboard(humanoidRootPart)
+        checkedParts[humanoidRootPart] = true
+    end
+    soldier.ChildAdded:Connect(function(child)
+        if child.Name == "HumanoidRootPart" and not checkedParts[child] then
+            createBillboard(child)
+            checkedParts[child] = true
+        end
+    end)
+end
+local function applyESPToAllSoldiers()
+    for _, soldier in ipairs(soldiersFolder:GetChildren()) do
+        if soldier.Name == "soldier_model" then
+            applyESPToSoldier(soldier)
+        end
+    end
+end
+applyESPToAllSoldiers()
+while true do
+    applyESPToAllSoldiers()
+    wait(1)
+end
