@@ -1,3 +1,4 @@
+--by @Bolts.Reborn
 local playersFolder = game:GetService("Workspace").Characters
 local checkedParts = {}
 local function createBillboard(part)
