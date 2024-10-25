@@ -1,4 +1,4 @@
--- When the player right-clicks, the script will automatically fire continuously. 
+-- When the player right-clicks, the script will automatically fire continuously.  
 -- When the player left-clicks, the script will fire a single bullet. If the player were to regularly hold the left click to allow the gun to go full auto, the silent aim would not go into full effect.
 
 -- Due to the way I manipulate the camera, it is necessary to implement the shooting mechanics in this specific manner.
@@ -16,6 +16,7 @@ local targetPlayer = nil
 local ClickInterval = 0.10
 local isLeftMouseDown = false
 local isRightMouseDown = false
+local autoClickConnection = nil
 
 local function isLobbyVisible()
     return localPlayer.PlayerGui.MainGui.MainFrame.Lobby.Currency.Visible == true
@@ -53,41 +54,36 @@ local function lockCameraToHead()
         if headPosition.Z > 0 then
             local cameraPosition = camera.CFrame.Position
             local direction = (head.Position - cameraPosition).Unit
-            local ray = Ray.new(cameraPosition, direction * (head.Position - cameraPosition).Magnitude)
-            local hit, hitPosition = workspace:FindPartOnRayWithIgnoreList(ray, {localPlayer.Character, camera})
-
-            if hit and hit:IsDescendantOf(targetPlayer.Character) then
-                local newPosition = cameraPosition + direction * 0.5
-                camera.CFrame = CFrame.new(newPosition, head.Position)
-            end
+            camera.CFrame = CFrame.new(cameraPosition, head.Position)
         end
     end
 end
 
 local function autoClick()
-    while isLeftMouseDown or isRightMouseDown do
-        if not isLobbyVisible() then
-            mouse1click()
-            task.wait(ClickInterval)
-            if not isLeftMouseDown and not isRightMouseDown then
-                break
+    if autoClickConnection then
+        autoClickConnection:Disconnect()
+    end
+    autoClickConnection = RunService.Heartbeat:Connect(function()
+        if isLeftMouseDown or isRightMouseDown then
+            if not isLobbyVisible() then
+                mouse1click()
             end
         else
-            break
+            autoClickConnection:Disconnect()
         end
-    end
+    end)
 end
 
 UserInputService.InputBegan:Connect(function(input, isProcessed)
     if input.UserInputType == Enum.UserInputType.MouseButton1 and not isProcessed then
         if not isLeftMouseDown then
             isLeftMouseDown = true
-            task.spawn(autoClick)
+            autoClick()
         end
     elseif input.UserInputType == Enum.UserInputType.MouseButton2 and not isProcessed then
         if not isRightMouseDown then
             isRightMouseDown = true
-            task.spawn(autoClick)
+            autoClick()
         end
     end
 end)
