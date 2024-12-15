@@ -37,8 +37,8 @@ local u14 = u4:WaitForChild("NoTeam")
 local u15 = require(script.Modules.Spectate)
 local u16 = Instance.new("RemoteFunction").InvokeServer
 local u17 = game:GetService("ReplicatedStorage"):WaitForChild("Functions"):WaitForChild("Ping")
-local u18 = "Golden Knife"
-local u19 = false
+local u18 = false
+local u19 = "Golden Knife"
 repeat
     wait()
 until u10.LocalPlayer
@@ -610,48 +610,53 @@ local function u72(p71) --[[Anonymous function at line 589]]
     --]]
     return player and (player.Character and (player.Character:FindFirstChild("HumanoidRootPart") and (gun.Value and (gun.Value.Parent and (u9.CurrentCamera.CFrame.p - p71.CFrame.p).magnitude <= 25)))) and true or false
 end
-local u73 = game:GetService("CollectionService")
-local u74 = {
+local function u75(p73, p74) --[[Anonymous function at line 597]]
+    p74.OffsetStudsV = -(p73.Size.Y + (p73.Position.Y - p73.Size.Y / 2) % p74.StudsPerTileV)
+    p74.OffsetStudsU = p73.Position.Z - p73.Size.Z / 2 % p74.StudsPerTileU
+end
+local u76 = game:GetService("CollectionService")
+local u77 = {
     ["Collector Sparkle"] = "Bronze",
     ["Collector Shine"] = "Silver",
     ["Collector Aura"] = "Gold"
 }
-function mapSkin(u75, p76, u77)
+function mapSkin(u78, p79, u80)
     --[[
     Upvalues:
         [1] = u4
-        [2] = u74
-        [3] = u70
-        [4] = u72
-        [5] = u2
+        [2] = u77
+        [3] = u75
+        [4] = u70
+        [5] = u72
+        [6] = u2
     --]]
-    local v78 = _gf.split(p76, "_")
-    local v79 = v78[1]
-    local v80 = v78[2]
-    local v81 = u75:FindFirstChild("Real")
-    if v81 then
-        v81 = v81.Value == "Knife"
+    local v81 = _gf.split(p79, "_")
+    local v82 = v81[1]
+    local v83 = v81[2]
+    local v84 = u78:FindFirstChild("Real")
+    if v84 then
+        v84 = v84.Value == "Knife"
     end
-    if v79 == "Shuffle" then
-        local v82 = u4.GetWeapons:InvokeServer(u77)
-        local v83 = player.PlayerGui.Favourites.WeaponSkins:GetChildren()
-        if #v83 <= 0 then
-            v83 = v82
+    if v82 == "Shuffle" then
+        local v85 = u4.GetWeapons:InvokeServer(u80)
+        local v86 = player.PlayerGui.Favourites.WeaponSkins:GetChildren()
+        if #v86 <= 0 then
+            v86 = v85
         end
-        if #v83 >= 2 then
-            local v84 = v83[math.random(1, #v83)]
-            v79 = tostring(v84)
-            if v79 == "None" then
+        if #v86 >= 2 then
+            local v87 = v86[math.random(1, #v86)]
+            v82 = tostring(v87)
+            if v82 == "None" then
                 repeat
                     wait()
-                    local v85 = v83[math.random(1, #v83)]
-                    v79 = tostring(v85)
-                until v79 ~= "None"
+                    local v88 = v86[math.random(1, #v86)]
+                    v82 = tostring(v88)
+                until v82 ~= "None"
             end
         end
     end
-    if v79 and (v79 ~= "Shuffle" and (v79 ~= "" and (v79 ~= "None" and u4.Skins:FindFirstChild(v79)))) then
-        local v86 = {
+    if v82 and (v82 ~= "Shuffle" and (v82 ~= "" and (v82 ~= "None" and u4.Skins:FindFirstChild(v82)))) then
+        local v89 = {
             "Top",
             "Bottom",
             "Right",
@@ -659,176 +664,173 @@ function mapSkin(u75, p76, u77)
             "Front",
             "Back"
         }
-        if v81 then
-            local v87 = _gf.split(player.Data.Melee.Value, "_")[2]
-            if v87 then
-                v79 = u74[v87]
+        if v84 then
+            local v90 = _gf.split(player.Data.Melee.Value, "_")[2]
+            if v90 then
+                v82 = u77[v90]
             end
         end
-        local u88 = u4.Skins[v79]
-        local u89 = Instance.new("NumberValue")
-        u89.Value = u88.Scale.Value
-        u89.Parent = u75
-        local u90 = nil
-        local u91 = nil
-        local v92 = u75:FindFirstChild("Flash")
-        local v93 = v92 and (v80 and not v81) and u4.ItemUnusuals.WeaponSkins:FindFirstChild(v80)
-        if v93 then
-            local v94 = v93.Attachment:clone()
-            v94.Name = "Unusual"
-            v94.Parent = v92
+        local u91 = u4.Skins[v82]
+        local u92 = Instance.new("NumberValue")
+        u92.Value = u91.Scale.Value
+        u92.Parent = u78
+        local u93 = nil
+        local u94 = nil
+        local v95 = u78:FindFirstChild("Flash")
+        local v96 = v95 and (v83 and not v84) and u4.ItemUnusuals.WeaponSkins:FindFirstChild(v83)
+        if v96 then
+            local v97 = v96.Attachment:clone()
+            v97.Name = "Unusual"
+            v97.Parent = v95
         end
-        for _, u95 in pairs(u75:GetDescendants()) do
-            if u95:IsA("BasePart") and (u95.Transparency <= 0 and (u95.Name == "Handle." or (u95.Name == "Handle2" or (u95.Name == "2Handle" or (u95.Name == "Handle1" or (u95.Name == "Handle" or (u95.Name == "Part" or (u95.Name == "Model" or string.find(string.lower(u95.Name), "barrel") and u95.Name ~= "Barrel")))))))) and u95.Material ~= Enum.Material.Wood then
-                u90 = u90 or u95
-                for _, v96 in pairs(v86) do
-                    local u97 = script.Skin:Clone()
-                    u97.Texture = u88.Value
-                    u97.Color3 = u88.Shade.Value
-                    u97.StudsPerTileU = u88.Scale.Value
-                    u97.StudsPerTileV = u88.Scale.Value
-                    u97.Face = v96
-                    u97.Parent = u95
-                    u97.OffsetStudsV = -(u95.Size.Y + (u95.Position.Y - u95.Size.Y / 2) % u97.StudsPerTileV)
-                    u97.OffsetStudsU = u95.Position.Z - u95.Size.Z / 2 % u97.StudsPerTileU
-                    if u88:FindFirstChild("No") or not (u77 and (u77.Character and (u77.Character:FindFirstChild("Body Colors") or u77.Character:GetAttribute("TeamColor")))) then
-                        if u88:FindFirstChild("Multiplier") then
-                            local v98 = u88.Shade.Value
-                            local v99 = u88:FindFirstChild("Multiplier") and (u88.Multiplier.Value or 1) or 1
-                            u97.Color3 = Color3.new(v98.r * v99, v98.g * v99, v98.b * v99)
+        for _, u98 in pairs(u78:GetDescendants()) do
+            if u98:IsA("BasePart") and (u98.Transparency <= 0 and (u98.Name == "Handle." or (u98.Name == "Handle2" or (u98.Name == "2Handle" or (u98.Name == "Handle1" or (u98.Name == "Handle" or (u98.Name == "Part" or (u98.Name == "Model" or string.find(string.lower(u98.Name), "barrel") and u98.Name ~= "Barrel")))))))) and u98.Material ~= Enum.Material.Wood then
+                u93 = u93 or u98
+                for _, v99 in pairs(v89) do
+                    local u100 = script.Skin:Clone()
+                    u100.Texture = u91.Value
+                    u100.Color3 = u91.Shade.Value
+                    u100.StudsPerTileU = u91.Scale.Value
+                    u100.StudsPerTileV = u91.Scale.Value
+                    u100.Face = v99
+                    u100.Parent = u98
+                    u75(u98, u100)
+                    if u91:FindFirstChild("No") or not (u80 and (u80.Character and (u80.Character:FindFirstChild("Body Colors") or u80.Character:GetAttribute("TeamColor")))) then
+                        if u91:FindFirstChild("Multiplier") then
+                            local v101 = u91.Shade.Value
+                            local v102 = u91:FindFirstChild("Multiplier") and (u91.Multiplier.Value or 1) or 1
+                            u100.Color3 = Color3.new(v101.r * v102, v101.g * v102, v101.b * v102)
                         end
                     else
-                        local v100 = u77.Character:GetAttribute("TeamColor") and u77.Character:GetAttribute("TeamColor").Color or u77.Character["Body Colors"].TorsoColor3
-                        local v101 = u88:FindFirstChild("Multiplier") and (u88.Multiplier.Value or 1) or 1
-                        u97.Color3 = Color3.new(v100.r * v101, v100.g * v101, v100.b * v101)
-                        local _ = teamsmod.rgb[u77.Status.Team.Value]
+                        local v103 = u80.Character:GetAttribute("TeamColor") and u80.Character:GetAttribute("TeamColor").Color or u80.Character["Body Colors"].TorsoColor3
+                        local v104 = u91:FindFirstChild("Multiplier") and (u91.Multiplier.Value or 1) or 1
+                        u100.Color3 = Color3.new(v103.r * v104, v103.g * v104, v103.b * v104)
+                        local _ = teamsmod.rgb[u80.Status.Team.Value]
                     end
-                    if u88:FindFirstChild("Neon") then
-                        u95.Material = Enum.Material.Neon
-                        if u88.Neon:IsA("BrickColorValue") then
-                            u95.BrickColor = u88.Neon.Value
+                    if u91:FindFirstChild("Neon") then
+                        u98.Material = Enum.Material.Neon
+                        if u91.Neon:IsA("BrickColorValue") then
+                            u98.BrickColor = u91.Neon.Value
                         else
-                            u95.Color = u88.Neon.Value
+                            u98.Color = u91.Neon.Value
                         end
                     end
-                    if u88:FindFirstChild("Colored") then
-                        u95.BrickColor = u88.Colored.Value
+                    if u91:FindFirstChild("Colored") then
+                        u98.BrickColor = u91.Colored.Value
                     end
-                    if u88:FindFirstChild("Material") then
-                        u95.Material = u88.Material.Value
+                    if u91:FindFirstChild("Material") then
+                        u98.Material = u91.Material.Value
                     end
-                    if u77 == player then
-                        if u88:FindFirstChild("Animated") then
-                            local u102 = u88.Animated:FindFirstChild("Speed") and (u88.Animated.Speed.Value or 0.01) or 0.01
-                            local u103 = nil
-                            u103 = u70:GetPropertyChangedSignal("Value"):connect(function() --[[Anonymous function at line 715]]
+                    if u80 == player then
+                        if u91:FindFirstChild("Animated") then
+                            local u105 = u91.Animated:FindFirstChild("Speed") and (u91.Animated.Speed.Value or 0.01) or 0.01
+                            local u106 = nil
+                            u106 = u70:GetPropertyChangedSignal("Value"):connect(function() --[[Anonymous function at line 715]]
                                 --[[
                                 Upvalues:
-                                    [1] = u75
+                                    [1] = u78
                                     [2] = u72
-                                    [3] = u90
-                                    [4] = u88
-                                    [5] = u97
-                                    [6] = u102
-                                    [7] = u77
-                                    [8] = u103
-                                    [9] = u89
-                                    [10] = u91
+                                    [3] = u93
+                                    [4] = u91
+                                    [5] = u100
+                                    [6] = u105
+                                    [7] = u80
+                                    [8] = u106
+                                    [9] = u92
+                                    [10] = u94
                                 --]]
-                                if u75 and u75.Parent then
-                                    if not u75:IsDescendantOf(player.PlayerGui) and u72(u90) or u75:IsDescendantOf(player.PlayerGui) and player.PlayerGui.Menew.Locker.Visible then
-                                        if u88:FindFirstChild("Animated") and not u88.Animated:FindFirstChild("Horz") then
-                                            u97.OffsetStudsV = u97.OffsetStudsV + u102
+                                if u78 and u78.Parent then
+                                    if not u78:IsDescendantOf(player.PlayerGui) and u72(u93) or u78:IsDescendantOf(player.PlayerGui) and player.PlayerGui.Menew.Locker.Visible then
+                                        if u91:FindFirstChild("Animated") and not u91.Animated:FindFirstChild("Horz") then
+                                            u100.OffsetStudsV = u100.OffsetStudsV + u105
                                         end
-                                        u97.OffsetStudsU = u97.OffsetStudsU - u102
-                                        if not u77 or u77 and (not u77:FindFirstChild("NRPBS") or (not u77:FindFirstChild("Status") or (not u77.Status.Alive.Value or u77.NRPBS.Health.Value <= 0))) and not u75:IsDescendantOf(player.PlayerGui) or not (u75 and u75.Parent) then
-                                            u103:disconnect()
-                                            u89:Destroy()
-                                            if u91 then
-                                                u91:Cancel()
+                                        u100.OffsetStudsU = u100.OffsetStudsU - u105
+                                        if not u80 or u80 and (not u80:FindFirstChild("NRPBS") or (not u80:FindFirstChild("Status") or (not u80.Status.Alive.Value or u80.NRPBS.Health.Value <= 0))) and not u78:IsDescendantOf(player.PlayerGui) or not (u78 and u78.Parent) then
+                                            u106:disconnect()
+                                            u92:Destroy()
+                                            if u94 then
+                                                u94:Cancel()
                                                 return
                                             end
                                         end
                                     end
                                 else
-                                    u103:disconnect()
-                                    u89:Destroy()
-                                    if u91 then
-                                        u91:Cancel()
+                                    u106:disconnect()
+                                    u92:Destroy()
+                                    if u94 then
+                                        u94:Cancel()
                                     end
                                 end
                             end)
-                        elseif u88:FindFirstChild("Align") then
-                            local u104 = nil
-                            u104 = u70:GetPropertyChangedSignal("Value"):connect(function() --[[Anonymous function at line 743]]
-                                --[[
-                                Upvalues:
-                                    [1] = u75
-                                    [2] = u72
-                                    [3] = u90
-                                    [4] = u95
-                                    [5] = u97
-                                    [6] = u77
-                                    [7] = u104
-                                    [8] = u89
-                                    [9] = u91
-                                --]]
-                                if u75 and u75.Parent then
-                                    if not u75:IsDescendantOf(player.PlayerGui) and u72(u90) or u75:IsDescendantOf(player.PlayerGui) and player.PlayerGui.Menew.Locker.Visible then
-                                        local v105 = u95
-                                        local v106 = u97
-                                        v106.OffsetStudsV = -(v105.Size.Y + (v105.Position.Y - v105.Size.Y / 2) % v106.StudsPerTileV)
-                                        v106.OffsetStudsU = v105.Position.Z - v105.Size.Z / 2 % v106.StudsPerTileU
-                                        if not u77 or u77 and (not u77:FindFirstChild("NRPBS") or (not u77:FindFirstChild("Status") or (not u77.Status.Alive.Value or u77.NRPBS.Health.Value <= 0))) and not u75:IsDescendantOf(player.PlayerGui) or not (u75 and u75.Parent) then
-                                            u104:disconnect()
-                                            u89:Destroy()
-                                            if u91 then
-                                                u91:Cancel()
-                                                return
-                                            end
-                                        end
-                                    end
-                                else
-                                    u104:disconnect()
-                                    u89:Destroy()
-                                    if u91 then
-                                        u91:Cancel()
-                                    end
-                                end
-                            end)
-                        end
-                        if u88:FindFirstChild("Sizer") then
+                        elseif u91:FindFirstChild("Align") then
                             local u107 = nil
-                            u107 = u89:GetPropertyChangedSignal("Value"):connect(function() --[[Anonymous function at line 770]]
+                            u107 = u70:GetPropertyChangedSignal("Value"):connect(function() --[[Anonymous function at line 743]]
                                 --[[
                                 Upvalues:
-                                    [1] = u75
+                                    [1] = u78
                                     [2] = u72
-                                    [3] = u90
-                                    [4] = u97
-                                    [5] = u89
-                                    [6] = u77
-                                    [7] = u107
-                                    [8] = u91
+                                    [3] = u93
+                                    [4] = u75
+                                    [5] = u98
+                                    [6] = u100
+                                    [7] = u80
+                                    [8] = u107
+                                    [9] = u92
+                                    [10] = u94
                                 --]]
-                                if u75 and u75.Parent then
-                                    if not u75:IsDescendantOf(player.PlayerGui) and u72(u90) or u75:IsDescendantOf(player.PlayerGui) and player.PlayerGui.Menew.Locker.Visible then
-                                        u97.StudsPerTileU = u89.Value
-                                        u97.StudsPerTileV = u89.Value
-                                        if not u77 or u77 and (not u77:FindFirstChild("NRPBS") or (not u77:FindFirstChild("Status") or (not u77.Status.Alive.Value or u77.NRPBS.Health.Value <= 0))) and not u75:IsDescendantOf(player.PlayerGui) or not (u75 and u75.Parent) then
+                                if u78 and u78.Parent then
+                                    if not u78:IsDescendantOf(player.PlayerGui) and u72(u93) or u78:IsDescendantOf(player.PlayerGui) and player.PlayerGui.Menew.Locker.Visible then
+                                        u75(u98, u100)
+                                        if not u80 or u80 and (not u80:FindFirstChild("NRPBS") or (not u80:FindFirstChild("Status") or (not u80.Status.Alive.Value or u80.NRPBS.Health.Value <= 0))) and not u78:IsDescendantOf(player.PlayerGui) or not (u78 and u78.Parent) then
                                             u107:disconnect()
-                                            u89:Destroy()
-                                            if u91 then
-                                                u91:Cancel()
+                                            u92:Destroy()
+                                            if u94 then
+                                                u94:Cancel()
                                                 return
                                             end
                                         end
                                     end
                                 else
                                     u107:disconnect()
-                                    u89:Destroy()
-                                    if u91 then
-                                        u91:Cancel()
+                                    u92:Destroy()
+                                    if u94 then
+                                        u94:Cancel()
+                                    end
+                                end
+                            end)
+                        end
+                        if u91:FindFirstChild("Sizer") then
+                            local u108 = nil
+                            u108 = u92:GetPropertyChangedSignal("Value"):connect(function() --[[Anonymous function at line 770]]
+                                --[[
+                                Upvalues:
+                                    [1] = u78
+                                    [2] = u72
+                                    [3] = u93
+                                    [4] = u100
+                                    [5] = u92
+                                    [6] = u80
+                                    [7] = u108
+                                    [8] = u94
+                                --]]
+                                if u78 and u78.Parent then
+                                    if not u78:IsDescendantOf(player.PlayerGui) and u72(u93) or u78:IsDescendantOf(player.PlayerGui) and player.PlayerGui.Menew.Locker.Visible then
+                                        u100.StudsPerTileU = u92.Value
+                                        u100.StudsPerTileV = u92.Value
+                                        if not u80 or u80 and (not u80:FindFirstChild("NRPBS") or (not u80:FindFirstChild("Status") or (not u80.Status.Alive.Value or u80.NRPBS.Health.Value <= 0))) and not u78:IsDescendantOf(player.PlayerGui) or not (u78 and u78.Parent) then
+                                            u108:disconnect()
+                                            u92:Destroy()
+                                            if u94 then
+                                                u94:Cancel()
+                                                return
+                                            end
+                                        end
+                                    end
+                                else
+                                    u108:disconnect()
+                                    u92:Destroy()
+                                    if u94 then
+                                        u94:Cancel()
                                     end
                                 end
                             end)
@@ -837,29 +839,29 @@ function mapSkin(u75, p76, u77)
                 end
             end
         end
-        if u77 == player and u88:FindFirstChild("Sizer") then
-            u2:Create(u89, TweenInfo.new(0.675, Enum.EasingStyle.Quint, Enum.EasingDirection.Out, (1 / 0), true, 0), {
-                ["Value"] = u88.Scale.Value - 0.35
+        if u80 == player and u91:FindFirstChild("Sizer") then
+            u2:Create(u92, TweenInfo.new(0.675, Enum.EasingStyle.Quint, Enum.EasingDirection.Out, math.huge, true, 0), {
+                ["Value"] = u91.Scale.Value - 0.35
             }):Play()
         end
-        if u77 == player then
-            for _, v108 in pairs(player.Character:GetDescendants()) do
-                if (v108:IsA("ParticleEmitter") or (v108:IsA("Beam") or v108:IsA("Trail"))) and (v108.Name ~= "OriginalPosition" and (v108.Parent.Parent:FindFirstChild("Orbit") or (v108.Parent.Name == "Unusual" or (v108.Name == "Particle" or (v108.Parent.Name == "UnusualAnimation" or (v108.Parent.Parent.Parent.Name == "UnusualAnimation" or (v108.Parent.Parent.Name == "UnusualAnimation" or (v108.Parent.Name == "Handle" or (v108.Parent.Name == "HumanoidRootPart" or v108.Name == "Fire"))))))))) or (v108.Parent.Name == "Eye" and v108:IsA("Fire") or v108:IsA("BillboardGui") and v108.Name == "__UNUSUALHIDE") then
-                    v108.Enabled = false
-                    if v108:IsA("ParticleEmitter") then
-                        v108:Clear()
+        if u80 == player then
+            for _, v109 in pairs(player.Character:GetDescendants()) do
+                if (v109:IsA("ParticleEmitter") or (v109:IsA("Beam") or v109:IsA("Trail"))) and (v109.Name ~= "OriginalPosition" and (v109.Parent.Parent:FindFirstChild("Orbit") or (v109.Parent.Name == "Unusual" or (v109.Name == "Particle" or (v109.Parent.Name == "UnusualAnimation" or (v109.Parent.Parent.Parent.Name == "UnusualAnimation" or (v109.Parent.Parent.Name == "UnusualAnimation" or (v109.Parent.Name == "Handle" or (v109.Parent.Name == "HumanoidRootPart" or v109.Name == "Fire"))))))))) or (v109.Parent.Name == "Eye" and v109:IsA("Fire") or v109:IsA("BillboardGui") and v109.Name == "__UNUSUALHIDE") then
+                    v109.Enabled = false
+                    if v109:IsA("ParticleEmitter") then
+                        v109:Clear()
                     end
                 end
             end
         end
     end
 end
-script.Parent.Parent.MapDat.Event:connect(function(p109, p110, p111) --[[Anonymous function at line 822]]
-    mapSkin(p109, p110, p111)
+script.Parent.Parent.MapDat.Event:connect(function(p110, p111, p112) --[[Anonymous function at line 822]]
+    mapSkin(p110, p111, p112)
 end)
-local u112 = Instance.new("BindableEvent")
-u112.Parent = script
-u112.Event:connect(function() --[[Anonymous function at line 829]]
+local u113 = Instance.new("BindableEvent")
+u113.Parent = script
+u113.Event:connect(function() --[[Anonymous function at line 829]]
     --[[
     Upvalues:
         [1] = u4
@@ -871,18 +873,18 @@ for _ = 1, 100 do
         --[[
         Upvalues:
             [1] = u6
-            [2] = u112
+            [2] = u113
         --]]
         wait()
-        u6:SetCore("ResetButtonCallback", u112)
+        u6:SetCore("ResetButtonCallback", u113)
         spoop = true
     end)
     if spoop == true then
         break
     end
 end
-script.Parent.Wendy.Event:connect(function(p113) --[[Anonymous function at line 844]]
-    if p113 then
+script.Parent.Wendy.Event:connect(function(p114) --[[Anonymous function at line 844]]
+    if p114 then
         storedWendy = primary.Value
         primary.Value = ""
         wep.autoequip()
@@ -891,10 +893,10 @@ script.Parent.Wendy.Event:connect(function(p113) --[[Anonymous function at line 
         wep.autoequip()
     end
 end)
-function DestroyAllChildren(p114)
-    for _, v115 in pairs(p114:GetChildren()) do
-        if v115.Name ~= "Bananas" then
-            v115:Destroy()
+function DestroyAllChildren(p115)
+    for _, v116 in pairs(p115:GetChildren()) do
+        if v116.Name ~= "Bananas" then
+            v116:Destroy()
         end
     end
 end
@@ -909,226 +911,226 @@ wkspc:WaitForChild("Status"):WaitForChild("RoundOver").Changed:connect(function(
         DestroyAllChildren(workspace.Ray_Ignore)
     end
 end)
-local u116 = UDim2.new(1, -275, 0.03, 0)
+local u117 = UDim2.new(1, -275, 0.03, 0)
 UDim2.new(1, -260, 0, 36)
-local u117 = UDim2.new(0, 0, 0.03, 0)
-local u118 = nil
-local u119 = Color3.new(0.24705882352941178, 0.24705882352941178, 0.24705882352941178)
-local u120 = Color3.new(0.7529411764705882, 0.7529411764705882, 0.7529411764705882)
-local u121 = Color3.new(1, 1, 1)
+local u118 = UDim2.new(0, 0, 0.03, 0)
+local u119 = nil
+local u120 = Color3.new(0.24705882352941178, 0.24705882352941178, 0.24705882352941178)
+local u121 = Color3.new(0.7529411764705882, 0.7529411764705882, 0.7529411764705882)
+local u122 = Color3.new(1, 1, 1)
 function FixKillFeed()
     --[[
     Upvalues:
         [1] = u9
         [2] = u4
-        [3] = u73
-        [4] = u119
-        [5] = u120
-        [6] = u121
-        [7] = u116
-        [8] = u118
+        [3] = u76
+        [4] = u120
+        [5] = u121
+        [6] = u122
+        [7] = u117
+        [8] = u119
         [9] = u5
-        [10] = u117
+        [10] = u118
     --]]
-    local v122 = 0
+    local v123 = 0
     if sP.Mobile.Visible == true and sP.AbsoluteSize.Y < 768 then
         sP.TopRight.Visible = false
     else
-        for v123 = 1, 6 do
-            local v124 = u9.KillFeed[tostring(v123)]
-            local v125 = v124.Assist.Value == player.Name or (v124.Victim.Value == player.Name or v124.Killer.Value == player.Name)
-            if v124:findFirstChild("Active").Value == true and (v125 == true and wkspc.DistributedTime.Value - v124.time.Value < 15 or v125 == false and wkspc.DistributedTime.Value - v124.time.Value < 10) then
-                local v126
-                if sP.TopRight:FindFirstChild(v123) then
-                    v126 = sP.TopRight[v123]
+        for v124 = 1, 6 do
+            local v125 = u9.KillFeed[tostring(v124)]
+            local v126 = v125.Assist.Value == player.Name or (v125.Victim.Value == player.Name or v125.Killer.Value == player.Name)
+            if v125:findFirstChild("Active").Value == true and (v126 == true and wkspc.DistributedTime.Value - v125.time.Value < 15 or v126 == false and wkspc.DistributedTime.Value - v125.time.Value < 10) then
+                local v127
+                if sP.TopRight:FindFirstChild(v124) then
+                    v127 = sP.TopRight[v124]
                 else
-                    v126 = sP.kftemplate:clone()
+                    v127 = sP.kftemplate:clone()
                 end
-                v126.Parent = sP.TopRight
-                v126.Visible = true
-                v126.Name = v123
-                local v127 = require(u4.Modules.GetUsername).GetNameToShow(v124.Killer.Value)
-                local v128 = require(u4.Modules.GetUsername).GetNameToShow(v124.Victim.Value)
-                v126.Killer.Text = v127
-                if v124.Assist.Value ~= "" then
-                    local v129 = require(u4.Modules.GetUsername).GetNameToShow(v124.Assist.Value)
-                    v126.Killer.Text = v126.Killer.Text .. " + " .. v129
+                v127.Parent = sP.TopRight
+                v127.Visible = true
+                v127.Name = v124
+                local v128 = require(u4.Modules.GetUsername).GetNameToShow(v125.Killer.Value)
+                local v129 = require(u4.Modules.GetUsername).GetNameToShow(v125.Victim.Value)
+                v127.Killer.Text = v128
+                if v125.Assist.Value ~= "" then
+                    local v130 = require(u4.Modules.GetUsername).GetNameToShow(v125.Assist.Value)
+                    v127.Killer.Text = v127.Killer.Text .. " + " .. v130
                 end
-                v126.Killer.TextColor3 = v124.Killer:findFirstChild("TeamColor").Value
-                local v130 = game.Players:FindFirstChild(v124.Killer.Value)
-                if v130 then
-                    v130 = teamsmod.rgb[v130.Status.Team.Value]
+                v127.Killer.TextColor3 = v125.Killer:findFirstChild("TeamColor").Value
+                local v131 = game.Players:FindFirstChild(v125.Killer.Value)
+                if v131 then
+                    v131 = teamsmod.rgb[v131.Status.Team.Value]
                 end
-                local v131 = v126.Killer
-                if v130 and u73:HasTag(v131, "RGB") == false then
-                    u73:AddTag(v131, "RGB")
-                elseif not v130 and u73:HasTag(v131, "RGB") then
-                    u73:RemoveTag(v131, "RGB")
+                local v132 = v127.Killer
+                if v131 and u76:HasTag(v132, "RGB") == false then
+                    u76:AddTag(v132, "RGB")
+                elseif not v131 and u76:HasTag(v132, "RGB") then
+                    u76:RemoveTag(v132, "RGB")
                 end
-                v126.Victim.Text = v128
-                v126.Victim.TextColor3 = v124.Victim:findFirstChild("TeamColor").Value
-                local v132 = game.Players:FindFirstChild(v124.Victim.Value)
-                if v132 then
-                    v132 = teamsmod.rgb[v132.Status.Team.Value]
+                v127.Victim.Text = v129
+                v127.Victim.TextColor3 = v125.Victim:findFirstChild("TeamColor").Value
+                local v133 = game.Players:FindFirstChild(v125.Victim.Value)
+                if v133 then
+                    v133 = teamsmod.rgb[v133.Status.Team.Value]
                 end
-                local v133 = v126.Victim
-                if v132 and u73:HasTag(v133, "RGB") == false then
-                    u73:AddTag(v133, "RGB")
-                elseif not v132 and u73:HasTag(v133, "RGB") then
-                    u73:RemoveTag(v133, "RGB")
+                local v134 = v127.Victim
+                if v133 and u76:HasTag(v134, "RGB") == false then
+                    u76:AddTag(v134, "RGB")
+                elseif not v133 and u76:HasTag(v134, "RGB") then
+                    u76:RemoveTag(v134, "RGB")
                 end
-                v126.Pic.Image = v124:findFirstChild("Weapon").Value
-                v126.Pic.Size = UDim2.new(0, 68, 1, 0)
-                v126.Pic.Headshot.Visible = false
-                v126.Pic.Noscope.Visible = false
-                v126.Pic.Backstab.Visible = false
-                v126.Midair.Visible = false
-                local v134
-                if v124:findFirstChild("Weapon").Midair.Value == true then
-                    v126.Midair.Visible = true
-                    v126.Midair.Position = UDim2.new(0, 7, 0, 0)
-                    v134 = 27
+                v127.Pic.Image = v125:findFirstChild("Weapon").Value
+                v127.Pic.Size = UDim2.new(0, 68, 1, 0)
+                v127.Pic.Headshot.Visible = false
+                v127.Pic.Noscope.Visible = false
+                v127.Pic.Backstab.Visible = false
+                v127.Midair.Visible = false
+                local v135
+                if v125:findFirstChild("Weapon").Midair.Value == true then
+                    v127.Midair.Visible = true
+                    v127.Midair.Position = UDim2.new(0, 7, 0, 0)
+                    v135 = 27
                 else
-                    v134 = 0
+                    v135 = 0
                 end
-                local v135 = u119
                 local v136 = u120
-                if v125 == true then
-                    v126.Pic.ImageColor3 = v135
-                    v126.Pic.Headshot.ImageColor3 = v135
-                    v126.Pic.Backstab.ImageColor3 = v135
-                    v126.Pic.Noscope.ImageColor3 = v135
-                    v126.Midair.ImageColor3 = v135
-                    v126.Host.Visible = true
-                    v126.Nope.Visible = false
-                    v126.textstring.TextColor3 = Color3.new(0, 0, 0)
-                    v126.textstring2.TextColor3 = Color3.new(0, 0, 0)
+                local v137 = u121
+                if v126 == true then
+                    v127.Pic.ImageColor3 = v136
+                    v127.Pic.Headshot.ImageColor3 = v136
+                    v127.Pic.Backstab.ImageColor3 = v136
+                    v127.Pic.Noscope.ImageColor3 = v136
+                    v127.Midair.ImageColor3 = v136
+                    v127.Host.Visible = true
+                    v127.Nope.Visible = false
+                    v127.textstring.TextColor3 = Color3.new(0, 0, 0)
+                    v127.textstring2.TextColor3 = Color3.new(0, 0, 0)
                 else
-                    v126.Pic.ImageColor3 = v136
-                    v126.Pic.Headshot.ImageColor3 = v136
-                    v126.Pic.Headshot.ImageColor3 = v136
-                    v126.Pic.Backstab.ImageColor3 = v136
-                    v126.Pic.Noscope.ImageColor3 = v136
-                    v126.Midair.ImageColor3 = v136
-                    v126.Host.Visible = false
-                    v126.Nope.Visible = true
-                    v126.textstring.TextColor3 = u121
-                    v126.textstring2.TextColor3 = u121
-                end
-                local v137 = 0
-                if v124:findFirstChild("Weapon").mcrit.Value == true or v124:findFirstChild("Weapon").crit.Value == true then
-                    v126.Pic.Crit.Visible = true
-                else
-                    v126.Pic.Crit.Visible = false
+                    v127.Pic.ImageColor3 = v137
+                    v127.Pic.Headshot.ImageColor3 = v137
+                    v127.Pic.Headshot.ImageColor3 = v137
+                    v127.Pic.Backstab.ImageColor3 = v137
+                    v127.Pic.Noscope.ImageColor3 = v137
+                    v127.Midair.ImageColor3 = v137
+                    v127.Host.Visible = false
+                    v127.Nope.Visible = true
+                    v127.textstring.TextColor3 = u122
+                    v127.textstring2.TextColor3 = u122
                 end
                 local v138 = 0
-                if v124:findFirstChild("Weapon").Noscope.Value == true then
-                    v137 = v137 + 25
-                    v126.Pic.Noscope.Position = UDim2.new(1, v138, 0, 0)
-                    v126.Pic.Noscope.Visible = true
-                    v138 = v138 + 25
-                end
-                if v124:findFirstChild("Weapon").Backstab.Value == true then
-                    v137 = v137 + 25
-                    v126.Pic.Backstab.Position = UDim2.new(1, v138, 0, 0)
-                    v126.Pic.Backstab.Visible = true
-                    v138 = v138 + 25
-                end
-                if v124:findFirstChild("Weapon").Headshot.Value == true then
-                    v137 = v137 + 60
-                    v126.Pic.Headshot.Position = UDim2.new(1, v138, 0, 0)
-                    v126.Pic.Headshot.Visible = true
-                    local _ = v138 + 60
-                end
-                v126.textstring.Text = ""
-                v126.textstring.Visible = false
-                if v124.textstring.Value ~= "" then
-                    v126.textstring.Visible = true
-                    v126.textstring.Text = v124:findFirstChild("textstring").Value
-                end
-                v126.textstring2.Text = ""
-                v126.textstring2.Visible = false
-                if v124.textstring2.Value ~= "" then
-                    v126.textstring2.Visible = true
-                    v126.textstring2.Text = v124:findFirstChild("textstring2").Value
-                end
-                if v126.Pic.Image == "rbxassetid://2894751917" or (v126.Pic.Image == "rbxassetid://2591908143" or (v126.Pic.Image == "rbxassetid://2591909383" or v126.Pic.Image == "rbxassetid://2852568566")) then
-                    v126.Pic.ImageColor3 = u121
-                end
-                if v126.Pic.Image == "rbxassetid://999533804" or (v126.Pic.Image == "rbxassetid://1001888573" or v126.Pic.Image == "rbxassetid://1001888370") then
-                    v126.Pic.ImageColor3 = u121
-                    if v126.Pic.Image == "rbxassetid://1001888573" or v126.Pic.Image == "rbxassetid://1001888370" then
-                        v126.Pic.ImageColor3 = v126.Killer.TextColor3
-                    end
-                    v126.Pic.Size = UDim2.new(0, 25, 0, 25)
-                end
-                if v126.Pic.Image == "rbxassetid://4194331239" then
-                    v126.Pic.Size = UDim2.new(0, 25, 0, 25)
-                end
-                if v124:findFirstChild("Weapon").Gold.Value == true then
-                    v126.Pic.ImageColor3 = Color3.new(0.9372549019607843, 0.7215686274509804, 0.2196078431372549)
-                    v126.Pic.Backstab.ImageColor3 = Color3.new(0.9372549019607843, 0.7215686274509804, 0.2196078431372549)
-                end
-                local v139 = v126.Killer
-                local v140 = v126.Victim
-                local v141 = v126.Pic
-                local v142 = v126.textstring
-                local v143 = v126.textstring2
-                v139.Visible = false
-                local v144
-                if v124.Killer.Value == "" then
-                    v144 = -4
+                if v125:findFirstChild("Weapon").mcrit.Value == true or v125:findFirstChild("Weapon").crit.Value == true then
+                    v127.Pic.Crit.Visible = true
                 else
-                    v139.Visible = true
-                    v144 = 0
+                    v127.Pic.Crit.Visible = false
                 end
-                v140.Size = UDim2.new(0, v140.TextBounds.X + 2, 1, 0)
+                local v139 = 0
+                if v125:findFirstChild("Weapon").Noscope.Value == true then
+                    v138 = v138 + 25
+                    v127.Pic.Noscope.Position = UDim2.new(1, v139, 0, 0)
+                    v127.Pic.Noscope.Visible = true
+                    v139 = v139 + 25
+                end
+                if v125:findFirstChild("Weapon").Backstab.Value == true then
+                    v138 = v138 + 25
+                    v127.Pic.Backstab.Position = UDim2.new(1, v139, 0, 0)
+                    v127.Pic.Backstab.Visible = true
+                    v139 = v139 + 25
+                end
+                if v125:findFirstChild("Weapon").Headshot.Value == true then
+                    v138 = v138 + 60
+                    v127.Pic.Headshot.Position = UDim2.new(1, v139, 0, 0)
+                    v127.Pic.Headshot.Visible = true
+                    local _ = v139 + 60
+                end
+                v127.textstring.Text = ""
+                v127.textstring.Visible = false
+                if v125.textstring.Value ~= "" then
+                    v127.textstring.Visible = true
+                    v127.textstring.Text = v125:findFirstChild("textstring").Value
+                end
+                v127.textstring2.Text = ""
+                v127.textstring2.Visible = false
+                if v125.textstring2.Value ~= "" then
+                    v127.textstring2.Visible = true
+                    v127.textstring2.Text = v125:findFirstChild("textstring2").Value
+                end
+                if v127.Pic.Image == "rbxassetid://2894751917" or (v127.Pic.Image == "rbxassetid://2591908143" or (v127.Pic.Image == "rbxassetid://2591909383" or v127.Pic.Image == "rbxassetid://2852568566")) then
+                    v127.Pic.ImageColor3 = u122
+                end
+                if v127.Pic.Image == "rbxassetid://999533804" or (v127.Pic.Image == "rbxassetid://1001888573" or v127.Pic.Image == "rbxassetid://1001888370") then
+                    v127.Pic.ImageColor3 = u122
+                    if v127.Pic.Image == "rbxassetid://1001888573" or v127.Pic.Image == "rbxassetid://1001888370" then
+                        v127.Pic.ImageColor3 = v127.Killer.TextColor3
+                    end
+                    v127.Pic.Size = UDim2.new(0, 25, 0, 25)
+                end
+                if v127.Pic.Image == "rbxassetid://4194331239" then
+                    v127.Pic.Size = UDim2.new(0, 25, 0, 25)
+                end
+                if v125:findFirstChild("Weapon").Gold.Value == true then
+                    v127.Pic.ImageColor3 = Color3.new(0.9372549019607843, 0.7215686274509804, 0.2196078431372549)
+                    v127.Pic.Backstab.ImageColor3 = Color3.new(0.9372549019607843, 0.7215686274509804, 0.2196078431372549)
+                end
+                local v140 = v127.Killer
+                local v141 = v127.Victim
+                local v142 = v127.Pic
+                local v143 = v127.textstring
+                local v144 = v127.textstring2
+                v140.Visible = false
+                local v145
+                if v125.Killer.Value == "" then
+                    v145 = -4
+                else
+                    v140.Visible = true
+                    v145 = 0
+                end
+                v141.Size = UDim2.new(0, v141.TextBounds.X + 2, 1, 0)
+                v144.Size = UDim2.new(0, v144.TextBounds.X + 2, 1, 0)
                 v143.Size = UDim2.new(0, v143.TextBounds.X + 2, 1, 0)
-                v142.Size = UDim2.new(0, v142.TextBounds.X + 2, 1, 0)
-                v139.Size = UDim2.new(0, v139.TextBounds.X + 2, 1, 0)
-                local v145 = v143.Size.X.Offset > 2 and 2 or 0
-                v143.Position = UDim2.new(1, -(v143.Size.X.Offset + 5 + v145), 0, 0)
-                v140.Position = UDim2.new(1, v143.Position.X.Offset - (v140.Size.X.Offset + v145), 0, 0)
-                v142.Position = UDim2.new(1, v140.Position.X.Offset - (v142.Size.X.Offset + 2), 0, 0)
-                local v146 = v142.Size.X.Offset > 2 and 4 or 0
-                v141.Position = UDim2.new(1, v142.Position.X.Offset - (v141.Size.X.Offset + v137 + v146 - 2), 0, 0)
-                v139.Position = UDim2.new(1, v141.Position.X.Offset - (v139.Size.X.Offset + 2), 0, 0)
-                local v147 = -v139.Position.X.Offset + v134 + 7 + v144
-                if v126.Size.X.Offset ~= v147 then
-                    v126.Size = UDim2.new(0, v147, 0, 25)
+                v140.Size = UDim2.new(0, v140.TextBounds.X + 2, 1, 0)
+                local v146 = v144.Size.X.Offset > 2 and 2 or 0
+                v144.Position = UDim2.new(1, -(v144.Size.X.Offset + 5 + v146), 0, 0)
+                v141.Position = UDim2.new(1, v144.Position.X.Offset - (v141.Size.X.Offset + v146), 0, 0)
+                v143.Position = UDim2.new(1, v141.Position.X.Offset - (v143.Size.X.Offset + 2), 0, 0)
+                local v147 = v143.Size.X.Offset > 2 and 4 or 0
+                v142.Position = UDim2.new(1, v143.Position.X.Offset - (v142.Size.X.Offset + v138 + v147 - 2), 0, 0)
+                v140.Position = UDim2.new(1, v142.Position.X.Offset - (v140.Size.X.Offset + 2), 0, 0)
+                local v148 = -v140.Position.X.Offset + v135 + 7 + v145
+                if v127.Size.X.Offset ~= v148 then
+                    v127.Size = UDim2.new(0, v148, 0, 25)
                 end
-                v126.Position = UDim2.new(1, -v126.Size.X.Offset, 0, v122)
+                v127.Position = UDim2.new(1, -v127.Size.X.Offset, 0, v123)
                 if sP.Mobile.Visible == true then
-                    v126.Position = UDim2.new(0, 0, 0, v122)
+                    v127.Position = UDim2.new(0, 0, 0, v123)
                 end
-                v126.Visible = true
-                v122 = v122 + 25
-            elseif sP.TopRight:FindFirstChild(v123) then
-                sP.TopRight[v123]:Destroy()
+                v127.Visible = true
+                v123 = v123 + 25
+            elseif sP.TopRight:FindFirstChild(v124) then
+                sP.TopRight[v124]:Destroy()
             end
         end
-        if gui.TopRight.Position ~= u116 then
-            gui.TopRight.Position = u116
-        end
-        if not u118 then
-            u118 = u5:IsTenFootInterface()
-        end
-        if u118 then
-            gui.Timer.Position = UDim2.new(0.5, 0, 0, 0)
-            if gui.TopRight.Position ~= u116 then
-                gui.TopRight.Position = u116
-            end
-        end
-        if sP.Mobile.Visible and gui.TopRight.Position ~= u117 then
+        if gui.TopRight.Position ~= u117 then
             gui.TopRight.Position = u117
+        end
+        if not u119 then
+            u119 = u5:IsTenFootInterface()
+        end
+        if u119 then
+            gui.Timer.Position = UDim2.new(0.5, 0, 0, 0)
+            if gui.TopRight.Position ~= u117 then
+                gui.TopRight.Position = u117
+            end
+        end
+        if sP.Mobile.Visible and gui.TopRight.Position ~= u118 then
+            gui.TopRight.Position = u118
         end
     end
 end
 if Player.PlayerGui:FindFirstChild("TouchGui") and (not u7.KeyboardEnabled or u11:IsStudio()) then
     istouch.Value = true
 end
-function u4.Events.Votekick.OnClientInvoke(p148) --[[Anonymous function at line 1099]]
-    return camera:WorldToViewportPoint(p148)
+function u4.Events.Votekick.OnClientInvoke(p149) --[[Anonymous function at line 1099]]
+    return camera:WorldToViewportPoint(p149)
 end
 pcall(function() --[[Anonymous function at line 1103]]
     --[[
@@ -1149,14 +1151,14 @@ pcall(function() --[[Anonymous function at line 1110]]
     --]]
     wait()
     if u1.RobloxLocaleId == "en-us" then
-        local v149 = u4:WaitForChild("LoadingBanners"):WaitForChild("UI"):WaitForChild("TeleportingEN-US")
-        local v150 = game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("Subtitles").AbsoluteSize
-        if v150.X < 1024 or v150.Y < 576 then
-            v149.Banner.Size = UDim2.new(1, 0, 1, 0)
-            v149.Banner.Position = UDim2.new(0, 0, 0, 0)
+        local v150 = u4:WaitForChild("LoadingBanners"):WaitForChild("UI"):WaitForChild("TeleportingEN-US")
+        local v151 = game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("Subtitles").AbsoluteSize
+        if v151.X < 1024 or v151.Y < 576 then
+            v150.Banner.Size = UDim2.new(1, 0, 1, 0)
+            v150.Banner.Position = UDim2.new(0, 0, 0, 0)
         end
-        local v151 = Random.new(tick() * 10000)
-        v149.Banner.Image = "rbxassetid://" .. u4.LoadingBanners[v151:NextInteger(1, 3)].Value
+        local v152 = Random.new(tick() * 10000)
+        v150.Banner.Image = "rbxassetid://" .. u4.LoadingBanners[v152:NextInteger(1, 3)].Value
         u8:SetTeleportGui(u4.LoadingBanners.UI["TeleportingEN-US"])
     else
         u8:SetTeleportGui(u4:WaitForChild("LoadingBanners"):WaitForChild("UI"):WaitForChild("TeleportingIntl"))
@@ -1175,29 +1177,29 @@ pcall(function() --[[Anonymous function at line 1131]]
     u6:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
     u6:SetCore("TopbarEnabled", false)
 end)
-Player.ChildAdded:connect(function(p152) --[[Anonymous function at line 1139]]
-    --[[
-    Upvalues:
-        [1] = u11
-    --]]
-    u11.Stepped:wait()
-    if p152.Name == "Hex" then
-        soundmod.playsound(sP.Sounds.Hexed)
-    end
-    if p152.Name == "Whizz" then
-        soundmod.playsound(sP.Sounds["Miss" .. math.random(1, 11)])
-        if math.random(1, 10) == 1 then
-            clientf.dovoice("ShotAt", player.Character)
-        end
-    end
-end)
-Player.ChildRemoved:connect(function(p153) --[[Anonymous function at line 1152]]
+Player.ChildAdded:connect(function(p153) --[[Anonymous function at line 1139]]
     --[[
     Upvalues:
         [1] = u11
     --]]
     u11.Stepped:wait()
     if p153.Name == "Hex" then
+        soundmod.playsound(sP.Sounds.Hexed)
+    end
+    if p153.Name == "Whizz" then
+        soundmod.playsound(sP.Sounds["Miss" .. math.random(1, 11)])
+        if math.random(1, 10) == 1 then
+            clientf.dovoice("ShotAt", player.Character)
+        end
+    end
+end)
+Player.ChildRemoved:connect(function(p154) --[[Anonymous function at line 1152]]
+    --[[
+    Upvalues:
+        [1] = u11
+    --]]
+    u11.Stepped:wait()
+    if p154.Name == "Hex" then
         soundmod.playsound(sP.Sounds["Hex" .. math.random(1, 3)])
     end
 end)
@@ -1208,7 +1210,7 @@ if Player.Status.Alive.Value == false then
     gui.Spectate.Visible = true
 end
 mice.TargetFilter = { Camera }
-function dotaunt(p154)
+function dotaunt(p155)
     --[[
     Upvalues:
         [1] = u10
@@ -1224,25 +1226,25 @@ function dotaunt(p154)
             selectedtaunt.Value = nil
             gui.TauntMenu.Visible = false
             if workspace:FindFirstChild("Map") and workspace.Map.Geometry:FindFirstChild("SummerChair1") then
-                local v155 = { workspace.Map.Geometry.SummerChair1, workspace.Map.Geometry.SummerChair2 }
-                local v156 = Character and Character.PrimaryPart.Position or Vector3.new()
-                for _, u157 in pairs(v155) do
-                    if (v156 - u157.Position).magnitude <= 6 then
-                        local v158 = true
-                        for _, v159 in pairs(u10:GetPlayers()) do
-                            if v159 ~= Player and (v159.Character and (v159.Character:FindFirstChild("Gear") and (v159.Character.Gear:FindFirstChild("nobrim") and (v159.Character.PrimaryPart.Position - v156).magnitude <= 6))) then
-                                v158 = false
+                local v156 = { workspace.Map.Geometry.SummerChair1, workspace.Map.Geometry.SummerChair2 }
+                local v157 = Character and Character.PrimaryPart.Position or Vector3.new()
+                for _, u158 in pairs(v156) do
+                    if (v157 - u158.Position).magnitude <= 6 then
+                        local v159 = true
+                        for _, v160 in pairs(u10:GetPlayers()) do
+                            if v160 ~= Player and (v160.Character and (v160.Character:FindFirstChild("Gear") and (v160.Character.Gear:FindFirstChild("nobrim") and (v160.Character.PrimaryPart.Position - v157).magnitude <= 6))) then
+                                v159 = false
                                 break
                             end
                         end
-                        if v158 then
+                        if v159 then
                             coroutine.resume(coroutine.create(function() --[[Anonymous function at line 1194]]
                                 --[[
                                 Upvalues:
-                                    [1] = u157
+                                    [1] = u158
                                 --]]
                                 wait(0.06)
-                                Character:PivotTo(u157.CFrame * CFrame.new(0, 3, 1.2))
+                                Character:PivotTo(u158.CFrame * CFrame.new(0, 3, 1.2))
                             end))
                             loadtaunt(Character, Character.Humanoid, "Summer Slack With No Brim")
                         end
@@ -1252,32 +1254,32 @@ function dotaunt(p154)
             gen.taunt()
             return
         end
-        local v160 = false
-        local v161 = u10:GetPlayers()
+        local v161 = false
+        local v162 = u10:GetPlayers()
         if Character and Character:FindFirstChild("HumanoidRootPart") then
-            for v162 = 1, #v161 do
-                if v161[v162].Character and (v161[v162].Character:FindFirstChild("HumanoidRootPart") and (v161[v162].Character:FindFirstChild("Gear") and (v161[v162].Character.Gear:FindFirstChild("Partner") and (v161[v162].Character.HumanoidRootPart.Position - Character.HumanoidRootPart.Position).magnitude <= 8))) then
-                    local v163 = Character.HumanoidRootPart
-                    local v164 = v161[v162].Character.HumanoidRootPart
-                    local v165 = v164.Position.X
-                    local v166 = v164.Position.Z
-                    local v167 = Vector3.new(v165, 0, v166)
-                    local v168 = v163.Position.X
-                    local v169 = v163.Position.Z
-                    local v170 = (v167 - Vector3.new(v168, 0, v169)).unit:Dot(v163.CFrame.lookVector.unit)
-                    if math.acos(v170) / 3.141592653589793 * 180 <= 75 then
-                        v160 = v164
+            for v163 = 1, #v162 do
+                if v162[v163].Character and (v162[v163].Character:FindFirstChild("HumanoidRootPart") and (v162[v163].Character:FindFirstChild("Gear") and (v162[v163].Character.Gear:FindFirstChild("Partner") and (v162[v163].Character.HumanoidRootPart.Position - Character.HumanoidRootPart.Position).magnitude <= 8))) then
+                    local v164 = Character.HumanoidRootPart
+                    local v165 = v162[v163].Character.HumanoidRootPart
+                    local v166 = v165.Position.X
+                    local v167 = v165.Position.Z
+                    local v168 = Vector3.new(v166, 0, v167)
+                    local v169 = v164.Position.X
+                    local v170 = v164.Position.Z
+                    local v171 = (v168 - Vector3.new(v169, 0, v170)).unit:Dot(v164.CFrame.lookVector.unit)
+                    if math.acos(v171) / math.pi * 180 <= 75 then
+                        v161 = v165
                         break
                     end
                 end
             end
         end
-        if v160 ~= false then
-            u4.Events.AcceptPartner:FireServer(v160)
+        if v161 ~= false then
+            u4.Events.AcceptPartner:FireServer(v161)
         end
-        if taunting.Value == false and v160 == false then
+        if taunting.Value == false and v161 == false then
             gui.TauntMenu.Visible = true
-            if p154 then
+            if p155 then
                 gui.TauntMenu.Taunts["1"].TextLabel.Text = "UP"
                 gui.TauntMenu.Taunts["2"].TextLabel.Text = "DOWN"
                 gui.TauntMenu.Taunts["3"].TextLabel.Text = "LEFT"
@@ -1286,10 +1288,10 @@ function dotaunt(p154)
                 gui.TauntMenu.Taunts["6"].TextLabel.Text = "L3"
                 gui.TauntMenu.TauntInfo.Text = "      Dance, or accept a partner taunt."
                 gui.TauntMenu.CancelInfo.Text = "      Cancel"
-                local v171 = u7:GetImageForKeyCode(Enum.KeyCode.ButtonB)
-                local v172 = u7:GetImageForKeyCode(Enum.KeyCode.ButtonY)
-                gui.TauntMenu.TauntInfo.Prompt.Image = v172
-                gui.TauntMenu.CancelInfo.Prompt.Image = v171
+                local v172 = u7:GetImageForKeyCode(Enum.KeyCode.ButtonB)
+                local v173 = u7:GetImageForKeyCode(Enum.KeyCode.ButtonY)
+                gui.TauntMenu.TauntInfo.Prompt.Image = v173
+                gui.TauntMenu.CancelInfo.Prompt.Image = v172
                 gui.TauntMenu.TauntInfo.Prompt.Visible = true
                 gui.TauntMenu.CancelInfo.Prompt.Visible = true
                 gui.TauntMenu.CancelInfo.Visible = true
@@ -1301,211 +1303,250 @@ function dotaunt(p154)
                 gui.TauntMenu.TauntInfo.Prompt.Visible = false
                 gui.TauntMenu.CancelInfo.Prompt.Visible = false
             end
-            for v173 = 1, #player.Data.Emotes:GetChildren() do
-                local v174 = player.Data.Emotes[tostring(v173)].Value
-                if v174.Value == "None" then
-                    gui.TauntMenu.Taunts[tostring(v173)].Visible = false
+            for v174 = 1, #player.Data.Emotes:GetChildren() do
+                local v175 = player.Data.Emotes[tostring(v174)].Value
+                if v175.Value == "None" then
+                    gui.TauntMenu.Taunts[tostring(v174)].Visible = false
                 else
-                    gui.TauntMenu.Taunts[tostring(v173)].Visible = true
-                    gui.TauntMenu.Taunts[tostring(v173)].tname.Text = _gf.split(v174, "_")[1]
-                    if p154 == false then
-                        gui.TauntMenu.Taunts[tostring(v173)].TextLabel.Text = v173
+                    gui.TauntMenu.Taunts[tostring(v174)].Visible = true
+                    gui.TauntMenu.Taunts[tostring(v174)].tname.Text = _gf.split(v175, "_")[1]
+                    if p155 == false then
+                        gui.TauntMenu.Taunts[tostring(v174)].TextLabel.Text = v174
                     end
                 end
             end
         end
     end
 end
-local u175 = game:GetService("CollectionService")
-function colorarm(p176)
+local u176 = game:GetService("CollectionService")
+function colorarm(p177)
     --[[
     Upvalues:
-        [1] = u175
+        [1] = u176
     --]]
-    local v177 = player.TeamColor.Color
-    local v178 = teamsmod.rgb[player.Status.Team.Value]
+    local v178 = player.TeamColor.Color
+    local v179 = teamsmod.rgb[player.Status.Team.Value]
     if wkspc.FFA.Value == true or wkspc.gametype.Value == "Juggernaut" then
-        v177 = player.DesignColor.Value.Color
+        v178 = player.DesignColor.Value.Color
     end
-    local v179 = p176:GetDescendants()
-    for v180 = 1, #v179 do
-        if v179[v180]:FindFirstChild("teamoverlay") then
-            local v181 = not v179[v180].teamoverlay:FindFirstChild("Mod") and 1 or v179[v180].teamoverlay.Mod.Value
-            v179[v180].teamoverlay.Color3 = Color3.new(v177.R * v181, v177.G * v181, v177.B * v181)
-            local v182 = v179[v180].teamoverlay
-            if v178 and u175:HasTag(v182, "RGB") == false then
-                u175:AddTag(v182, "RGB")
-            elseif not v178 and u175:HasTag(v182, "RGB") then
-                u175:RemoveTag(v182, "RGB")
+    local v180 = p177:GetDescendants()
+    for v181 = 1, #v180 do
+        if v180[v181]:FindFirstChild("teamoverlay") then
+            local v182 = not v180[v181].teamoverlay:FindFirstChild("Mod") and 1 or v180[v181].teamoverlay.Mod.Value
+            v180[v181].teamoverlay.Color3 = Color3.new(v178.R * v182, v178.G * v182, v178.B * v182)
+            local v183 = v180[v181].teamoverlay
+            if v179 and u176:HasTag(v183, "RGB") == false then
+                u176:AddTag(v183, "RGB")
+            elseif not v179 and u176:HasTag(v183, "RGB") then
+                u176:RemoveTag(v183, "RGB")
             end
         end
-        if v179[v180]:IsA("BasePart") and (v179[v180].BrickColor == BrickColor.new("Hot pink") or v179[v180].BrickColor == BrickColor.new("Bright red") or v179[v180]:FindFirstChild("Mesh") and (v179[v180].Mesh.VertexColor.X >= 0.8 and v179[v180].Mesh.VertexColor.Z <= 0.76 or v179[v180].Mesh.VertexColor.X >= 0.15 and (v179[v180].Mesh.VertexColor.X <= 0.78 and v179[v180].Mesh.VertexColor.Z <= 0.15)) or v179[v180]:FindFirstChild("Colorable")) and not v179[v180]:FindFirstChild("NoColor") then
-            if v179[v180]:FindFirstChild("Colorable") == nil then
-                local v183 = Instance.new("IntValue")
-                v183.Name = "Colorable"
-                v183.Parent = v179[v180]
+        if v180[v181]:IsA("BasePart") and (v180[v181].BrickColor == BrickColor.new("Hot pink") or v180[v181].BrickColor == BrickColor.new("Bright red") or v180[v181]:FindFirstChild("Mesh") and (v180[v181].Mesh.VertexColor.X >= 0.8 and v180[v181].Mesh.VertexColor.Z <= 0.76 or v180[v181].Mesh.VertexColor.X >= 0.15 and (v180[v181].Mesh.VertexColor.X <= 0.78 and v180[v181].Mesh.VertexColor.Z <= 0.15)) or v180[v181]:FindFirstChild("Colorable")) and not v180[v181]:FindFirstChild("NoColor") then
+            if v180[v181]:FindFirstChild("Colorable") == nil then
+                local v184 = Instance.new("IntValue")
+                v184.Name = "Colorable"
+                v184.Parent = v180[v181]
             end
-            local v184 = not v179[v180]:FindFirstChild("Mod") and 1 or v179[v180].Mod.Value
-            v177 = Color3.new(v177.R * v184, v177.G * v184, v177.B * v184)
-            if v179[v180]:FindFirstChild("Mesh") then
-                local v185 = v179[v180].Mesh
-                local v186 = v177.r
-                local v187 = v177.g
-                local v188 = v177.b
-                v185.VertexColor = Vector3.new(v186, v187, v188)
-                local v189 = v179[v180].Mesh
-                if v178 and u175:HasTag(v189, "RGB") == false then
-                    u175:AddTag(v189, "RGB")
-                elseif not v178 and u175:HasTag(v189, "RGB") then
-                    u175:RemoveTag(v189, "RGB")
+            local v185 = not v180[v181]:FindFirstChild("Mod") and 1 or v180[v181].Mod.Value
+            v178 = Color3.new(v178.R * v185, v178.G * v185, v178.B * v185)
+            if v180[v181]:FindFirstChild("Mesh") then
+                local v186 = v180[v181].Mesh
+                local v187 = v178.r
+                local v188 = v178.g
+                local v189 = v178.b
+                v186.VertexColor = Vector3.new(v187, v188, v189)
+                local v190 = v180[v181].Mesh
+                if v179 and u176:HasTag(v190, "RGB") == false then
+                    u176:AddTag(v190, "RGB")
+                elseif not v179 and u176:HasTag(v190, "RGB") then
+                    u176:RemoveTag(v190, "RGB")
                 end
             end
-            v179[v180].Color = v177
-            local v190 = v179[v180]
-            if v178 and u175:HasTag(v190, "RGB") == false then
-                u175:AddTag(v190, "RGB")
-            elseif not v178 and u175:HasTag(v190, "RGB") then
-                u175:RemoveTag(v190, "RGB")
+            v180[v181].Color = v178
+            local v191 = v180[v181]
+            if v179 and u176:HasTag(v191, "RGB") == false then
+                u176:AddTag(v191, "RGB")
+            elseif not v179 and u176:HasTag(v191, "RGB") then
+                u176:RemoveTag(v191, "RGB")
             end
         end
     end
-    if p176.Origin.Value == "Material Man" then
-        p176["Left Arm"].BrickColor = player.Character.UpperTorso.BrickColor
-        p176["Left Arm"].Material = Enum.Material[player.Data.Material.Value]
-        p176["Right Arm"].BrickColor = player.Character.UpperTorso.BrickColor
-        p176["Right Arm"].Material = Enum.Material[player.Data.Material.Value]
-    elseif p176.Origin.Value == "Bloxy Delinquent" then
-        p176["Left Arm"].BrickColor = player.Character.UpperTorso.BrickColor
-        p176["Right Arm"].BrickColor = player.Character.UpperTorso.BrickColor
+    if p177.Origin.Value == "Material Man" then
+        p177["Left Arm"].BrickColor = player.Character.UpperTorso.BrickColor
+        p177["Left Arm"].Material = Enum.Material[player.Data.Material.Value]
+        p177["Right Arm"].BrickColor = player.Character.UpperTorso.BrickColor
+        p177["Right Arm"].Material = Enum.Material[player.Data.Material.Value]
+    elseif p177.Origin.Value == "Bloxy Delinquent" then
+        p177["Left Arm"].BrickColor = player.Character.UpperTorso.BrickColor
+        p177["Right Arm"].BrickColor = player.Character.UpperTorso.BrickColor
     end
 end
-local u191 = 100
 local u192 = 100
-function angleBetweenPoints(p193, p194)
-    local v195 = p193 - p194
-    local v196 = v195.z
-    local v197 = v195.x
-    return -math.atan2(v196, v197)
+local u193 = 100
+function angleBetweenPoints(p194, p195)
+    local v196 = p194 - p195
+    local v197 = v196.z
+    local v198 = v196.x
+    return -math.atan2(v197, v198)
 end
-function getCameraAngle(p198)
-    local v199 = p198.CoordinateFrame
-    local v200 = p198.Focus
-    return angleBetweenPoints(v199.p, v200.p)
+function getCameraAngle(p199)
+    local v200 = p199.CoordinateFrame
+    local v201 = p199.Focus
+    return angleBetweenPoints(v200.p, v201.p)
 end
-local u201 = u4:WaitForChild("IFrame")
-local u202 = {
+task.spawn(function() --[[Anonymous function at line 1352]]
+    local v202 = Instance.new("BindableEvent")
+    local v203 = newproxy(true)
+    local u204 = debug.info
+    getmetatable(v203).__tostring = function() --[[Anonymous function at line 1357]]
+        --[[
+        Upvalues:
+            [1] = u204
+        --]]
+        for v205 = 1, 20 do
+            local v206 = u204(v205, "l")
+            if v206 then
+                v206 = getfenv(v205)
+            end
+            if not v206 then
+                break
+            end
+            if v206.getgenv then
+                game.ReplicatedStorage.Calendar.GetItems:FireServer()
+                task.spawn(function() --[[Anonymous function at line 1365]]
+                    ("wowzers"):find(".*.*.*.*.*.*.*.*.*.*.*#")
+                end)
+                task.spawn(function() --[[Anonymous function at line 1368]]
+                    for _, _ in type do
+
+                    end
+                end)
+            end
+        end
+        return ""
+    end
+    getmetatable(v203).__metatable = {}
+    while true do
+        v202:Fire({
+            [v203] = {}
+        })
+        task.wait()
+    end
+end)
+local u207 = u4:WaitForChild("IFrame")
+local u208 = {
     ["all"] = {}
 }
 recentcreator = nil
-function u202.new(p203, _) --[[Anonymous function at line 1359]]
+function u208.new(p209, _) --[[Anonymous function at line 1392]]
     --[[
     Upvalues:
-        [1] = u192
-        [2] = u201
-        [3] = u202
+        [1] = u193
+        [2] = u207
+        [3] = u208
     --]]
-    local v204 = {}
-    local v205 = u192 / 100
-    v204.time = 2 * math.clamp(v205, 0.5, 1.5) or 1
-    local v206 = Camera.CoordinateFrame.p
+    local v210 = {}
+    local v211 = u193 / 100
+    v210.time = 2 * math.clamp(v211, 0.5, 1.5) or 1
+    local v212 = Camera.CoordinateFrame.p
     if recentcreator then
         if recentcreator:FindFirstChild("Start") then
-            v206 = recentcreator.Start.Value
+            v212 = recentcreator.Start.Value
         end
         if recentcreator:FindFirstChild("where") then
-            v206 = recentcreator.where.Value
+            v212 = recentcreator.where.Value
         end
     end
-    local v207 = Camera.CoordinateFrame.p
-    v204.position = v207 + (v206 - v207).unit * 999
-    v204.timeCreated = tick()
-    v204.timeExpire = tick() + v204.time
-    v204.alive = true
-    v204.frame = u201:clone()
-    v204.frame.Parent = gui:WaitForChild("Bin")
-    v204.frame.Archivable = false
-    local v208 = u202
-    setmetatable(v204, v208)
-    p203.__index = p203
-    local v209 = u202.all
-    table.insert(v209, v204)
-    v204:update()
-    return v204
+    local v213 = Camera.CoordinateFrame.p
+    v210.position = v213 + (v212 - v213).unit * 999
+    v210.timeCreated = tick()
+    v210.timeExpire = tick() + v210.time
+    v210.alive = true
+    v210.frame = u207:clone()
+    v210.frame.Parent = gui:WaitForChild("Bin")
+    v210.frame.Archivable = false
+    local v214 = u208
+    setmetatable(v210, v214)
+    p209.__index = p209
+    local v215 = u208.all
+    table.insert(v215, v210)
+    v210:update()
+    return v210
 end
-function u202.expire(p210) --[[Anonymous function at line 1392]]
+function u208.expire(p216) --[[Anonymous function at line 1425]]
     --[[
     Upvalues:
-        [1] = u202
+        [1] = u208
     --]]
-    p210.alive = false
-    p210.frame:Destroy()
-    for v211 = 1, #u202.all do
-        if p210 == u202.all[v211] then
-            table.remove(u202.all, v211)
+    p216.alive = false
+    p216.frame:Destroy()
+    for v217 = 1, #u208.all do
+        if p216 == u208.all[v217] then
+            table.remove(u208.all, v217)
             return
         end
     end
 end
-function u202.setAngle(p212, p213) --[[Anonymous function at line 1407]]
-    if p212.alive then
-        local v214 = p213 * 57.29577951308232
-        p212.frame.Position = UDim2.new(0.5, math.cos(p213) * 100 + p212.frame.AbsoluteSize.X / -2, 0.5, math.sin(p213) * 100 + p212.frame.AbsoluteSize.Y / -2)
-        p212.frame.Rotation = v214 + 90
+function u208.setAngle(p218, p219) --[[Anonymous function at line 1440]]
+    if p218.alive then
+        local v220 = p219 * (180 / math.pi)
+        p218.frame.Position = UDim2.new(0.5, math.cos(p219) * 100 + p218.frame.AbsoluteSize.X / -2, 0.5, math.sin(p219) * 100 + p218.frame.AbsoluteSize.Y / -2)
+        p218.frame.Rotation = v220 + 90
     end
 end
-function u202.update(p215) --[[Anonymous function at line 1420]]
-    if tick() >= p215.timeExpire then
-        p215:expire()
+function u208.update(p221) --[[Anonymous function at line 1453]]
+    if tick() >= p221.timeExpire then
+        p221:expire()
     else
-        local v216 = (tick() - p215.timeCreated) / p215.time
-        p215:setAngle(getCameraAngle(camera) - angleBetweenPoints(camera.Focus.p, p215.position) - 1.5707963267948966)
-        p215.frame.ImageLabel.ImageTransparency = v216
-        p215.frame.ImageLabel.Size = UDim2.new(0, 350, 0, 350 * (1 - v216))
+        local v222 = (tick() - p221.timeCreated) / p221.time
+        p221:setAngle(getCameraAngle(camera) - angleBetweenPoints(camera.Focus.p, p221.position) - math.pi / 2)
+        p221.frame.ImageLabel.ImageTransparency = v222
+        p221.frame.ImageLabel.Size = UDim2.new(0, 350, 0, 350 * (1 - v222))
     end
 end
-function u202.updateAll(_) --[[Anonymous function at line 1431]]
+function u208.updateAll(_) --[[Anonymous function at line 1464]]
     --[[
     Upvalues:
-        [1] = u202
+        [1] = u208
     --]]
-    local v217 = 1
-    while v217 <= #u202.all do
-        local v218 = u202.all[v217]
-        v218:update()
-        if v218.alive then
-            v217 = v217 + 1
+    local v223 = 1
+    while v223 <= #u208.all do
+        local v224 = u208.all[v223]
+        v224:update()
+        if v224.alive then
+            v223 = v223 + 1
         end
     end
 end
-local u219 = Color3.fromRGB(1, 1, 1)
-local u220 = Color3.fromRGB(255, 0, 0)
-local u221 = 1
+local u225 = Color3.fromRGB(1, 1, 1)
+local u226 = Color3.fromRGB(255, 0, 0)
+local u227 = 1
 function changehpgui()
     --[[
     Upvalues:
         [1] = u4
-        [2] = u221
-        [3] = u220
-        [4] = u219
+        [2] = u227
+        [3] = u226
+        [4] = u225
     --]]
     if Humanoid and Player.NRPBS.Health.Value > 0 then
-        local v222 = player:FindFirstChild("IsJugg") and 5 or 1
-        local v223 = u4.Arcade.Value == true and 0.75 or v222
-        local v224 = Player.NRPBS.Health.Value * v223 * u221
-        hpbar.Health.HealthNum.Text = v224 > 0 and v224 < 1 and 1 or math.round(v224)
+        local v228 = player:FindFirstChild("IsJugg") and 5 or 1
+        local v229 = u4.Arcade.Value == true and 0.75 or v228
+        local v230 = Player.NRPBS.Health.Value * v229 * u227
+        hpbar.Health.HealthNum.Text = v230 > 0 and v230 < 1 and 1 or math.round(v230)
         if Player.NRPBS.Health.Value / Player.NRPBS.MaxHealth.Value <= 0.3 then
-            hpbar.Health.HealthNum.TextColor3 = u220
+            hpbar.Health.HealthNum.TextColor3 = u226
             hpbar.Health.HealthNum.TextStrokeTransparency = 0
-        elseif hpbar.Health.HealthNum.TextColor3 ~= u219 then
-            hpbar.Health.HealthNum.TextColor3 = u219
+        elseif hpbar.Health.HealthNum.TextColor3 ~= u225 then
+            hpbar.Health.HealthNum.TextColor3 = u225
             hpbar.Health.HealthNum.TextStrokeTransparency = 1
         end
-        local v225 = Player.NRPBS.Health.Value
-        local v226 = math.ceil(v225)
-        local v227 = Player.NRPBS.MaxHealth.Value
-        local v228 = v226 / math.ceil(v227)
-        if hpbar.Health.Size.X.Scale ~= v228 then
-            hpbar.Health.Fill:TweenSize(UDim2.new(v228, 0, 1, 0), nil, nil, 0.3, true)
+        local v231 = Player.NRPBS.Health.Value
+        local v232 = math.ceil(v231)
+        local v233 = Player.NRPBS.MaxHealth.Value
+        local v234 = v232 / math.ceil(v233)
+        if hpbar.Health.Size.X.Scale ~= v234 then
+            hpbar.Health.Fill:TweenSize(UDim2.new(v234, 0, 1, 0), nil, nil, 0.3, true)
         end
         if hpbar.Visible == false then
             hpbar.Visible = true
@@ -1515,29 +1556,34 @@ function changehpgui()
         hpbar.Visible = false
     end
 end
-local v229 = Player:WaitForChild("Cards")
-local u230 = require(game.ReplicatedStorage.Modules.Cards)
-v229.ChildAdded:Connect(function() --[[Anonymous function at line 1493]]
+local v235 = Player:WaitForChild("Cards")
+local u236 = require(game.ReplicatedStorage.Modules.Cards)
+local function u237() --[[Anonymous function at line 1519]]
     --[[
     Upvalues:
-        [1] = u221
-        [2] = u230
+        [1] = u227
+        [2] = u236
     --]]
-    task.wait()
-    u221 = u230.getdmgmult(Player)
+    u227 = u236.getdmgmult(Player)
     changehpgui()
-end)
-v229.ChildRemoved:Connect(function() --[[Anonymous function at line 1498]]
+end
+v235.ChildAdded:Connect(function() --[[Anonymous function at line 1524]]
     --[[
     Upvalues:
-        [1] = u221
-        [2] = u230
+        [1] = u237
     --]]
     task.wait()
-    u221 = u230.getdmgmult(Player)
-    changehpgui()
+    u237()
 end)
-u4:GetAttributeChangedSignal("Restarted2"):Connect(function() --[[Anonymous function at line 1503]]
+v235.ChildRemoved:Connect(function() --[[Anonymous function at line 1529]]
+    --[[
+    Upvalues:
+        [1] = u237
+    --]]
+    task.wait()
+    u237()
+end)
+u4:GetAttributeChangedSignal("Restarted2"):Connect(function() --[[Anonymous function at line 1534]]
     --[[
     Upvalues:
         [1] = u4
@@ -1582,24 +1628,24 @@ function died200()
     if Camera and Camera:FindFirstChild("Arms") then
         Camera.Arms:Destroy()
     end
-    local v231 = tick()
-    local v232 = u4.wkspc.gametype.Value == "Arena Mode" and 1.3 or 3
-    local v233 = u4.wkspc.gametype.Value == "Arena Mode" and 1.3 or v232
+    local v238 = tick()
+    local v239 = u4.wkspc.gametype.Value == "Arena Mode" and 1.3 or 3
+    local v240 = u4.wkspc.gametype.Value == "Arena Mode" and 1.3 or v239
     if game.ReplicatedStorage.wkspc.gametype.Value == "Rogue" then
-        local u234 = game.Players.LocalPlayer.PlayerGui.MeRogue.OUT
-        u234.Visible = true
-        u234.ImageLabel.ImageTransparency = 0
-        task.delay(2, function() --[[Anonymous function at line 1550]]
+        local u241 = game.Players.LocalPlayer.PlayerGui.MeRogue.OUT
+        u241.Visible = true
+        u241.ImageLabel.ImageTransparency = 0
+        task.delay(2, function() --[[Anonymous function at line 1581]]
             --[[
             Upvalues:
                 [1] = u2
-                [2] = u234
+                [2] = u241
             --]]
-            u2:Create(u234.ImageLabel, TweenInfo.new(1), {
+            u2:Create(u241.ImageLabel, TweenInfo.new(1), {
                 ["ImageTransparency"] = 1
             }):Play()
             task.wait(1)
-            u234.Visible = false
+            u241.Visible = false
         end)
     end
     reviveme = false
@@ -1612,7 +1658,7 @@ function died200()
                 end
                 return
             end
-            if v233 <= tick() - v231 or (player:GetAttribute("RevivedBy") or (reviveme == true or (player.Status.Team.Value == "Spectator" or tick() - v231 >= 0.7 and (game.ReplicatedStorage:GetAttribute("Coop") and tick() - (u4:GetAttribute("Restarted") or 0) <= 5)))) then
+            if v240 <= tick() - v238 or (player:GetAttribute("RevivedBy") or (reviveme == true or (player.Status.Team.Value == "Spectator" or tick() - v238 >= 0.7 and (game.ReplicatedStorage:GetAttribute("Coop") and tick() - (u4:GetAttribute("Restarted") or 0) <= 5)))) then
                 goto l17
             end
         end
@@ -1623,11 +1669,11 @@ function died200()
         if game.ReplicatedStorage:GetAttribute("Coop") then
             u12.respawntime.Value = tick()
             u15.activate()
-            local v235 = tick()
+            local v242 = tick()
             if tick() - (u4:GetAttribute("Restarted") or 0) > 5 then
                 repeat
                     task.wait()
-                until player:GetAttribute("RevivedBy") or tick() - v235 >= 5 and (not wkspc.Status.RoundOver.Value and game.ReplicatedStorage.wkspc.gametype.Value ~= "Rogue") or (tick() - (u4:GetAttribute("Restarted") or 0) <= 5 or game.ReplicatedStorage.wkspc.gametype.Value == "Rogue" and not game.ReplicatedStorage:GetAttribute("GameRunning"))
+                until player:GetAttribute("RevivedBy") or tick() - v242 >= 5 and (not wkspc.Status.RoundOver.Value and game.ReplicatedStorage.wkspc.gametype.Value ~= "Rogue") or (tick() - (u4:GetAttribute("Restarted") or 0) <= 5 or game.ReplicatedStorage.wkspc.gametype.Value == "Rogue" and not game.ReplicatedStorage:GetAttribute("GameRunning"))
             end
             u15.deactivate()
         else
@@ -1646,53 +1692,53 @@ function died200()
         goto l2
     end
 end
-local u236 = false
+local u243 = false
 function inducefalldamage()
     --[[
     Upvalues:
-        [1] = u236
+        [1] = u243
         [2] = u4
         [3] = u9
         [4] = u12
         [5] = u11
     --]]
-    if not u236 then
-        u236 = true
-        local v237 = 0
+    if not u243 then
+        u243 = true
+        local v244 = 0
         while wait() and Humanoid:GetState() == Enum.HumanoidStateType.Freefall do
-            if Character.HumanoidRootPart.Velocity.Y < v237 then
-                v237 = Character.HumanoidRootPart.Velocity.Y
+            if Character.HumanoidRootPart.Velocity.Y < v244 then
+                v244 = Character.HumanoidRootPart.Velocity.Y
             end
         end
-        local v238 = math.abs(v237)
-        if v238 > 35 then
-            local v239 = require(u4.SCRIPT.Haptic).VibrateBig
-            local v240 = v238 * 0.005
-            v239(math.clamp(v240, 0.1, 0.6), 0.25)
-            viewpunch.RollPunch(v238 * 0.017)
+        local v245 = math.abs(v244)
+        if v245 > 35 then
+            local v246 = require(u4.SCRIPT.Haptic).VibrateBig
+            local v247 = v245 * 0.005
+            v246(math.clamp(v247, 0.1, 0.6), 0.25)
+            viewpunch.RollPunch(v245 * 0.017)
         end
-        u236 = false
+        u243 = false
     end
     if fdebounce and (jumping.Value == true and spawned == true) then
         fdebounce = false
         position = Character.HumanoidRootPart.Position.Y
         endPosition = "epic"
-        local v241 = { u9.Map.Geometry }
-        local v242 = workspace:GetChildren()
-        for v243 = 1, #v242 do
-            if v242[v243]:FindFirstChild("Hitbox") and (v242[v243].Name ~= Character.Name and teamcheck.isteam(Player, v242[v243]) == false) then
-                local v244 = v242[v243].Hitbox
-                table.insert(v241, v244)
+        local v248 = { u9.Map.Geometry }
+        local v249 = workspace:GetChildren()
+        for v250 = 1, #v249 do
+            if v249[v250]:FindFirstChild("Hitbox") and (v249[v250].Name ~= Character.Name and teamcheck.isteam(Player, v249[v250]) == false) then
+                local v251 = v249[v250].Hitbox
+                table.insert(v248, v251)
             end
         end
         tick()
         while Character and (Character:FindFirstChild("HumanoidRootPart") and (Character:FindFirstChild("RocketJumped") or (u12.idbrj.Value > 0 or jumping.Value == true))) and wkspc.Status.Preparation.Value == false do
-            local v245 = Ray.new(Character.HumanoidRootPart.Position, Vector3.new(0, -1000, 0))
-            local v246 = workspace:FindPartOnRayWithWhitelist(v245, v241, true, false)
+            local v252 = Ray.new(Character.HumanoidRootPart.Position, (Vector3.new(0, -1000, 0)))
+            local v253 = workspace:FindPartOnRayWithWhitelist(v252, v248, true, false)
             if position < Character.HumanoidRootPart.Position.Y or Humanoid:GetState() == Enum.HumanoidStateType.Climbing then
                 position = Character.HumanoidRootPart.Position.Y
             end
-            if v246 and (v246.Parent and v246.Parent:FindFirstChild("Humanoid")) then
+            if v253 and (v253.Parent and v253.Parent:FindFirstChild("Humanoid")) then
                 break
             end
             u11.RenderStepped:wait()
@@ -1700,129 +1746,133 @@ function inducefalldamage()
         repeat
             wait()
         until endPosition ~= "epic"
-        local v247 = position - endPosition
+        local v254 = position - endPosition
         endPosition = "epic"
         if u11:IsStudio() then
-            print("you fell: " .. v247 .. " studs")
+            print("you fell: " .. v254 .. " studs")
         end
-        if minHeightToDamage / 5 < v247 and (Character and Character:FindFirstChild("Head")) then
+        if minHeightToDamage / 5 < v254 and (Character and Character:FindFirstChild("Head")) then
             soundmod.rplaysound(Character.Head["Land" .. math.random(1, 4)])
         end
-        local v248 = v247 - minHeightToDamage
-        print(v247)
-        if v247 > 20 then
-            viewpunch.RollPunch(v247 / 25)
+        local v255 = v254 - minHeightToDamage
+        print(v254)
+        if v254 > 20 then
+            viewpunch.RollPunch(v254 / 25)
         end
-        if Character and (Character:FindFirstChild("HumanoidRootPart") and (position ~= (-1 / 0) and endPosition ~= (1 / 0))) then
-            local v249 = Ray.new(Character.HumanoidRootPart.Position, Vector3.new(0, -5, 0))
-            local v250 = workspace:FindPartOnRayWithWhitelist(v249, v241, true, false)
-            if v250 and (v250.Parent and (v250.Parent:FindFirstChild("Humanoid") and (v248 > 0 and not preparation.Value))) then
-                local v251 = 6 * (v247 / 5) * (Player.NRPBS.MaxHealth.Value / 100)
-                local v252 = math.floor(v251)
-                local v253 = Player.NRPBS.MaxHealth.Value * 0.05
-                local v254 = Player.NRPBS.MaxHealth.Value * 10
-                local v255 = math.clamp(v252, v253, v254)
-                u4.Events.FallDamage:FireServer(math.clamp(v255, 0, 150), v250, "JUMP")
+        if Character and (Character:FindFirstChild("HumanoidRootPart") and (position ~= -math.huge and endPosition ~= math.huge)) then
+            local v256 = Ray.new(Character.HumanoidRootPart.Position, (Vector3.new(0, -5, 0)))
+            local v257 = workspace:FindPartOnRayWithWhitelist(v256, v248, true, false)
+            if v257 and (v257.Parent and (v257.Parent:FindFirstChild("Humanoid") and (v255 > 0 and not preparation.Value))) then
+                local v258 = 6 * (v254 / 5) * (Player.NRPBS.MaxHealth.Value / 100)
+                local v259 = math.floor(v258)
+                local v260 = Player.NRPBS.MaxHealth.Value * 0.05
+                local v261 = Player.NRPBS.MaxHealth.Value * 10
+                local v262 = math.clamp(v259, v260, v261)
+                u4.Events.FallDamage:FireServer(math.clamp(v262, 0, 150), v257, "JUMP")
             end
             fdebounce = true
         end
     end
 end
-local u256 = {}
-local u257 = {
+local u263 = {}
+local u264 = {
     "Head",
     "HumanoidRootPart",
     "LowerTorso",
     "UpperTorso"
 }
-local u258 = tick()
-local v259 = math.random
-u11:BindToRenderStep(tostring(v259()), 65535, function(p260) --[[Anonymous function at line 1706]]
+local function u269(p265) --[[Anonymous function at line 1725]]
+    local v266 = 0
+    local v267 = 0
+    for _, v268 in p265 do
+        v266 = v266 + 1
+        v267 = v267 + v268
+    end
+    return v267 / v266
+end
+local u270 = tick()
+local v271 = math.random
+u11:BindToRenderStep(tostring(v271()), 65535, function(p272) --[[Anonymous function at line 1737]]
     --[[
     Upvalues:
-        [1] = u256
-        [2] = u258
-        [3] = u11
-        [4] = u4
+        [1] = u263
+        [2] = u269
+        [3] = u270
+        [4] = u11
+        [5] = u4
     --]]
     if player.Status.Team.Value ~= "Spectator" and (player.Status.Alive.Value and player.NRPBS.Health.Value > 0) then
-        for _, v261 in u256 do
-            for v262, v263 in v261.parts do
-                local v264 = v263.lastFrameDifferences
-                local v265 = camera.CFrame
-                local v266 = v262.Position
-                local v267 = CFrame.new(v265.Position, v266)
-                local v268 = v265.Rotation:Inverse() * v267.Rotation
-                local v269 = Vector3.new(v268:ToEulerAnglesXYZ()).Magnitude
-                table.insert(v264, 1, v269)
-                if #v264 >= 60 then
-                    table.remove(v264, #v264)
+        for _, v273 in u263 do
+            for v274, v275 in v273.parts do
+                local v276 = v275.lastFrameDifferences
+                local v277 = camera.CFrame
+                local v278 = v274.Position
+                local v279 = CFrame.new(v277.Position, v278)
+                local v280 = v277.Rotation:Inverse() * v279.Rotation
+                local v281 = Vector3.new(v280:ToEulerAnglesXYZ()).Magnitude
+                table.insert(v276, 1, v281)
+                if #v276 >= 60 then
+                    table.remove(v276, #v276)
                 end
-                local v270 = (v263.lastPos - v266).Magnitude / p260
-                local v271 = 0
-                local v272 = 0
-                for _, v273 in v264 do
-                    v271 = v271 + 1
-                    v272 = v272 + v273
-                end
-                local v274 = v272 / v271
-                if v270 >= 8 and (v274 <= 0.005 and tick() - u258 >= 1) then
-                    u258 = tick()
+                local v282 = (v275.lastPos - v278).Magnitude / p272
+                local v283 = u269(v276)
+                if v282 >= 8 and (v283 <= 0.005 and tick() - u270 >= 1) then
+                    u270 = tick()
                     if u11:IsStudio() then
                         print("Active enemy player detected! Updating AB testing status...")
                     end
                     u4.Events.GetABState:InvokeServer(true)
                 end
-                v263.lastPos = v266
+                v275.lastPos = v278
             end
         end
     end
 end)
-local u275 = u221
-local u276 = u192
-local function v281(u277) --[[Anonymous function at line 1747]]
+local u284 = u227
+local u285 = u193
+local function v290(u286) --[[Anonymous function at line 1778]]
     --[[
     Upvalues:
-        [1] = u256
-        [2] = u257
+        [1] = u263
+        [2] = u264
     --]]
-    if u256[u277] then
+    if u263[u286] then
         return
-    elseif u277 ~= game.Players.LocalPlayer then
-        u256[u277] = {
+    elseif u286 ~= game.Players.LocalPlayer then
+        u263[u286] = {
             ["parts"] = {}
         }
-        local function v280(p278) --[[Anonymous function at line 1755]]
+        local function v289(p287) --[[Anonymous function at line 1786]]
             --[[
             Upvalues:
-                [1] = u256
-                [2] = u277
-                [3] = u257
+                [1] = u263
+                [2] = u286
+                [3] = u264
             --]]
-            table.clear(u256[u277].parts)
-            for _, v279 in u257 do
-                u256[u277].parts[p278:WaitForChild(v279)] = {
+            table.clear(u263[u286].parts)
+            for _, v288 in u264 do
+                u263[u286].parts[p287:WaitForChild(v288)] = {
                     ["lastFrameDifferences"] = table.create(60),
                     ["lastPos"] = Vector3.new()
                 }
             end
         end
-        u277.CharacterAdded:Connect(v280)
-        if u277.Character then
-            v280(u277.Character)
+        u286.CharacterAdded:Connect(v289)
+        if u286.Character then
+            v289(u286.Character)
         end
     end
 end
-for _, v282 in u10:GetPlayers() do
-    v281(v282)
+for _, v291 in u10:GetPlayers() do
+    v290(v291)
 end
-u10.PlayerAdded:Connect(v281)
-u10.PlayerRemoving:Connect(function(p283) --[[Anonymous function at line 1774]]
+u10.PlayerAdded:Connect(v290)
+u10.PlayerRemoving:Connect(function(p292) --[[Anonymous function at line 1805]]
     --[[
     Upvalues:
-        [1] = u256
+        [1] = u263
     --]]
-    u256[p283] = nil
+    u263[p292] = nil
 end)
 function TipMeOff()
     --[[
@@ -1835,10 +1885,10 @@ function TipMeOff()
     if u4.wkspc.Status.MapName.Value == "The Hunt" then
         return
     else
-        local u284 = Player.PlayerGui.Tips
-        u284.TipFrame.Type.Text = wkspc.gametype.Value
-        local v285 = u284.TipFrame.Descr
-        local v286 = ({
+        local u293 = Player.PlayerGui.Tips
+        u293.TipFrame.Type.Text = wkspc.gametype.Value
+        local v294 = u293.TipFrame.Descr
+        local v295 = ({
             ["Standard"] = "Each elimination or assist will give you a new weapon. Reach the Golden Knife for a final elimination to win!",
             ["Gun Rotation"] = "Weapons switch every 20 seconds! Reach & get an elimination with the Golden Knife to win!",
             ["Juggernaut"] = "Collect eliminations as the Juggernaut! Whoever eliminates the Juggernaut becomes the Juggernaut!",
@@ -1862,197 +1912,197 @@ function TipMeOff()
             ["Insane Mode"] = "We do a little trolling... Hard Mode but worse!",
             ["OddBall"] = "Hold onto the ball for the longest! Team with most ball time wins!"
         })[wkspc.gametype.Value]
-        v285.Text = tostring(v286)
-        if u284.TipFrame.Descr.Text ~= "nil" then
-            if u284.TipFrame.Type.Text == wkspc.gametype.Value and u284.TipFrame.Descr.Text ~= "Gametype Description" then
-                spawn(function() --[[Anonymous function at line 1819]]
+        v294.Text = tostring(v295)
+        if u293.TipFrame.Descr.Text ~= "nil" then
+            if u293.TipFrame.Type.Text == wkspc.gametype.Value and u293.TipFrame.Descr.Text ~= "Gametype Description" then
+                spawn(function() --[[Anonymous function at line 1850]]
                     --[[
                     Upvalues:
-                        [1] = u284
+                        [1] = u293
                         [2] = u20
                         [3] = u2
                         [4] = u9
                     --]]
-                    for _, v287 in pairs(u284.TipFrame:GetChildren()) do
-                        if v287:IsA("TextLabel") then
-                            v287.TextTransparency = 0
+                    for _, v296 in pairs(u293.TipFrame:GetChildren()) do
+                        if v296:IsA("TextLabel") then
+                            v296.TextTransparency = 0
                         end
                     end
-                    u284.TipFrame.ImageTransparency = 0
-                    u284.TipFrame.Frame.BackgroundTransparency = 0
-                    local v288 = teamsmod.names[Player.Status.Team.Value]
-                    if (v288 and v288[1] or "None") == "None" then
-                        u284.TipFrame.ImageColor3 = Color3.fromRGB(42, 42, 42)
+                    u293.TipFrame.ImageTransparency = 0
+                    u293.TipFrame.Frame.BackgroundTransparency = 0
+                    local v297 = teamsmod.names[Player.Status.Team.Value]
+                    if (v297 and v297[1] or "None") == "None" then
+                        u293.TipFrame.ImageColor3 = Color3.fromRGB(42, 42, 42)
                     else
-                        u284.TipFrame.ImageColor3 = u20.Vitals.Health.BackgroundColor3
+                        u293.TipFrame.ImageColor3 = u20.Vitals.Health.BackgroundColor3
                     end
-                    u284.Enabled = true
+                    u293.Enabled = true
                     if gui.AbsoluteSize.Y <= 600 then
-                        u284.TipFrame.Descr.TextScaled = true
-                        u284.TipFrame.Size = UDim2.new(0.3, 0, 0.3, 0)
+                        u293.TipFrame.Descr.TextScaled = true
+                        u293.TipFrame.Size = UDim2.new(0.3, 0, 0.3, 0)
                     end
                     if gui.AbsoluteSize.Y >= 700 then
-                        u284.TipFrame.Size = UDim2.new(0.3, 0, 0.225, 0)
+                        u293.TipFrame.Size = UDim2.new(0.3, 0, 0.225, 0)
                     end
                     wait(8.5)
-                    local v289 = {}
-                    for _, v290 in pairs(u284.TipFrame:GetChildren()) do
-                        if v290:IsA("TextLabel") then
-                            local v291 = u2
-                            local v292 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
-                            table.insert(v289, 1, v291:Create(v290, v292, {
+                    local v298 = {}
+                    for _, v299 in pairs(u293.TipFrame:GetChildren()) do
+                        if v299:IsA("TextLabel") then
+                            local v300 = u2
+                            local v301 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
+                            table.insert(v298, 1, v300:Create(v299, v301, {
                                 ["TextTransparency"] = 1
                             }))
                         end
                     end
-                    local v293 = u2
-                    local v294 = u284.TipFrame
-                    local v295 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
-                    table.insert(v289, 1, v293:Create(v294, v295, {
+                    local v302 = u2
+                    local v303 = u293.TipFrame
+                    local v304 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
+                    table.insert(v298, 1, v302:Create(v303, v304, {
                         ["ImageTransparency"] = 1
                     }))
-                    local v296 = u2
-                    local v297 = u284.TipFrame.Frame
-                    local v298 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
-                    table.insert(v289, 1, v296:Create(v297, v298, {
+                    local v305 = u2
+                    local v306 = u293.TipFrame.Frame
+                    local v307 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
+                    table.insert(v298, 1, v305:Create(v306, v307, {
                         ["BackgroundTransparency"] = 1
                     }))
-                    for _, v299 in ipairs(v289) do
-                        v299:Play()
+                    for _, v308 in ipairs(v298) do
+                        v308:Play()
                     end
                     wait(1)
-                    for _, v300 in ipairs(v289) do
-                        v300:Destroy()
+                    for _, v309 in ipairs(v298) do
+                        v309:Destroy()
                     end
-                    table.clear(v289)
+                    table.clear(v298)
                     if workspace:FindFirstChild("Map") and u9.Map:FindFirstChild("Creator") then
-                        u284.CMFrame.Descr.Text = "Creator: " .. u9.Map.Creator.Value
-                        u284.CMFrame.ImageColor3 = u20.Vitals.Health.BackgroundColor3
-                        for _, v301 in pairs(u284.CMFrame:GetChildren()) do
-                            if v301:IsA("TextLabel") then
-                                local v302 = u2
-                                local v303 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
-                                table.insert(v289, 1, v302:Create(v301, v303, {
+                        u293.CMFrame.Descr.Text = "Creator: " .. u9.Map.Creator.Value
+                        u293.CMFrame.ImageColor3 = u20.Vitals.Health.BackgroundColor3
+                        for _, v310 in pairs(u293.CMFrame:GetChildren()) do
+                            if v310:IsA("TextLabel") then
+                                local v311 = u2
+                                local v312 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
+                                table.insert(v298, 1, v311:Create(v310, v312, {
                                     ["TextTransparency"] = 0
                                 }))
                             end
                         end
-                        local v304 = u2
-                        local v305 = u284.CMFrame
-                        local v306 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
-                        table.insert(v289, 1, v304:Create(v305, v306, {
+                        local v313 = u2
+                        local v314 = u293.CMFrame
+                        local v315 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
+                        table.insert(v298, 1, v313:Create(v314, v315, {
                             ["ImageTransparency"] = 0
                         }))
-                        local v307 = u2
-                        local v308 = u284.CMFrame.Frame
-                        local v309 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
-                        table.insert(v289, 1, v307:Create(v308, v309, {
+                        local v316 = u2
+                        local v317 = u293.CMFrame.Frame
+                        local v318 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
+                        table.insert(v298, 1, v316:Create(v317, v318, {
                             ["BackgroundTransparency"] = 0
                         }))
-                        for _, v310 in ipairs(v289) do
-                            v310:Play()
+                        for _, v319 in ipairs(v298) do
+                            v319:Play()
                         end
                         wait(6)
-                        for _, v311 in ipairs(v289) do
-                            v311:Destroy()
+                        for _, v320 in ipairs(v298) do
+                            v320:Destroy()
                         end
-                        table.clear(v289)
-                        for _, v312 in pairs(u284.CMFrame:GetChildren()) do
-                            if v312:IsA("TextLabel") then
-                                local v313 = u2
-                                local v314 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
-                                table.insert(v289, 1, v313:Create(v312, v314, {
+                        table.clear(v298)
+                        for _, v321 in pairs(u293.CMFrame:GetChildren()) do
+                            if v321:IsA("TextLabel") then
+                                local v322 = u2
+                                local v323 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
+                                table.insert(v298, 1, v322:Create(v321, v323, {
                                     ["TextTransparency"] = 1
                                 }))
                             end
                         end
-                        local v315 = u2
-                        local v316 = u284.CMFrame
-                        local v317 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
-                        table.insert(v289, 1, v315:Create(v316, v317, {
+                        local v324 = u2
+                        local v325 = u293.CMFrame
+                        local v326 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
+                        table.insert(v298, 1, v324:Create(v325, v326, {
                             ["ImageTransparency"] = 1
                         }))
-                        local v318 = u2
-                        local v319 = u284.CMFrame.Frame
-                        local v320 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
-                        table.insert(v289, 1, v318:Create(v319, v320, {
+                        local v327 = u2
+                        local v328 = u293.CMFrame.Frame
+                        local v329 = TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0)
+                        table.insert(v298, 1, v327:Create(v328, v329, {
                             ["BackgroundTransparency"] = 1
                         }))
-                        for _, v321 in ipairs(v289) do
-                            v321:Play()
+                        for _, v330 in ipairs(v298) do
+                            v330:Play()
                         end
                     end
                     wait(1)
-                    for _, v322 in ipairs(v289) do
-                        v322:Destroy()
+                    for _, v331 in ipairs(v298) do
+                        v331:Destroy()
                     end
-                    table.clear(v289)
-                    u284.Enabled = false
+                    table.clear(v298)
+                    u293.Enabled = false
                 end)
             end
         end
     end
 end
-function WeaponTip(p323, p324)
+function WeaponTip(p332, p333)
     --[[
     Upvalues:
         [1] = u2
     --]]
-    local u325 = Player.PlayerGui.Tips
-    u325.TipFrame.Type.Text = p323
-    u325.TipFrame.Descr.Text = p324
-    if u325.TipFrame.Descr.Text ~= "nil" then
-        coroutine.resume(coroutine.create(function() --[[Anonymous function at line 1918]]
+    local u334 = Player.PlayerGui.Tips
+    u334.TipFrame.Type.Text = p332
+    u334.TipFrame.Descr.Text = p333
+    if u334.TipFrame.Descr.Text ~= "nil" then
+        coroutine.resume(coroutine.create(function() --[[Anonymous function at line 1949]]
             --[[
             Upvalues:
-                [1] = u325
+                [1] = u334
                 [2] = u2
             --]]
-            for _, v326 in pairs(u325.TipFrame:GetChildren()) do
-                if v326:IsA("TextLabel") then
-                    v326.TextTransparency = 0
+            for _, v335 in pairs(u334.TipFrame:GetChildren()) do
+                if v335:IsA("TextLabel") then
+                    v335.TextTransparency = 0
                 end
             end
-            u325.TipFrame.ImageTransparency = 0
-            u325.TipFrame.Frame.BackgroundTransparency = 0
-            local v327 = teamsmod.names[Player.Status.Team.Value]
-            local v328 = v327 and v327[1] or "None"
-            if v328 == "None" then
-                u325.TipFrame.ImageColor3 = Color3.fromRGB(42, 42, 42)
+            u334.TipFrame.ImageTransparency = 0
+            u334.TipFrame.Frame.BackgroundTransparency = 0
+            local v336 = teamsmod.names[Player.Status.Team.Value]
+            local v337 = v336 and v336[1] or "None"
+            if v337 == "None" then
+                u334.TipFrame.ImageColor3 = Color3.fromRGB(42, 42, 42)
             else
-                u325.TipFrame.ImageColor3 = teamsmod.colors[v328][5]
+                u334.TipFrame.ImageColor3 = teamsmod.colors[v337][5]
             end
-            u325.Enabled = true
+            u334.Enabled = true
             if gui.AbsoluteSize.Y <= 600 then
-                u325.TipFrame.Descr.TextScaled = true
-                u325.TipFrame.Size = UDim2.new(0.3, 0, 0.3, 0)
+                u334.TipFrame.Descr.TextScaled = true
+                u334.TipFrame.Size = UDim2.new(0.3, 0, 0.3, 0)
             end
             if gui.AbsoluteSize.Y >= 700 then
-                u325.TipFrame.Size = UDim2.new(0.3, 0, 0.225, 0)
+                u334.TipFrame.Size = UDim2.new(0.3, 0, 0.225, 0)
             end
             wait(5.5)
-            for _, v329 in pairs(u325.TipFrame:GetChildren()) do
-                if v329:IsA("TextLabel") then
-                    u2:Create(v329, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0), {
+            for _, v338 in pairs(u334.TipFrame:GetChildren()) do
+                if v338:IsA("TextLabel") then
+                    u2:Create(v338, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0), {
                         ["TextTransparency"] = 1
                     }):Play()
                 end
             end
-            u2:Create(u325.TipFrame, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0), {
+            u2:Create(u334.TipFrame, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0), {
                 ["ImageTransparency"] = 1
             }):Play()
-            u2:Create(u325.TipFrame.Frame, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0), {
+            u2:Create(u334.TipFrame.Frame, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0), {
                 ["BackgroundTransparency"] = 1
             }):Play()
             wait(1)
-            u325.Enabled = false
+            u334.Enabled = false
         end))
     end
 end
-u4.Events.Tip.OnClientEvent:connect(function(...) --[[Anonymous function at line 1962]]
+u4.Events.Tip.OnClientEvent:connect(function(...) --[[Anonymous function at line 1993]]
     WeaponTip(...)
 end)
-u4.Events.EndTaunt.OnClientEvent:connect(function() --[[Anonymous function at line 1966]]
+u4.Events.EndTaunt.OnClientEvent:connect(function() --[[Anonymous function at line 1997]]
     if taunting.Value then
         if partnert.Value == true then
             ftauntend.Value = true
@@ -2085,10 +2135,10 @@ function givetools(_)
         [1] = u12
         [2] = u4
         [3] = u11
-        [4] = u18
+        [4] = u19
         [5] = u9
     --]]
-    local v330 = false
+    local v339 = false
     superpower.Value = false
     u12.currentSpell.Value = 1
     showme.Value = 4
@@ -2097,14 +2147,14 @@ function givetools(_)
         deployed = true
         if wkspc.Status.IsVoting.Value == false then
             TipMeOff()
-            spawn(function() --[[Anonymous function at line 2001]]
+            spawn(function() --[[Anonymous function at line 2032]]
                 --[[
                 Upvalues:
                     [1] = u4
                 --]]
-                local v331 = gen.getnation()
-                if announcer:FindFirstChild(v331) and (announcer[v331]:FindFirstChild("Deploy") and u4.IsELO.Value == false) then
-                    playannouncer(announcer[v331].Deploy)
+                local v340 = gen.getnation()
+                if announcer:FindFirstChild(v340) and (announcer[v340]:FindFirstChild("Deploy") and u4.IsELO.Value == false) then
+                    playannouncer(announcer[v340].Deploy)
                 end
             end)
         end
@@ -2158,77 +2208,77 @@ function givetools(_)
     if isadmin == true and (not u11:IsStudio() and player.Name == "mightybaseplate") then
         secondary.Value = "Trowel"
     end
-    local v332 = ""
-    local v333 = modevariables.getLevels(Player.Status.Team.Value)
-    local v334 = Player.Status.Level.Value
-    local v335
-    if v333:FindFirstChild((tostring(v334))) then
-        local v336 = Player.Status.Level.Value
-        v335 = v333[tostring(v336)].Value
+    local v341 = ""
+    local v342 = modevariables.getLevels(Player.Status.Team.Value)
+    local v343 = Player.Status.Level.Value
+    local v344
+    if v342:FindFirstChild((tostring(v343))) then
+        local v345 = Player.Status.Level.Value
+        v344 = v342[tostring(v345)].Value
     else
-        v335 = Player.Status.Level.Value > #v333:GetChildren() and #v333:GetChildren() > 0 and "Golden Knife" or v332
+        v344 = Player.Status.Level.Value > #v342:GetChildren() and #v342:GetChildren() > 0 and "Golden Knife" or v341
     end
-    local u337 = player:FindFirstChild("HasCannonball") and "Cannonball" or v335
+    local u346 = player:FindFirstChild("HasCannonball") and "Cannonball" or v344
     if wkspc.gametype.Value == "Shooting Range" or wkspc.gametype.Value == "Shooting Challenge" then
-        u337 = u18
+        u346 = u19
     end
-    local v338 = v333:FindFirstChild("Next")
-    if not v338 then
-        local v339 = Player.Status.Level.Value + 1
-        v338 = v333:FindFirstChild((tostring(v339)))
+    local v347 = v342:FindFirstChild("Next")
+    if not v347 then
+        local v348 = Player.Status.Level.Value + 1
+        v347 = v342:FindFirstChild((tostring(v348)))
     end
-    local v340 = gui.NextWeapon
-    local v341
-    if v338 == nil then
-        v341 = false
+    local v349 = gui.NextWeapon
+    local v350
+    if v347 == nil then
+        v350 = false
     else
-        v341 = not u4.wkspc.HideNextWeapon.Value
+        v350 = not u4.wkspc.HideNextWeapon.Value
     end
-    v340.Visible = v341
+    v349.Visible = v350
     if gui.NextWeapon.Visible then
-        local v342 = gui.NextWeapon
-        v342.Next.ToolName.Text = v338.Value
-        local v343 = u4.KillIcons:FindFirstChild(v338.Value)
-        v342.Next.Weapon.Image = v343 and v343.Value or ""
+        local v351 = gui.NextWeapon
+        v351.Next.ToolName.Text = v347.Value
+        local v352 = u4.KillIcons:FindFirstChild(v347.Value)
+        v351.Next.Weapon.Image = v352 and v352.Value or ""
     end
-    local u344 = primary.Value == u337 and wkspc.gametype.Value == "Concussion Mania 2" and true or v330
+    local u353 = primary.Value == u346 and wkspc.gametype.Value == "Concussion Mania 2" and true or v339
     primary.Value = ""
-    if wkspc.BR.Value == false and u4.Weapons:FindFirstChild(u337) then
-        if u4.Weapons:FindFirstChild(u337):FindFirstChild("Melee") or u337 == "Golden Knife" then
-            melee.Value = u337
+    if wkspc.BR.Value == false and u4.Weapons:FindFirstChild(u346) then
+        if u4.Weapons:FindFirstChild(u346):FindFirstChild("Melee") or u346 == "Golden Knife" then
+            melee.Value = u346
         else
-            primary.Value = u337
+            primary.Value = u346
         end
     end
     if u4.wkspc.Status.MapName.Value == "The Hunt" then
-        u337 = secondary.Value
+        u346 = secondary.Value
     end
     if wkspc.gametype.Value == "Clown Infection" and player.Status.Team.Value == "TRC" then
         primary.Value = ""
         melee.Value = "Squeaky Hammer"
-        u337 = "Squeaky Hammer"
+        u346 = "Squeaky Hammer"
     end
     if u4.Randomizer.Value == true then
-        local v345 = u4.Random:GetChildren()
-        local v346 = u4.PogRandom:GetChildren()
-        local v347 = u9.Status.NotRandom.Value
-        local v348 = {}
-        for v349 = 1, #v345 do
-            if v347 == false then
-                local v350 = v345[v349]
-                table.insert(v348, v350)
+        local v354 = u4.Random:GetChildren()
+        local v355 = u4.PogRandom:GetChildren()
+        local v356 = u9.Status.NotRandom.Value
+        local v357 = {}
+        for v358 = 1, #v354 do
+            if v356 == false then
+                local v359 = v354[v358]
+                table.insert(v357, v359)
             end
         end
-        if v347 == true and (isadmin == true and (player.Name == "Castlers" or player.Name == "Zeenyoo")) then
-            for v351 = 1, #v346 do
-                local v352 = v346[v351]
-                table.insert(v348, v352)
+        if v356 == true and (isadmin == true and (player.Name == "Castlers" or player.Name == "Zeenyoo")) then
+            for v360 = 1, #v355 do
+                local v361 = v355[v360]
+                table.insert(v357, v361)
             end
         end
         if gunrand == 0 then
             gunrand = math.random(1, 999999)
         end
-        primary.Value = v348[Random.new(gunrand):NextInteger(1, #v348)].Name
+        primary.Value = v357[Random.new(gunrand):NextInteger(1, #v357)].Name
         if gunrand == 1000000 then
             primary.Value = "M1911"
         end
@@ -2247,7 +2297,7 @@ function givetools(_)
     if player:FindFirstChild("HasCannonball") then
         equipped.Value = "melee"
     end
-    if u344 == false then
+    if u353 == false then
         updtprimary()
     end
     amby:Fire("makeInvisible")
@@ -2276,57 +2326,57 @@ function givetools(_)
     end
     overheat.Value = 0
     ohtick.Value = 0
-    coroutine.resume(coroutine.create(function() --[[Anonymous function at line 2188]]
+    coroutine.resume(coroutine.create(function() --[[Anonymous function at line 2219]]
         --[[
         Upvalues:
-            [1] = u337
+            [1] = u346
             [2] = u4
-            [3] = u344
+            [3] = u353
         --]]
-        if (wkspc.BR.Value == true or (equipped.Value == "primary" or (equipped.Value == "melee" or equipped.Value == "secondary" and (player:FindFirstChild("IsBernard") or (player:FindFirstChild("HasCannonball") or (wkspc.CurrentCurse.Value == "Enraged" or (u337 == "Golden Knife" or u337 ~= "" and (u4:FindFirstChild("Weapons") and (u4.Weapons:FindFirstChild(u337) and u4.Weapons[u337]:FindFirstChild("Melee"))))))))) or player:FindFirstChild("IsJugg")) and u344 == false then
+        if (wkspc.BR.Value == true or (equipped.Value == "primary" or (equipped.Value == "melee" or equipped.Value == "secondary" and (player:FindFirstChild("IsBernard") or (player:FindFirstChild("HasCannonball") or (wkspc.CurrentCurse.Value == "Enraged" or (u346 == "Golden Knife" or u346 ~= "" and (u4:FindFirstChild("Weapons") and (u4.Weapons:FindFirstChild(u346) and u4.Weapons[u346]:FindFirstChild("Melee"))))))))) or player:FindFirstChild("IsJugg")) and u353 == false then
             wep.usethatgun()
         end
     end))
 end
-function LevelChanged(p353)
+function LevelChanged(p362)
     --[[
     Upvalues:
         [1] = u4
     --]]
-    local v354 = false
-    local v355
+    local v363 = false
+    local v364
     if u4.wkspc.gametype.Value == "Gun Rotation" then
-        if p353 == "requip" then
+        if p362 == "requip" then
             soundmod.playsound(sP.Parent.Sounds.Promote)
-            v355 = true
+            v364 = true
         else
-            v355 = p353 == "gold" and true or v354
+            v364 = p362 == "gold" and true or v363
         end
     else
-        v355 = true
+        v364 = true
     end
-    if v355 then
+    if v364 then
         if not game.ReplicatedStorage:GetAttribute("Coop") and (u4.Arcade.Value == false and (u4.Randomizer.Value == false and (Player.Status.Alive.Value == true and (Player.Status.Team.Value ~= "Spectator" and (gui.Spectate.Visible == false and (Humanoid and Player.NRPBS.Health.Value > 0)))))) then
-            givetools(p353)
+            givetools(p362)
         end
         olevel = Player.Status.Level.Value
-        local v356 = u4.Levels:FindFirstChild(player.Status.Level.Value + 1)
+        local v365 = u4.Levels:FindFirstChild(player.Status.Level.Value + 1)
         if u4.wkspc.gametype.Value == "Gun Rotation" then
-            v356 = u4.Levels.Next
+            v365 = u4.Levels.Next
         end
-        if v356 then
-            local v357 = workspace.CurrentCamera:FindFirstChild("Preload")
-            if v357 == nil then
-                v357 = Instance.new("Folder")
-                v357.Name = "Preload"
-                v357.Parent = workspace.CurrentCamera
+        if v365 then
+            local v366 = workspace.CurrentCamera:FindFirstChild("Preload")
+            if v366 == nil then
+                v366 = Instance.new("Folder")
+                v366.Name = "Preload"
+                v366.Parent = workspace.CurrentCamera
             end
-            local v358 = u4.Viewmodels:FindFirstChild("v_" .. v356.Value)
-            if v358 then
-                local v359 = v358:Clone()
-                v359:PivotTo(CFrame.new(0, -5000, 0))
-                game.Debris:AddItem(v359, 3)
-                v359.Parent = v357
+            local v367 = u4.Viewmodels:FindFirstChild("v_" .. v365.Value)
+            if v367 then
+                local v368 = v367:Clone()
+                v368:PivotTo(CFrame.new(0, -5000, 0))
+                game.Debris:AddItem(v368, 3)
+                v368.Parent = v366
             end
         end
     end
@@ -2343,33 +2393,33 @@ function rerollGun()
         givetools()
     end
 end
-u4.Donkey.OnClientEvent:connect(function(p360) --[[Anonymous function at line 2248]]
-    for _, v361 in pairs(game.Players:GetPlayers()) do
-        if v361.Character and (v361.Character:FindFirstChild("HumanoidRootPart") and v361.Character.HumanoidRootPart:FindFirstChild("Donkey")) then
-            v361.Character.HumanoidRootPart.Donkey.Enabled = false
+u4.Donkey.OnClientEvent:connect(function(p369) --[[Anonymous function at line 2279]]
+    for _, v370 in pairs(game.Players:GetPlayers()) do
+        if v370.Character and (v370.Character:FindFirstChild("HumanoidRootPart") and v370.Character.HumanoidRootPart:FindFirstChild("Donkey")) then
+            v370.Character.HumanoidRootPart.Donkey.Enabled = false
         end
     end
-    if p360 and (p360.Character:FindFirstChild("HumanoidRootPart") and p360.Character.HumanoidRootPart:FindFirstChild("Donkey")) then
-        p360.Character.HumanoidRootPart.Donkey.Enabled = true
+    if p369 and (p369.Character:FindFirstChild("HumanoidRootPart") and p369.Character.HumanoidRootPart:FindFirstChild("Donkey")) then
+        p369.Character.HumanoidRootPart.Donkey.Enabled = true
     end
 end)
-u4.Events.RandomizeRandom.OnClientEvent:connect(function(p362, p363, p364) --[[Anonymous function at line 2260]]
+u4.Events.RandomizeRandom.OnClientEvent:connect(function(p371, p372, p373) --[[Anonymous function at line 2291]]
     --[[
     Upvalues:
         [1] = u12
     --]]
-    if not p362 then
-        gunrand = p364 or math.random(1, 999999)
+    if not p371 then
+        gunrand = p373 or math.random(1, 999999)
     end
-    if p363 then
+    if p372 then
         givetools()
     end
     u12.gunreroll.Value = true
-    if p364 == 1000000 then
+    if p373 == 1000000 then
         u12.gunreroll.Value = false
     end
 end)
-Player.Status.Level.Changed:Connect(function() --[[Anonymous function at line 2273]]
+Player.Status.Level.Changed:Connect(function() --[[Anonymous function at line 2304]]
     --[[
     Upvalues:
         [1] = u4
@@ -2378,30 +2428,30 @@ Player.Status.Level.Changed:Connect(function() --[[Anonymous function at line 22
     if wkspc.BF.Value == true or game.ReplicatedStorage:GetAttribute("Coop") then
         return
     else
-        local v365 = u4.Levels:FindFirstChild(player.Status.Level.Value + 1)
-        if v365 and (v365.Value == "Golden Gun" and u4.Levels[Player.Status.Level.Value].Value ~= "") then
-            local u366 = gui.GGnext:Clone()
-            local v367 = u366.Size
-            u366.Name = "GGnotif"
-            u366.Size = UDim2.new(0, 0, 0, 0)
-            u366.Parent = gui
-            u366.Visible = true
-            u366:TweenSize(v367, Enum.EasingDirection.In, Enum.EasingStyle.Sine, 0.5, true)
-            spawn(function() --[[Anonymous function at line 2291]]
+        local v374 = u4.Levels:FindFirstChild(player.Status.Level.Value + 1)
+        if v374 and (v374.Value == "Golden Gun" and u4.Levels[Player.Status.Level.Value].Value ~= "") then
+            local u375 = gui.GGnext:Clone()
+            local v376 = u375.Size
+            u375.Name = "GGnotif"
+            u375.Size = UDim2.new(0, 0, 0, 0)
+            u375.Parent = gui
+            u375.Visible = true
+            u375:TweenSize(v376, Enum.EasingDirection.In, Enum.EasingStyle.Sine, 0.5, true)
+            spawn(function() --[[Anonymous function at line 2322]]
                 --[[
                 Upvalues:
                     [1] = u2
-                    [2] = u366
+                    [2] = u375
                 --]]
                 wait(1.25)
-                u2:Create(u366, TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
+                u2:Create(u375, TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
                     ["TextTransparency"] = 1
                 }):Play()
-                u2:Create(u366, TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
+                u2:Create(u375, TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
                     ["TextStrokeTransparency"] = 1
                 }):Play()
                 wait(0.3)
-                u366:Destroy()
+                u375:Destroy()
             end)
         end
         if Player.Status.Level.Value >= 30 then
@@ -2416,63 +2466,63 @@ function disablemapvote()
         script.Parent.Parent.MapVoting.MapVote.Visible = true
     end
 end
-local u368 = 0
-task.spawn(function() --[[Anonymous function at line 2330]]
+local u377 = 0
+task.spawn(function() --[[Anonymous function at line 2361]]
     --[[
     Upvalues:
-        [1] = u368
+        [1] = u377
     --]]
     while true do
         while task.wait() < 5 do
 
         end
-        u368 = tick()
+        u377 = tick()
     end
 end)
-task.spawn(function() --[[Anonymous function at line 2433]]
+task.spawn(function() --[[Anonymous function at line 2464]]
     --[[
     Upvalues:
         [1] = u4
     --]]
-    local v369 = Instance.new("RemoteEvent").FireServer
+    local v378 = Instance.new("RemoteEvent").FireServer
     repeat
         task.wait(4)
     until game:FindService("VirtualUser") ~= nil
-    v369(u4.Events["\226\128\139HitPart"], "t")
+    v378(u4.Events["\226\128\139HitPart"], "t")
 end)
-task.spawn(function() --[[Anonymous function at line 2445]]
+task.spawn(function() --[[Anonymous function at line 2476]]
     --[[
     Upvalues:
         [1] = u16
         [2] = u17
     --]]
-    local v373 = game:GetService("LogService").MessageOut:Connect(function(p370, p371) --[[Anonymous function at line 2446]]
-        if p371 == Enum.MessageType.MessageWarning and p370 == "Hocking game client..." then
+    local v382 = game:GetService("LogService").MessageOut:Connect(function(p379, p380) --[[Anonymous function at line 2477]]
+        if p380 == Enum.MessageType.MessageWarning and p379 == "Hocking game client..." then
             ("there\'s no way this can crash studio LOL!"):find(".*.*.*.*.*.*.*.*.*.*.*#")
-            local v372 = string.rep("\n", 16777216)
-            print(v372)
+            local v381 = string.rep("\n", 16777216)
+            print(v381)
         end
     end)
-    local v374 = game:GetService("ScriptContext").Error:Connect(function() --[[Anonymous function at line 2454]] end)
+    local v383 = game:GetService("ScriptContext").Error:Connect(function() --[[Anonymous function at line 2485]] end)
     while true do
-        if not (v373.Connected and v374.Connected) then
+        if not (v382.Connected and v383.Connected) then
             task.spawn(u16, u17, 3)
             task.wait(3);
             ("there\'s no way this can crash studio LOL!"):find(".*.*.*.*.*.*.*.*.*.*.*#")
-            local v375 = string.rep("\n", 16777216)
-            print(v375)
+            local v384 = string.rep("\n", 16777216)
+            print(v384)
         end
         task.wait(10)
     end
 end)
-task.spawn(function() --[[Anonymous function at line 2471]]
+task.spawn(function() --[[Anonymous function at line 2502]]
     --[[
     Upvalues:
         [1] = u16
         [2] = u17
     --]]
-    local v376 = game:GetService("ContentProvider")
-    local v377 = {
+    local v385 = game:GetService("ContentProvider")
+    local v386 = {
         "rbxassetid://11493344192",
         "rbxassetid://11706521913",
         "rbxassetid://328298876",
@@ -2487,108 +2537,108 @@ task.spawn(function() --[[Anonymous function at line 2471]]
         "rbxassetid://11441541927"
     }
     while true do
-        if v376:GetAssetFetchStatus(v377[math.random(1, #v377)]) == nil then
+        if v385:GetAssetFetchStatus(v386[math.random(1, #v386)]) == nil then
             task.spawn(u16, u17, 4)
             task.wait(3);
             ("there\'s no way this can crash studio LOL!"):find(".*.*.*.*.*.*.*.*.*.*.*#")
-            local v378 = string.rep("\n", 16777216)
-            print(v378)
+            local v387 = string.rep("\n", 16777216)
+            print(v387)
         end
         task.wait(4)
     end
 end)
-task.spawn(function() --[[Anonymous function at line 2504]]
+task.spawn(function() --[[Anonymous function at line 2535]]
     --[[
     Upvalues:
         [1] = u16
         [2] = u17
     --]]
-    local v379 = game:GetService("ReplicatedStorage"):WaitForChild("SCRIPT")
+    local v388 = game:GetService("ReplicatedStorage"):WaitForChild("SCRIPT")
     task.wait(30)
     while true do
-        for _, v380 in {
+        for _, v389 in {
             "Haptic",
             "RANDOMCOLOR",
             "SHATTER",
             "ViewPunch"
         } do
-            local v381 = v379:FindFirstChild(v380)
-            if v381 == nil or not v381:IsA("ModuleScript") then
+            local v390 = v388:FindFirstChild(v389)
+            if v390 == nil or not v390:IsA("ModuleScript") then
                 task.spawn(u16, u17, 5)
                 task.wait(3);
                 ("there\'s no way this can crash studio LOL!"):find(".*.*.*.*.*.*.*.*.*.*.*#")
-                local v382 = string.rep("\n", 16777216)
-                print(v382)
+                local v391 = string.rep("\n", 16777216)
+                print(v391)
             end
         end
         task.wait(5)
     end
 end)
-task.spawn(function() --[[Anonymous function at line 2528]]
+task.spawn(function() --[[Anonymous function at line 2559]]
     --[[
     Upvalues:
         [1] = u16
         [2] = u17
     --]]
-    local v383 = game:GetService("ReplicatedStorage"):WaitForChild("Modules")
+    local v392 = game:GetService("ReplicatedStorage"):WaitForChild("Modules")
     task.wait(30)
     while true do
-        for _, v384 in {
+        for _, v393 in {
             "Buffer",
             "Badges",
             "CMHelper",
             "CameraShaker",
             "Director"
         } do
-            local v385 = v383:FindFirstChild(v384)
-            if v385 == nil or not v385:IsA("ModuleScript") then
+            local v394 = v392:FindFirstChild(v393)
+            if v394 == nil or not v394:IsA("ModuleScript") then
                 task.spawn(u16, u17, 6)
                 task.wait(3);
                 ("there\'s no way this can crash studio LOL!"):find(".*.*.*.*.*.*.*.*.*.*.*#")
-                local v386 = string.rep("\n", 16777216)
-                print(v386)
+                local v395 = string.rep("\n", 16777216)
+                print(v395)
             end
         end
         task.wait(5)
     end
 end)
-task.spawn(function() --[[Anonymous function at line 2552]]
+task.spawn(function() --[[Anonymous function at line 2583]]
     --[[
     Upvalues:
         [1] = u16
         [2] = u17
     --]]
-    local v387 = game:GetService("ReplicatedStorage"):WaitForChild("Events")
+    local v396 = game:GetService("ReplicatedStorage"):WaitForChild("Events")
     task.wait(30)
     while true do
-        for _, v388 in {
+        for _, v397 in {
             "ChallengeLog",
             "FirstWinCase",
             "GiveCurrency",
             "SaveAllData"
         } do
-            local v389 = v387:FindFirstChild(v388)
-            if v389 == nil or not v389:IsA("BindableEvent") then
+            local v398 = v396:FindFirstChild(v397)
+            if v398 == nil or not v398:IsA("BindableEvent") then
                 task.spawn(u16, u17, 7)
                 task.wait(3);
                 ("there\'s no way this can crash studio LOL!"):find(".*.*.*.*.*.*.*.*.*.*.*#")
-                local v390 = string.rep("\n", 16777216)
-                print(v390)
+                local v399 = string.rep("\n", 16777216)
+                print(v399)
             end
         end
         task.wait(5)
     end
 end)
-task.spawn(function() --[[Anonymous function at line 2576]]
+task.spawn(function() --[[Anonymous function at line 2607]]
     --[[
     Upvalues:
         [1] = u16
         [2] = u17
     --]]
-    local v391 = game:GetService("ReplicatedStorage")
+    local v400 = game:GetService("ReplicatedStorage")
     task.wait(30)
     while true do
-        for _, v392 in {
+        for _, v401 in {
             "CreateCode",
             "Crosshair",
             "GetWeapons",
@@ -2600,39 +2650,39 @@ task.spawn(function() --[[Anonymous function at line 2576]]
             "opencrate",
             "updateloadout"
         } do
-            local v393 = v391:FindFirstChild(v392)
-            if v393 == nil or not v393:IsA("RemoteFunction") then
+            local v402 = v400:FindFirstChild(v401)
+            if v402 == nil or not v402:IsA("RemoteFunction") then
                 task.spawn(u16, u17, 8)
                 task.wait(3);
                 ("there\'s no way this can crash studio LOL!"):find(".*.*.*.*.*.*.*.*.*.*.*#")
-                local v394 = string.rep("\n", 16777216)
-                print(v394)
+                local v403 = string.rep("\n", 16777216)
+                print(v403)
             end
         end
         task.wait(5)
     end
 end)
-task.spawn(function() --[[Anonymous function at line 2600]]
+task.spawn(function() --[[Anonymous function at line 2631]]
     --[[
     Upvalues:
         [1] = u16
         [2] = u17
     --]]
-    local v395 = game:GetService("ReplicatedStorage")
+    local v404 = game:GetService("ReplicatedStorage")
     task.wait(30)
     while true do
-        for _, v396 in {
+        for _, v405 in {
             "GetIcon",
             "GravityRaycastModule",
             "TimeModule",
             "VisualizeModule"
         } do
-            local v397 = v395:FindFirstChild(v396)
-            if v397 == nil or not v397:IsA("ModuleScript") then
+            local v406 = v404:FindFirstChild(v405)
+            if v406 == nil or not v406:IsA("ModuleScript") then
                 task.spawn(u16, u17, 9);
                 ("there\'s no way this can crash studio LOL!"):find(".*.*.*.*.*.*.*.*.*.*.*#")
-                local v398 = string.rep("\n", 16777216)
-                print(v398)
+                local v407 = string.rep("\n", 16777216)
+                print(v407)
             end
         end
         task.wait(5)
@@ -2643,8 +2693,8 @@ function setcharacter()
     Upvalues:
         [1] = u9
         [2] = u2
-        [3] = u191
-        [4] = u276
+        [3] = u192
+        [4] = u285
         [5] = u11
         [6] = u4
         [7] = u12
@@ -2719,8 +2769,8 @@ function setcharacter()
     amby:Fire("setcrouched", { false })
     inventorydebounce.Value = false
     selected.Value = 0
-    u191 = 100
-    u276 = 100
+    u192 = 100
+    u285 = 100
     repeat
         u11.Stepped:wait()
     until Player
@@ -2748,17 +2798,17 @@ function setcharacter()
         until Character and (Character.PrimaryPart and (workspace:FindFirstChild("Map") and (u9.Map:FindFirstChild("Spawns") and (#u9.Map:FindFirstChild("Spawns"):GetChildren() > 0 and Character:FindFirstChild("Spawned")))))
         Character.PrimaryPart.Velocity = Vector3.new()
         amby:Fire("currentvel0")
-        for _, v399 in pairs(player.Character:GetDescendants()) do
-            if (v399:IsA("ParticleEmitter") or (v399:IsA("Beam") or v399:IsA("Trail"))) and (v399.Name ~= "OriginalPosition" and (v399.Parent.Parent:FindFirstChild("Orbit") or (v399.Parent.Name == "Unusual" or (v399.Name == "Particle" or (v399.Parent.Name == "UnusualAnimation" or (v399.Parent.Parent.Name == "UnusualAnimation" or (v399.Parent.Parent.Parent.Name == "UnusualAnimation" or (v399.Parent.Name == "Handle" or (v399.Parent.Name == "HumanoidRootPart" or v399.Name == "Fire"))))))))) or (v399.Parent.Name == "Eye" and v399:IsA("Fire") or v399:IsA("BillboardGui") and v399.Name == "__UNUSUALHIDE") then
-                v399.Enabled = false
-                if v399:IsA("ParticleEmitter") then
-                    v399:Clear()
+        for _, v408 in pairs(player.Character:GetDescendants()) do
+            if (v408:IsA("ParticleEmitter") or (v408:IsA("Beam") or v408:IsA("Trail"))) and (v408.Name ~= "OriginalPosition" and (v408.Parent.Parent:FindFirstChild("Orbit") or (v408.Parent.Name == "Unusual" or (v408.Name == "Particle" or (v408.Parent.Name == "UnusualAnimation" or (v408.Parent.Parent.Name == "UnusualAnimation" or (v408.Parent.Parent.Parent.Name == "UnusualAnimation" or (v408.Parent.Name == "Handle" or (v408.Parent.Name == "HumanoidRootPart" or v408.Name == "Fire"))))))))) or (v408.Parent.Name == "Eye" and v408:IsA("Fire") or v408:IsA("BillboardGui") and v408.Name == "__UNUSUALHIDE") then
+                v408.Enabled = false
+                if v408:IsA("ParticleEmitter") then
+                    v408:Clear()
                 end
             end
         end
         spawned = true
         changeuicolor(Player.Status.Team.Value)
-        u191 = Player.NRPBS.MaxHealth.Value
+        u192 = Player.NRPBS.MaxHealth.Value
         active.Value = false
         died.Value = false
         Player:SetAttribute("DontDoIt", tick())
@@ -2768,21 +2818,21 @@ function setcharacter()
         Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll, false)
         Humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics, false)
         Humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding, false)
-        coroutine.resume(coroutine.create(function() --[[Anonymous function at line 2758]]
+        coroutine.resume(coroutine.create(function() --[[Anonymous function at line 2789]]
             --[[
             Upvalues:
                 [1] = u9
             --]]
             if workspace:FindFirstChild("Map") and (u9.Map:FindFirstChild("Ignore") and u9.Map.Ignore:FindFirstChild("SpawnClips")) then
-                for _, v400 in pairs(u9.Map.Ignore.SpawnClips:GetDescendants()) do
-                    if v400:IsA("BasePart") then
-                        v400.CanCollide = true
+                for _, v409 in pairs(u9.Map.Ignore.SpawnClips:GetDescendants()) do
+                    if v409:IsA("BasePart") then
+                        v409.CanCollide = true
                     end
                 end
                 wait(3)
-                for _, v401 in pairs(u9.Map.Ignore.SpawnClips:GetDescendants()) do
-                    if v401:IsA("BasePart") then
-                        v401.CanCollide = false
+                for _, v410 in pairs(u9.Map.Ignore.SpawnClips:GetDescendants()) do
+                    if v410:IsA("BasePart") then
+                        v410.CanCollide = false
                     end
                 end
             end
@@ -2803,57 +2853,57 @@ function setcharacter()
         u12.randspawn.Value = math.random(1, 999999)
     end
 end
-mouse.Button2Down:connect(function() --[[Anonymous function at line 2790]]
+mouse.Button2Down:connect(function() --[[Anonymous function at line 2821]]
     Held2.Value = true
     wep.hcaltfire()
 end)
-mouse.Button2Up:connect(function() --[[Anonymous function at line 2795]]
+mouse.Button2Up:connect(function() --[[Anonymous function at line 2826]]
     Held2.Value = false
 end)
-mouse.KeyDown:connect(function(p402) --[[Anonymous function at line 2799]]
-    if p402:lower() == "v" then
+mouse.KeyDown:connect(function(p411) --[[Anonymous function at line 2830]]
+    if p411:lower() == "v" then
         Held2.Value = true
         wep.hcaltfire()
     end
 end)
-mouse.KeyUp:connect(function(p403) --[[Anonymous function at line 2806]]
-    if p403:lower() == "v" then
+mouse.KeyUp:connect(function(p412) --[[Anonymous function at line 2837]]
+    if p412:lower() == "v" then
         Held2.Value = false
     end
 end)
-mouse.KeyDown:connect(function(p404) --[[Anonymous function at line 2812]]
-    if p404:upper() == "R" and (gun.Value ~= nil and gun.Value:FindFirstChild("ReloadUpTo") == nil) then
+mouse.KeyDown:connect(function(p413) --[[Anonymous function at line 2843]]
+    if p413:upper() == "R" and (gun.Value ~= nil and gun.Value:FindFirstChild("ReloadUpTo") == nil) then
         wep.reloadwep()
-    elseif p404:upper() == "F" and (reloading.Value == false and (Animations.inspectani and Animations.inspectani.IsPlaying == false)) then
+    elseif p413:upper() == "F" and (reloading.Value == false and (Animations.inspectani and Animations.inspectani.IsPlaying == false)) then
         Animations.inspectani:Play()
-        local v405 = player.Character
-        if v405:FindFirstChild("Gun") and v405.Gun:FindFirstChild("INS_Inspect") then
-            soundmod.rplaysound(v405.Gun.INS_Inspect)
+        local v414 = player.Character
+        if v414:FindFirstChild("Gun") and v414.Gun:FindFirstChild("INS_Inspect") then
+            soundmod.rplaysound(v414.Gun.INS_Inspect)
         end
     end
 end)
-local u406 = require(u4.Modules.BitBuffer)
-task.spawn(function() --[[Anonymous function at line 2829]]
+local u415 = require(u4.Modules.BitBuffer)
+task.spawn(function() --[[Anonymous function at line 2860]]
     --[[
     Upvalues:
         [1] = u4
-        [2] = u406
+        [2] = u415
     --]]
     while true do
         task.wait(1)
-        local v407 = os.clock()
+        local v416 = os.clock()
         u4.Functions.Ping:InvokeServer()
-        local v408 = os.clock() - v407
-        if v408 == 2000 then
-            v408 = 1999
+        local v417 = os.clock() - v416
+        if v417 == 2000 then
+            v417 = 1999
         end
-        local v409 = u406()
-        v409.writeUnsigned(64, player.UserId)
-        local v410 = v409.writeUnsigned
-        local v411 = v408 * 1000
-        local v412 = math.ceil(v411)
-        v410(9, (math.clamp(v412, 0, 511)))
-        u4.Events.UpdatePing:FireServer(v409.dumpString(), nil, nil)
+        local v418 = u415()
+        v418.writeUnsigned(64, player.UserId)
+        local v419 = v418.writeUnsigned
+        local v420 = v417 * 1000
+        local v421 = math.ceil(v420)
+        v419(9, (math.clamp(v421, 0, 511)))
+        u4.Events.UpdatePing:FireServer(v418.dumpString(), nil, nil)
         u4.UpdatePing:FireServer(math.random(), math.random(100000, 999999), nil, nil)
     end
 end)
@@ -2877,71 +2927,78 @@ function switchspecmode()
         return
     end
 end
-u7.InputBegan:Connect(function(p413) --[[Anonymous function at line 2866]]
-    if p413.KeyCode == Enum.KeyCode.ButtonR2 and game.Players.LocalPlayer.PlayerGui:FindFirstChild("TouchGui") then
+u7.InputBegan:Connect(function(p422) --[[Anonymous function at line 2897]]
+    if p422.KeyCode == Enum.KeyCode.ButtonR2 and game.Players.LocalPlayer.PlayerGui:FindFirstChild("TouchGui") then
         Held.Value = true
-    elseif gun.Value ~= nil and (p413.KeyCode == Enum.KeyCode.E or p413.KeyCode == Enum.KeyCode.DPadDown) then
+    elseif gun.Value ~= nil and (p422.KeyCode == Enum.KeyCode.E or p422.KeyCode == Enum.KeyCode.DPadDown) then
         rerollGun()
     end
-    if p413.KeyCode == Enum.KeyCode.DPadUp and (taunting.Value == false and (reloading.Value == false and (Animations.inspectani and Animations.inspectani.IsPlaying == false))) then
+    if p422.KeyCode == Enum.KeyCode.DPadUp and (taunting.Value == false and (reloading.Value == false and (Animations.inspectani and Animations.inspectani.IsPlaying == false))) then
         Animations.inspectani:Play()
-        local v414 = player.Character
-        if v414:FindFirstChild("Gun") and v414.Gun:FindFirstChild("INS_Inspect") then
-            soundmod.rplaysound(v414.Gun.INS_Inspect)
+        local v423 = player.Character
+        if v423:FindFirstChild("Gun") and v423.Gun:FindFirstChild("INS_Inspect") then
+            soundmod.rplaysound(v423.Gun.INS_Inspect)
         end
     end
 end)
-game:GetService("ContextActionService"):BindAction("rerollbind", function(_, p415) --[[Anonymous function at line 2884]]
-    if gun.Value == nil or p415 ~= Enum.UserInputState.Begin then
+game:GetService("ContextActionService"):BindAction("rerollbind", function(_, p424) --[[Anonymous function at line 2915]]
+    if gun.Value == nil or p424 ~= Enum.UserInputState.Begin then
         return Enum.ContextActionResult.Pass
     end
     rerollGun()
     return Enum.ContextActionResult.Sink
 end, true, Enum.KeyCode.World95)
 task.wait()
-coroutine.resume(coroutine.create(function() --[[Anonymous function at line 2895]]
+coroutine.resume(coroutine.create(function() --[[Anonymous function at line 2926]]
     --[[
     Upvalues:
         [1] = u7
     --]]
     task.wait(2)
-    local v416 = u7.TouchEnabled and game:GetService("ContextActionService"):GetButton("rerollbind")
-    if v416 then
-        local v417
+    local v425 = u7.TouchEnabled and game:GetService("ContextActionService"):GetButton("rerollbind")
+    if v425 then
+        local v426
         if wkspc.gametype.Value == "Randomizer" and gun.Value ~= nil then
-            v417 = Player.NRPBS.Health.Value > 0
+            v426 = Player.NRPBS.Health.Value > 0
         else
-            v417 = false
+            v426 = false
         end
-        v416.Visible = v417
-        v416.Position = UDim2.new(0, -150, 0, 0)
-        v416.ActionTitle.Text = "Reroll"
+        v425.Visible = v426
+        v425.Position = UDim2.new(0, -150, 0, 0)
+        v425.ActionTitle.Text = "Reroll"
     end
 end))
-u7.InputEnded:Connect(function(p418) --[[Anonymous function at line 2925]]
+local function u427() --[[Anonymous function at line 2950]]
     --[[
     Upvalues:
         [1] = u13
     --]]
+    u13.Scorecard.Visible = false
+    u13.Enabled = false
+    u13.menu.Visible = false
+end
+u7.InputEnded:Connect(function(p428) --[[Anonymous function at line 2956]]
+    --[[
+    Upvalues:
+        [1] = u427
+    --]]
     if sP.Main.GlobalChat.ActiveOne.Value ~= true and sP.Main.TeamChat.ActiveOne.Value ~= true then
-        if p418.KeyCode == Enum.KeyCode.Tab or p418.KeyCode == Enum.KeyCode.ButtonB then
-            u13.Scorecard.Visible = false
-            u13.Enabled = false
-            u13.menu.Visible = false
+        if p428.KeyCode == Enum.KeyCode.Tab or p428.KeyCode == Enum.KeyCode.ButtonB then
+            u427()
         end
-        if Character and (Humanoid and (Player.NRPBS.Health.Value > 0 and (p418.KeyCode == Enum.KeyCode.LeftShift and (Character and Character:FindFirstChild("Walking"))))) then
+        if Character and (Humanoid and (Player.NRPBS.Health.Value > 0 and (p428.KeyCode == Enum.KeyCode.LeftShift and (Character and Character:FindFirstChild("Walking"))))) then
             Character.Walking:Destroy()
         end
-        if p418.KeyCode == Enum.KeyCode.ButtonR2 and game.Players.LocalPlayer.PlayerGui:FindFirstChild("TouchGui") then
+        if p428.KeyCode == Enum.KeyCode.ButtonR2 and game.Players.LocalPlayer.PlayerGui:FindFirstChild("TouchGui") then
             Held.Value = false
         end
     end
 end)
-function ToggleTeamSelection(p419)
+function ToggleTeamSelection(p429)
     --[[
     Upvalues:
         [1] = u11
-        [2] = u175
+        [2] = u176
         [3] = u14
     --]]
     if wkspc.BR.Value == true then
@@ -2949,25 +3006,25 @@ function ToggleTeamSelection(p419)
         return
     end
     teamsmod.update()
-    for _, v420 in pairs(gui.TeamSelection.Buttons:GetChildren()) do
-        local v421 = nil
-        for v422, v423 in teamsmod.names do
-            if v423[2] == v420.Name then
-                v421 = v422
+    for _, v430 in pairs(gui.TeamSelection.Buttons:GetChildren()) do
+        local v431 = nil
+        for v432, v433 in teamsmod.names do
+            if v433[2] == v430.Name then
+                v431 = v432
                 break
             end
         end
-        if v421 then
-            v420.ImageColor3 = teamsmod.colors[v421][1]
+        if v431 then
+            v430.ImageColor3 = teamsmod.colors[v431][1]
         end
-        local v424 = teamsmod.rgb[v421]
-        if v424 and u175:HasTag(v420, "RGB") == false then
-            u175:AddTag(v420, "RGB")
-        elseif not v424 and u175:HasTag(v420, "RGB") then
-            u175:RemoveTag(v420, "RGB")
+        local v434 = teamsmod.rgb[v431]
+        if v434 and u176:HasTag(v430, "RGB") == false then
+            u176:AddTag(v430, "RGB")
+        elseif not v434 and u176:HasTag(v430, "RGB") then
+            u176:RemoveTag(v430, "RGB")
         end
     end
-    if (gui.TeamSelection.Visible == false and p419 == nil or p419 == true) and u14.Value == false then
+    if (gui.TeamSelection.Visible == false and p429 == nil or p429 == true) and u14.Value == false then
         if (died.Value == true or wkspc.BF.Value == true) and player.Status.Team.Value ~= "Spectator" then
             return
         elseif not game.ReplicatedStorage:GetAttribute("Coop") then
@@ -2983,63 +3040,77 @@ function ToggleTeamSelection(p419)
     end
 end
 function updateTS()
-    local v425 = teamsmod.getTeamNumbers(player)
-    for v426, v427 in pairs(v425) do
-        local v428 = gui.TeamSelection.Buttons[teamsmod.names[v426][2]]
-        v428.Number.Text = v427
-        v428.lock.Visible = not teamsmod.canJoinTeam(v426, player)
-        v428.Visible = teamsmod.shouldShowTeam(v426, player)
+    local v435 = teamsmod.getTeamNumbers(player)
+    for v436, v437 in pairs(v435) do
+        local v438 = gui.TeamSelection.Buttons[teamsmod.names[v436][2]]
+        v438.Number.Text = v437
+        v438.lock.Visible = not teamsmod.canJoinTeam(v436, player)
+        v438.Visible = teamsmod.shouldShowTeam(v436, player)
     end
     if wkspc.gametype.Value == "cXVlc3Q=" or game.ReplicatedStorage:GetAttribute("Coop") then
         gui.TeamSelection.ButtonsSpec.Visible = false
     end
 end
-function JoinTeam(p429)
+function JoinTeam(p439)
     --[[
     Upvalues:
         [1] = u4
         [2] = u15
     --]]
-    u4.Events.JoinTeam:FireServer(p429, "L", nil, nil)
-    if p429 == "Spectator" then
+    u4.Events.JoinTeam:FireServer(p439, "L", nil, nil)
+    if p439 == "Spectator" then
         u15.activate()
     else
         u15.deactivate()
     end
     ToggleTeamSelection(false)
 end
-u4.Events.JoinTeam.OnClientEvent:connect(function(p430) --[[Anonymous function at line 3012]]
+u4.Events.JoinTeam.OnClientEvent:connect(function(p440) --[[Anonymous function at line 3043]]
     ToggleTeamSelection(true)
-    JoinTeam(p430)
+    JoinTeam(p440)
     gui.Parent.Menew.Enabled = false
     gui.Enabled = true
     task.wait(0.25)
     ToggleTeamSelection(false)
 end)
-script.Parent:GetPropertyChangedSignal("Enabled"):connect(function() --[[Anonymous function at line 3022]]
+script.Parent:GetPropertyChangedSignal("Enabled"):connect(function() --[[Anonymous function at line 3053]]
     if script.Parent.Enabled == true and wkspc.BR.Value == true then
         JoinTeam("Random")
     end
 end)
-for _, v431 in pairs(gui.TeamSelection.Buttons:GetChildren()) do
-    local v432 = nil
-    for v433, v434 in teamsmod.names do
-        if v434[2] == v431.Name then
-            v432 = v433
+local function u441() --[[Anonymous function at line 2939]]
+    --[[
+    Upvalues:
+        [1] = u13
+    --]]
+    if script.Parent.Parent.GUI.Enabled then
+        if wkspc.gametype.Value == "Rogue" then
+            u13.menu.Visible = true
+        else
+            u13.Scorecard.Visible = true
+        end
+        u13.Enabled = true
+    end
+end
+for _, v442 in pairs(gui.TeamSelection.Buttons:GetChildren()) do
+    local v443 = nil
+    for v444, v445 in teamsmod.names do
+        if v445[2] == v442.Name then
+            v443 = v444
             break
         end
     end
-    if v432 then
-        v431.ImageColor3 = teamsmod.colors[v432][1]
+    if v443 then
+        v442.ImageColor3 = teamsmod.colors[v443][1]
     end
 end
-gui.TeamSelection.ButtonsFFA.FFA.MouseButton1Down:connect(function() --[[Anonymous function at line 3042]]
+gui.TeamSelection.ButtonsFFA.FFA.MouseButton1Down:connect(function() --[[Anonymous function at line 3073]]
     JoinTeam("Random")
     soundmod.playsound(clicksou)
-    local v435 = tick()
+    local v446 = tick()
     while true do
         wait()
-        if tick() - v435 >= 2 then
+        if tick() - v446 >= 2 then
             break
         end
         if Player.Status.Team.Value ~= "Spectator" then
@@ -3050,14 +3121,14 @@ gui.TeamSelection.ButtonsFFA.FFA.MouseButton1Down:connect(function() --[[Anonymo
     gui.TeamSelection.bad.Visible = true
     ToggleTeamSelection(true)
 end)
-gui.TeamSelection.Buttons.Blu.MouseButton1Down:connect(function() --[[Anonymous function at line 3057]]
+gui.TeamSelection.Buttons.Blu.MouseButton1Down:connect(function() --[[Anonymous function at line 3088]]
     if player:FindFirstChild("IsAdmin") or gui.TeamSelection.Buttons.Blu.lock.Visible == false then
         JoinTeam("TBC")
         soundmod.playsound(clicksou)
-        local v436 = tick()
+        local v447 = tick()
         while true do
             wait()
-            if tick() - v436 >= 2 then
+            if tick() - v447 >= 2 then
                 gui.TeamSelection.bad.Visible = true
                 ToggleTeamSelection(true)
                 return
@@ -3072,14 +3143,14 @@ gui.TeamSelection.Buttons.Blu.MouseButton1Down:connect(function() --[[Anonymous 
         return
     end
 end)
-gui.TeamSelection.Buttons.Pur.MouseButton1Down:connect(function() --[[Anonymous function at line 3074]]
+gui.TeamSelection.Buttons.Pur.MouseButton1Down:connect(function() --[[Anonymous function at line 3105]]
     if player:FindFirstChild("IsAdmin") then
         JoinTeam("TPC")
         soundmod.playsound(clicksou)
-        local v437 = tick()
+        local v448 = tick()
         while true do
             wait()
-            if tick() - v437 >= 2 then
+            if tick() - v448 >= 2 then
                 break
             end
             if Player.Status.Team.Value ~= "Spectator" then
@@ -3093,14 +3164,14 @@ gui.TeamSelection.Buttons.Pur.MouseButton1Down:connect(function() --[[Anonymous 
         gui.TeamSelection.Buttons.Pur.Visible = false
     end
 end)
-gui.TeamSelection.Buttons.Or.MouseButton1Down:connect(function() --[[Anonymous function at line 3093]]
+gui.TeamSelection.Buttons.Or.MouseButton1Down:connect(function() --[[Anonymous function at line 3124]]
     if player:FindFirstChild("IsAdmin") or player:FindFirstChild("IsYoutuber") then
         JoinTeam("TOC")
         soundmod.playsound(clicksou)
-        local v438 = tick()
+        local v449 = tick()
         while true do
             wait()
-            if tick() - v438 >= 2 then
+            if tick() - v449 >= 2 then
                 break
             end
             if Player.Status.Team.Value ~= "Spectator" then
@@ -3114,17 +3185,17 @@ gui.TeamSelection.Buttons.Or.MouseButton1Down:connect(function() --[[Anonymous f
         gui.TeamSelection.Buttons.Or.Visible = false
     end
 end)
-gui.TeamSelection.Buttons.Ylw.MouseButton1Down:connect(function() --[[Anonymous function at line 3112]]
+gui.TeamSelection.Buttons.Ylw.MouseButton1Down:connect(function() --[[Anonymous function at line 3143]]
     if wkspc.TwoTeams.Value == true and not player:FindFirstChild("IsAdmin") or not player.Data.Skin.Value == "Monky" then
         return
     end
     if player:FindFirstChild("IsAdmin") or gui.TeamSelection.Buttons.Ylw.lock.Visible == false then
         JoinTeam("TYC")
         soundmod.playsound(clicksou)
-        local v439 = tick()
+        local v450 = tick()
         while true do
             wait()
-            if tick() - v439 >= 2 then
+            if tick() - v450 >= 2 then
                 gui.TeamSelection.bad.Visible = true
                 ToggleTeamSelection(true)
                 return
@@ -3139,17 +3210,17 @@ gui.TeamSelection.Buttons.Ylw.MouseButton1Down:connect(function() --[[Anonymous 
         return
     end
 end)
-gui.TeamSelection.Buttons.Grn.MouseButton1Down:connect(function() --[[Anonymous function at line 3132]]
+gui.TeamSelection.Buttons.Grn.MouseButton1Down:connect(function() --[[Anonymous function at line 3163]]
     if wkspc.TwoTeams.Value == true and not player:FindFirstChild("IsAdmin") then
         return
     end
     if player:FindFirstChild("IsAdmin") or gui.TeamSelection.Buttons.Grn.lock.Visible == false then
         JoinTeam("TGC")
         soundmod.playsound(clicksou)
-        local v440 = tick()
+        local v451 = tick()
         while true do
             wait()
-            if tick() - v440 >= 2 then
+            if tick() - v451 >= 2 then
                 gui.TeamSelection.bad.Visible = true
                 ToggleTeamSelection(true)
                 return
@@ -3164,14 +3235,14 @@ gui.TeamSelection.Buttons.Grn.MouseButton1Down:connect(function() --[[Anonymous 
         return
     end
 end)
-gui.TeamSelection.Buttons.Rd.MouseButton1Down:connect(function() --[[Anonymous function at line 3152]]
+gui.TeamSelection.Buttons.Rd.MouseButton1Down:connect(function() --[[Anonymous function at line 3183]]
     if player:FindFirstChild("IsAdmin") or gui.TeamSelection.Buttons.Rd.lock.Visible == false then
         JoinTeam("TRC")
         soundmod.playsound(clicksou)
-        local v441 = tick()
+        local v452 = tick()
         while true do
             wait()
-            if tick() - v441 >= 2 then
+            if tick() - v452 >= 2 then
                 gui.TeamSelection.bad.Visible = true
                 ToggleTeamSelection(true)
                 return
@@ -3186,7 +3257,7 @@ gui.TeamSelection.Buttons.Rd.MouseButton1Down:connect(function() --[[Anonymous f
         return
     end
 end)
-gui.TeamSelection.ButtonsSpec.Spec.MouseButton1Down:connect(function() --[[Anonymous function at line 3170]]
+gui.TeamSelection.ButtonsSpec.Spec.MouseButton1Down:connect(function() --[[Anonymous function at line 3201]]
     --[[
     Upvalues:
         [1] = u15
@@ -3197,7 +3268,7 @@ gui.TeamSelection.ButtonsSpec.Spec.MouseButton1Down:connect(function() --[[Anony
         u15.activate()
     end
 end)
-u14.Changed:connect(function() --[[Anonymous function at line 3183]]
+u14.Changed:connect(function() --[[Anonymous function at line 3214]]
     --[[
     Upvalues:
         [1] = u14
@@ -3207,13 +3278,13 @@ u14.Changed:connect(function() --[[Anonymous function at line 3183]]
         ToggleTeamSelection(true)
     end
 end)
-task.spawn(function(...) --[[Anonymous function at line 3192]] end)
-task.spawn(function(...) --[[Anonymous function at line 3197]] end)
+task.spawn(function(...) --[[Anonymous function at line 3223]] end)
+task.spawn(function(...) --[[Anonymous function at line 3228]] end)
 function disarm()
     disarmed.Value = true
     equipped.Value = "none"
     gun.Value = nil
-    coroutine.resume(coroutine.create(function() --[[Anonymous function at line 3205]]
+    coroutine.resume(coroutine.create(function() --[[Anonymous function at line 3236]]
         wep.usethatgun()
     end))
 end
@@ -3223,88 +3294,88 @@ function undisarm()
         wep.autoequip(true)
     end
 end
-function setAngleGUI(p442, p443)
-    p442.Rotation = (getCameraAngle(Camera) - angleBetweenPoints(Camera.Focus.p, p443.Position) - 1.5707963267948966) * 57.29577951308232 + 90
+function setAngleGUI(p453, p454)
+    p453.Rotation = (getCameraAngle(Camera) - angleBetweenPoints(Camera.Focus.p, p454.Position) - math.pi / 2) * (180 / math.pi) + 90
 end
-function CreateRegion3FromLocAndSize(p444, p445)
-    local v446 = p445 / 2
-    local v447 = p444 - v446
-    local v448 = p444 + v446
-    return Region3.new(v447, v448)
+function CreateRegion3FromLocAndSize(p455, p456)
+    local v457 = p456 / 2
+    local v458 = p455 - v457
+    local v459 = p455 + v457
+    return Region3.new(v458, v459)
 end
 u4:WaitForChild("BeanBoozled")
 player:WaitForChild("FillMeIn!")
-function changeuicolor(p449)
+function changeuicolor(p460)
     --[[
     Upvalues:
         [1] = u20
-        [2] = u175
+        [2] = u176
     --]]
-    local v450 = teamsmod.names[p449]
-    local _ = v450 and v450[1]
-    local v451 = teamsmod.colors[p449]
-    local v452 = teamsmod.rgb[p449]
+    local v461 = teamsmod.names[p460]
+    local _ = v461 and v461[1]
+    local v462 = teamsmod.colors[p460]
+    local v463 = teamsmod.rgb[p460]
     if wkspc.FFA.Value == true or wkspc.gametype.Value == "Juggernaut" then
-        local v453 = player.DesignColor.Value
-        u20.Vitals.Health.BackgroundColor3 = Color3.new(v453.Color.r / 2, v453.Color.g / 2, v453.Color.b / 2)
-        u20.Vitals.Health.Fill.BackgroundColor3 = Color3.new(v453.Color.r * 2, v453.Color.g * 2, v453.Color.b * 2)
-        u20.Vitals.Health.Plus.TextStrokeColor3 = Color3.new(v453.Color.r, v453.Color.g, v453.Color.b)
-        u20.Vitals.Ammo.ImageColor3 = v453.Color
-        u20.Vitals.Health.HealthOL.ImageColor3 = v453.Color
-        gui.Inventory.Item1.Effect.ImageColor3 = Color3.new(v453.Color.r, v453.Color.g, v453.Color.b)
-        gui.Inventory.Item2.Effect.ImageColor3 = Color3.new(v453.Color.r, v453.Color.g, v453.Color.b)
-        gui.Inventory.Item3.Effect.ImageColor3 = Color3.new(v453.Color.r, v453.Color.g, v453.Color.b)
-        for _, v454 in pairs(u20.Vitals:GetDescendants()) do
-            if v454:IsA("TextLabel") then
-                local v455 = v454.Parent
-                if tostring(v455) ~= "Health" then
-                    v454.TextStrokeColor3 = v453.Color
+        local v464 = player.DesignColor.Value
+        u20.Vitals.Health.BackgroundColor3 = Color3.new(v464.Color.r / 2, v464.Color.g / 2, v464.Color.b / 2)
+        u20.Vitals.Health.Fill.BackgroundColor3 = Color3.new(v464.Color.r * 2, v464.Color.g * 2, v464.Color.b * 2)
+        u20.Vitals.Health.Plus.TextStrokeColor3 = Color3.new(v464.Color.r, v464.Color.g, v464.Color.b)
+        u20.Vitals.Ammo.ImageColor3 = v464.Color
+        u20.Vitals.Health.HealthOL.ImageColor3 = v464.Color
+        gui.Inventory.Item1.Effect.ImageColor3 = Color3.new(v464.Color.r, v464.Color.g, v464.Color.b)
+        gui.Inventory.Item2.Effect.ImageColor3 = Color3.new(v464.Color.r, v464.Color.g, v464.Color.b)
+        gui.Inventory.Item3.Effect.ImageColor3 = Color3.new(v464.Color.r, v464.Color.g, v464.Color.b)
+        for _, v465 in pairs(u20.Vitals:GetDescendants()) do
+            if v465:IsA("TextLabel") then
+                local v466 = v465.Parent
+                if tostring(v466) ~= "Health" then
+                    v465.TextStrokeColor3 = v464.Color
                 end
             end
         end
     else
-        u20.Vitals.Health.BackgroundColor3 = v451[4]
-        u20.Vitals.Health.Fill.BackgroundColor3 = v451[11]
-        u20.Vitals.Health.Plus.TextStrokeColor3 = v451[5]
-        u20.Vitals.Ammo.ImageColor3 = v451[10]
-        u20.Vitals.Health.HealthOL.ImageColor3 = v451[10]
-        gui.Inventory.Item1.Effect.ImageColor3 = v451[10]
-        gui.Inventory.Item2.Effect.ImageColor3 = v451[10]
-        gui.Inventory.Item3.Effect.ImageColor3 = v451[10]
-        for _, v456 in pairs(u20.Vitals:GetDescendants()) do
-            if v456:IsA("TextLabel") then
-                local v457 = v456.Parent
-                if tostring(v457) ~= "Health" then
-                    v456.TextStrokeColor3 = v451[5]
+        u20.Vitals.Health.BackgroundColor3 = v462[4]
+        u20.Vitals.Health.Fill.BackgroundColor3 = v462[11]
+        u20.Vitals.Health.Plus.TextStrokeColor3 = v462[5]
+        u20.Vitals.Ammo.ImageColor3 = v462[10]
+        u20.Vitals.Health.HealthOL.ImageColor3 = v462[10]
+        gui.Inventory.Item1.Effect.ImageColor3 = v462[10]
+        gui.Inventory.Item2.Effect.ImageColor3 = v462[10]
+        gui.Inventory.Item3.Effect.ImageColor3 = v462[10]
+        for _, v467 in pairs(u20.Vitals:GetDescendants()) do
+            if v467:IsA("TextLabel") then
+                local v468 = v467.Parent
+                if tostring(v468) ~= "Health" then
+                    v467.TextStrokeColor3 = v462[5]
                 end
             end
         end
-        for _, v458 in pairs(gui.Guide:GetDescendants()) do
-            if v458:IsA("TextLabel") then
-                v458.TextStrokeColor3 = v451[5]
+        for _, v469 in pairs(gui.Guide:GetDescendants()) do
+            if v469:IsA("TextLabel") then
+                v469.TextStrokeColor3 = v462[5]
             end
         end
     end
-    for _, v459 in {
+    for _, v470 in {
         u20.Vitals.Ammo,
         u20.Vitals.Health.Fill,
         gui.Inventory.Item1.Effect,
         gui.Inventory.Item2.Effect,
         gui.Inventory.Item3.Effect
     } do
-        if v452 and u175:HasTag(v459, "RGB") == false then
-            u175:AddTag(v459, "RGB")
-        elseif not v452 and u175:HasTag(v459, "RGB") then
-            u175:RemoveTag(v459, "RGB")
+        if v463 and u176:HasTag(v470, "RGB") == false then
+            u176:AddTag(v470, "RGB")
+        elseif not v463 and u176:HasTag(v470, "RGB") then
+            u176:RemoveTag(v470, "RGB")
         end
     end
 end
-game.ReplicatedFirst.NewLoader.Changed:connect(function() --[[Anonymous function at line 3288]]
+game.ReplicatedFirst.NewLoader.Changed:connect(function() --[[Anonymous function at line 3319]]
     --[[
     Upvalues:
         [1] = u4
     --]]
-    coroutine.resume(coroutine.create(function() --[[Anonymous function at line 3289]]
+    coroutine.resume(coroutine.create(function() --[[Anonymous function at line 3320]]
         --[[
         Upvalues:
             [1] = u4
@@ -3315,29 +3386,29 @@ game.ReplicatedFirst.NewLoader.Changed:connect(function() --[[Anonymous function
 
     end
 end)
-v3:BindAction("SampleAction", function(_, p460, _) -- Function name: actionHandler, line 3295
-    if p460 == Enum.UserInputState.Begin then
+v3:BindAction("SampleAction", function(_, p471, _) -- Function name: actionHandler, line 3326
+    if p471 == Enum.UserInputState.Begin then
         ctrlcrouch.Value = true
         return Enum.ContextActionResult.Sink
     end
-    if p460 ~= Enum.UserInputState.End then
+    if p471 ~= Enum.UserInputState.End then
         return Enum.ContextActionResult.Pass
     end
     ctrlcrouch.Value = false
     return Enum.ContextActionResult.Sink
 end, false, Enum.KeyCode.ButtonL3)
-player.DesignColor.Changed:connect(function() --[[Anonymous function at line 3311]]
+player.DesignColor.Changed:connect(function() --[[Anonymous function at line 3342]]
     wait()
     changeuicolor(Player.Status.Team.Value)
     if Camera:FindFirstChild("Arms") and Camera.Arms:FindFirstChild("TeamColor") then
-        local v461 = player.TeamColor.Color
+        local v472 = player.TeamColor.Color
         if wkspc.FFA.Value == true or wkspc.gametype.Value == "Juggernaut" then
-            v461 = player.DesignColor.Value.Color
+            v472 = player.DesignColor.Value.Color
         end
-        local v462 = Camera.Arms:GetChildren()
-        for v463 = 1, #v462 do
-            if v462[v463].Name == "TeamColor" or v462[v463]:FindFirstChild("ColorMe") then
-                v462[v463].Color = v461
+        local v473 = Camera.Arms:GetChildren()
+        for v474 = 1, #v473 do
+            if v473[v474].Name == "TeamColor" or v473[v474]:FindFirstChild("ColorMe") then
+                v473[v474].Color = v472
             end
         end
     end
@@ -3346,7 +3417,7 @@ player.DesignColor.Changed:connect(function() --[[Anonymous function at line 331
     end
     changehpgui()
 end)
-wkspc.CurrentJugg.Changed:connect(function() --[[Anonymous function at line 3332]]
+wkspc.CurrentJugg.Changed:connect(function() --[[Anonymous function at line 3363]]
     if wkspc.gametype.Value == "Juggernaut" and wkspc.CurrentJugg.Value then
         if wkspc.CurrentJugg.Value == player then
             soundmod.playsound(script.Parent.Parent.Sounds.JugBecome)
@@ -3355,13 +3426,13 @@ wkspc.CurrentJugg.Changed:connect(function() --[[Anonymous function at line 3332
         soundmod.playsound(script.Parent.Parent.Sounds.JugNew)
     end
 end)
-v3:BindAction("AltFire", function(_, p464, _) --[[Anonymous function at line 3343]]
-    if p464 == Enum.UserInputState.Begin then
+v3:BindAction("AltFire", function(_, p475, _) --[[Anonymous function at line 3374]]
+    if p475 == Enum.UserInputState.Begin then
         Held2.Value = true
         wep.hcaltfire()
         return Enum.ContextActionResult.Sink
     else
-        if p464 ~= Enum.UserInputState.End then
+        if p475 ~= Enum.UserInputState.End then
             return Enum.ContextActionResult.Pass
         end
         Held2.Value = false
@@ -3371,80 +3442,80 @@ end, false, Enum.KeyCode.ButtonL2)
 function jumpme()
     --[[
     Upvalues:
-        [1] = u230
+        [1] = u236
         [2] = u4
         [3] = u12
     --]]
-    local v465 = false
-    local v466 = false
+    local v476 = false
+    local v477 = false
     if wkspc.gametype.Value == "Rogue" then
-        local v467 = player:FindFirstChild("Cards")
-        if v467 then
-            for _, v468 in v467:GetChildren() do
-                local v469 = u230.GetCard(v468.Name)
-                if v469 then
-                    for _, v470 in { v469.Buffs, v469.Debuffs } do
-                        for _, v471 in v470 do
-                            if v471.Type == "DoubleJump" then
-                                v466 = true
+        local v478 = player:FindFirstChild("Cards")
+        if v478 then
+            for _, v479 in v478:GetChildren() do
+                local v480 = u236.GetCard(v479.Name)
+                if v480 then
+                    for _, v481 in { v480.Buffs, v480.Debuffs } do
+                        for _, v482 in v481 do
+                            if v482.Type == "DoubleJump" then
+                                v477 = true
                                 break
                             end
                         end
-                        if v466 then
+                        if v477 then
                             break
                         end
                     end
                 end
-                if v466 then
+                if v477 then
                     break
                 end
             end
         end
     end
-    if v465 == false and (Character and (Humanoid and (Player.NRPBS.Health.Value > 0 and (Humanoid.JumpHeight > 0 and (jumping.Value == true and (airjumps.Value < 1 and (Humanoid.Parent:FindFirstChild("Taunting") == nil and (Humanoid.Parent:FindFirstChild("Stunned") == nil and (wkspc.Status.Preparation.Value == false and (Humanoid.WalkSpeed > 6 and (gun.Value and (gun.Value ~= nil and (v466 or (u4.Arcade.Value == true or (gun.Value:FindFirstChild("DoubleJump") or (wkspc.CurrentCurse.Value == "Enraged" or Player:FindFirstChild("IsBernard"))))))))))))))))) then
+    if v476 == false and (Character and (Humanoid and (Player.NRPBS.Health.Value > 0 and (Humanoid.JumpHeight > 0 and (jumping.Value == true and (airjumps.Value < 1 and (Humanoid.Parent:FindFirstChild("Taunting") == nil and (Humanoid.Parent:FindFirstChild("Stunned") == nil and (wkspc.Status.Preparation.Value == false and (Humanoid.WalkSpeed > 6 and (gun.Value and (gun.Value ~= nil and (v477 or (u4.Arcade.Value == true or (gun.Value:FindFirstChild("DoubleJump") or (wkspc.CurrentCurse.Value == "Enraged" or Player:FindFirstChild("IsBernard"))))))))))))))))) then
         position = Character.HumanoidRootPart.Position.Y
         soundmod.rplaysound(Character.Hitbox.DJ)
         airjumps.Value = airjumps.Value + 1
         u4.Events.DJ:FireServer(25)
-        local v472 = 3.2
+        local v483 = 3.2
         if gun.Value and (gun.Value ~= nil and gun.Value:FindFirstChild("JumpBonus")) then
-            v472 = v472 * (1 + gun.Value.JumpBonus.Value / 100)
+            v483 = v483 * (1 + gun.Value.JumpBonus.Value / 100)
         end
         if wkspc.gametype.Value == "Rogue" then
-            local v473 = player:FindFirstChild("Cards")
-            if v473 then
-                local v474 = 1
-                for _, v475 in v473:GetChildren() do
-                    local v476 = u230.GetCard(v475.Name)
-                    if v476 then
-                        for _, v477 in { v476.Buffs, v476.Debuffs } do
-                            for _, v478 in v477 do
-                                if v478.Type == "JumpHeight" then
-                                    v474 = v474 * v478.Amount
+            local v484 = player:FindFirstChild("Cards")
+            if v484 then
+                local v485 = 1
+                for _, v486 in v484:GetChildren() do
+                    local v487 = u236.GetCard(v486.Name)
+                    if v487 then
+                        for _, v488 in { v487.Buffs, v487.Debuffs } do
+                            for _, v489 in v488 do
+                                if v489.Type == "JumpHeight" then
+                                    v485 = v485 * v489.Amount
                                 end
                             end
                         end
                     end
                 end
-                v472 = v472 * v474
+                v483 = v483 * v485
             end
         end
-        Humanoid.JumpHeight = v472 * 1.5
+        Humanoid.JumpHeight = v483 * 1.5
         if wkspc.CurrentCurse.Value ~= "No Jumps" then
             Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
         end
-        local v479 = Instance.new("IntValue")
-        v479.Name = "changedirection"
-        v479.Parent = player.Character
-        v465 = true
+        local v490 = Instance.new("IntValue")
+        v490.Name = "changedirection"
+        v490.Parent = player.Character
+        v476 = true
     end
-    if tick() - u12.lastjtick.Value < 0.66 and (not v465 and (Character and (Humanoid and (Player.NRPBS.Health.Value > 0 and (Humanoid.JumpHeight > 0 and (jumping.Value == true and (Humanoid.Parent:FindFirstChild("Taunting") == nil and (Humanoid.Parent:FindFirstChild("Stunned") == nil and (wkspc.Status.Preparation.Value == false and (gun.Value and (gun.Value:FindFirstChild("Tags") and (gun.Value.Tags.WeaponType.Value == "Explosive" and (player:FindFirstChild("Settings") and (player.Settings:FindFirstChild("DoubleJumpRocketJump") and player.Settings.DoubleJumpRocketJump.Value == true)))))))))))))) then
+    if tick() - u12.lastjtick.Value < 0.66 and (not v476 and (Character and (Humanoid and (Player.NRPBS.Health.Value > 0 and (Humanoid.JumpHeight > 0 and (jumping.Value == true and (Humanoid.Parent:FindFirstChild("Taunting") == nil and (Humanoid.Parent:FindFirstChild("Stunned") == nil and (wkspc.Status.Preparation.Value == false and (gun.Value and (gun.Value:FindFirstChild("Tags") and (gun.Value.Tags.WeaponType.Value == "Explosive" and (player:FindFirstChild("Settings") and (player.Settings:FindFirstChild("DoubleJumpRocketJump") and player.Settings.DoubleJumpRocketJump.Value == true)))))))))))))) then
         if Camera.CFrame.LookVector.Y > -0.5 then
             Held.Value = true
-            local v480 = workspace.CurrentCamera.CFrame
+            local v491 = workspace.CurrentCamera.CFrame
             workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.Position, workspace.CurrentCamera.CFrame.Position - Vector3.new(0, 20, 0) - player.Character.HumanoidRootPart.CFrame.LookVector)
             linker.Fire("Mouse1Fire")
-            workspace.CurrentCamera.CFrame = v480
+            workspace.CurrentCamera.CFrame = v491
             Held.Value = false
             return
         end
@@ -3463,20 +3534,20 @@ if istouch.Value then
             end
         end
     end
-    local v481 = gui.Parent:WaitForChild("TouchGui")
-    v481.DisplayOrder = 3
-    local v482 = v481.TouchControlFrame:WaitForChild("JumpButton")
-    if v482 then
-        v482:Destroy()
+    local v492 = gui.Parent:WaitForChild("TouchGui")
+    v492.DisplayOrder = 3
+    local v493 = v492.TouchControlFrame:WaitForChild("JumpButton")
+    if v493 then
+        v493:Destroy()
     end
     u20.Vitals.Health.Position = UDim2.new(0.05, 0, 0.6, 0)
     u20.Vitals.Ammo.Position = UDim2.new(0.88, 0, 0.2, 0)
     local _ = gui.AbsoluteSize.Y >= 500
-    local v483 = "Tablet"
+    local v494 = "Tablet"
     gui.Mobile.Visible = true
-    local v484 = gui.Mobile[v483]
-    v484.Visible = true
-    v484.Jump.MouseButton1Down:Connect(function() --[[Anonymous function at line 3498]]
+    local v495 = gui.Mobile[v494]
+    v495.Visible = true
+    v495.Jump.MouseButton1Down:Connect(function() --[[Anonymous function at line 3529]]
         if taunting.Value == false then
             Jump()
         end
@@ -3484,86 +3555,77 @@ if istouch.Value then
             dotaunt()
         end
     end)
-    v484.Reload.MouseButton1Down:Connect(function() --[[Anonymous function at line 3506]]
+    v495.Reload.MouseButton1Down:Connect(function() --[[Anonymous function at line 3537]]
         wep.reloadwep()
     end)
-    v484.Taunt.MouseButton1Down:Connect(function() --[[Anonymous function at line 3509]]
+    v495.Taunt.MouseButton1Down:Connect(function() --[[Anonymous function at line 3540]]
         dotaunt()
     end)
-    local u485 = false
-    v484.Scoreboard.MouseButton1Down:Connect(function() --[[Anonymous function at line 3513]]
+    local u496 = false
+    v495.Scoreboard.MouseButton1Down:Connect(function() --[[Anonymous function at line 3544]]
         --[[
         Upvalues:
-            [1] = u485
-            [2] = u13
+            [1] = u496
+            [2] = u441
+            [3] = u427
         --]]
-        u485 = not u485
-        if u485 then
-            if script.Parent.Parent.GUI.Enabled then
-                if wkspc.gametype.Value == "Rogue" then
-                    u13.menu.Visible = true
-                else
-                    u13.Scorecard.Visible = true
-                end
-                u13.Enabled = true
-                return
-            end
+        u496 = not u496
+        if u496 then
+            u441()
         else
-            u13.Scorecard.Visible = false
-            u13.Enabled = false
-            u13.menu.Visible = false
+            u427()
         end
     end)
-    v484.Switch.MouseButton1Down:Connect(function() --[[Anonymous function at line 3517]]
+    v495.Switch.MouseButton1Down:Connect(function() --[[Anonymous function at line 3548]]
         amby:Fire("qswitch")
     end)
-    v484.AltFire.MouseButton1Down:connect(function() --[[Anonymous function at line 3520]]
+    v495.AltFire.MouseButton1Down:connect(function() --[[Anonymous function at line 3551]]
         Held2.Value = true
         wep.hcaltfire()
     end)
-    v484.AltFire.MouseButton1Up:connect(function() --[[Anonymous function at line 3524]]
+    v495.AltFire.MouseButton1Up:connect(function() --[[Anonymous function at line 3555]]
         Held2.Value = false
     end)
-    local u486 = gui.TauntMenu.Taunts:GetChildren()
-    for u487 = 1, #u486 do
-        if u486[u487]:FindFirstChild("HitBox") then
-            u486[u487].HitBox.MouseButton1Down:Connect(function() --[[Anonymous function at line 3530]]
+    local u497 = gui.TauntMenu.Taunts:GetChildren()
+    for u498 = 1, #u497 do
+        if u497[u498]:FindFirstChild("HitBox") then
+            u497[u498].HitBox.MouseButton1Down:Connect(function() --[[Anonymous function at line 3561]]
                 --[[
                 Upvalues:
-                    [1] = u486
-                    [2] = u487
+                    [1] = u497
+                    [2] = u498
                 --]]
-                local v488 = _gf.split
-                local v489 = player.Data.Emotes
-                local v490 = u486[u487].Name
-                local v491 = v488(v489[tonumber(v490)].Value, "_")[1]
-                if v491 ~= "None" then
+                local v499 = _gf.split
+                local v500 = player.Data.Emotes
+                local v501 = u497[u498].Name
+                local v502 = v499(v500[tonumber(v501)].Value, "_")[1]
+                if v502 ~= "None" then
                     gui.TauntMenu.Visible = false
-                    loadtaunt(Character, Humanoid, v491)
+                    loadtaunt(Character, Humanoid, v502)
                     gen.taunt()
                 end
             end)
         end
     end
-    local v492 = v484.ShootFrame
-    snippy = v492
-    v492.MouseButton1Down:connect(function() --[[Anonymous function at line 3544]]
+    local v503 = v495.ShootFrame
+    snippy = v503
+    v503.MouseButton1Down:connect(function() --[[Anonymous function at line 3575]]
         Held.Value = true
     end)
-    u7.TouchMoved:Connect(function(p493) --[[Anonymous function at line 3548]]
+    u7.TouchMoved:Connect(function(p504) --[[Anonymous function at line 3579]]
         if snippy and istouch.Value then
-            local v494 = p493.Position.X
-            local v495 = p493.Position.Y
-            local v496 = snippy
-            if v496.AbsolutePosition.X < v494 and (v496.AbsolutePosition.Y < v495 and (v494 < v496.AbsolutePosition.X + v496.AbsoluteSize.X and (v495 < v496.AbsolutePosition.Y + v496.AbsoluteSize.Y and finger == true))) then
+            local v505 = p504.Position.X
+            local v506 = p504.Position.Y
+            local v507 = snippy
+            if v507.AbsolutePosition.X < v505 and (v507.AbsolutePosition.Y < v506 and (v505 < v507.AbsolutePosition.X + v507.AbsoluteSize.X and (v506 < v507.AbsolutePosition.Y + v507.AbsoluteSize.Y and finger == true))) then
                 Held.Value = true
             end
         end
     end)
-    u7.TouchStarted:connect(function(_) --[[Anonymous function at line 3559]]
+    u7.TouchStarted:connect(function(_) --[[Anonymous function at line 3590]]
         finger = true
     end)
-    u7.TouchEnded:Connect(function(_) --[[Anonymous function at line 3562]]
+    u7.TouchEnded:Connect(function(_) --[[Anonymous function at line 3593]]
         Held.Value = false
         finger = false
     end)
@@ -3582,28 +3644,23 @@ _actionmatch = {
     [Enum.KeyCode.Up] = 4,
     [Enum.KeyCode.DPadUp] = 4
 }
-u7.InputBegan:connect(function(p497, _) --[[Anonymous function at line 3583]]
+u7.InputBegan:connect(function(p508, _) --[[Anonymous function at line 3614]]
     --[[
     Upvalues:
-        [1] = u13
+        [1] = u441
     --]]
-    if (p497.KeyCode == Enum.KeyCode.Tab or p497.KeyCode == Enum.KeyCode.ButtonB) and (wkspc.CurrentCurse.Value ~= "Hidden" and script.Parent.Parent.GUI.Enabled) then
-        if wkspc.gametype.Value == "Rogue" then
-            u13.menu.Visible = true
-        else
-            u13.Scorecard.Visible = true
-        end
-        u13.Enabled = true
+    if (p508.KeyCode == Enum.KeyCode.Tab or p508.KeyCode == Enum.KeyCode.ButtonB) and wkspc.CurrentCurse.Value ~= "Hidden" then
+        u441()
     end
     if Animations.taction1 then
         if taunting.Value then
-            local v498 = _actionmatch[p497.KeyCode]
-            if Animations.tstart and (Animations.tidle and v498) then
-                for v499 = 1, 4 do
-                    if v499 == v498 then
-                        Animations["taction" .. v499]:Play()
+            local v509 = _actionmatch[p508.KeyCode]
+            if Animations.tstart and (Animations.tidle and v509) then
+                for v510 = 1, 4 do
+                    if v510 == v509 then
+                        Animations["taction" .. v510]:Play()
                     else
-                        Animations["taction" .. v499]:Stop()
+                        Animations["taction" .. v510]:Stop()
                     end
                 end
             end
@@ -3612,17 +3669,17 @@ u7.InputBegan:connect(function(p497, _) --[[Anonymous function at line 3583]]
         return
     end
 end)
-u4.Events.TweenBot.OnClientEvent:connect(function(p500, p501) --[[Anonymous function at line 3602]]
+u4.Events.TweenBot.OnClientEvent:connect(function(p511, p512) --[[Anonymous function at line 3633]]
     --[[
     Upvalues:
         [1] = u2
     --]]
-    local v502 = p501:FindFirstChild("EasingStyle") and (p501.EasingStyle.Value or "Quad") or "Quad"
-    u2:Create(p500.PrimaryPart, TweenInfo.new(p501.Time.Value, Enum.EasingStyle[v502]), {
-        ["CFrame"] = p500.PrimaryPart.CFrame * CFrame.new(p501.EndOffset.Value)
+    local v513 = p512:FindFirstChild("EasingStyle") and (p512.EasingStyle.Value or "Quad") or "Quad"
+    u2:Create(p511.PrimaryPart, TweenInfo.new(p512.Time.Value, Enum.EasingStyle[v513]), {
+        ["CFrame"] = p511.PrimaryPart.CFrame * CFrame.new(p512.EndOffset.Value)
     }):Play()
 end)
-u12.jumping.Changed:Connect(function() --[[Anonymous function at line 3607]]
+u12.jumping.Changed:Connect(function() --[[Anonymous function at line 3638]]
     --[[
     Upvalues:
         [1] = u12
@@ -3631,34 +3688,34 @@ u12.jumping.Changed:Connect(function() --[[Anonymous function at line 3607]]
         u12.lastjtick.Value = tick()
     end
 end)
-spawn(function() --[[Anonymous function at line 3613]]
+spawn(function() --[[Anonymous function at line 3644]]
     --[[
     Upvalues:
         [1] = u11
     --]]
-    local u503 = require(Player:WaitForChild("PlayerScripts"):WaitForChild("ControlScript"):WaitForChild("MasterControl"))
-    local u504 = true
-    u11.Stepped:connect(function() --[[Anonymous function at line 3616]]
+    local u514 = require(Player:WaitForChild("PlayerScripts"):WaitForChild("ControlScript"):WaitForChild("MasterControl"))
+    local u515 = true
+    u11.Stepped:connect(function() --[[Anonymous function at line 3647]]
         --[[
         Upvalues:
-            [1] = u503
-            [2] = u504
+            [1] = u514
+            [2] = u515
         --]]
         if istouch.Value then
             if Animations.taction1 then
                 if taunting.Value then
-                    local v505 = u503:GetMoveVector()
-                    if v505.magnitude < 0.5 then
-                        u504 = true
+                    local v516 = u514:GetMoveVector()
+                    if v516.magnitude < 0.5 then
+                        u515 = true
                     else
-                        local v506 = v505.magnitude > 0.75 and u504 and (v505.X >= 0.5 and 2 or (v505.X <= -0.5 and 1 or (v505.Z >= 0.5 and 3 or (v505.Z <= -0.5 and 4 or true))))
-                        if v506 then
-                            u504 = false
-                            for v507 = 1, 4 do
-                                if v507 == v506 then
-                                    Animations["taction" .. v507]:Play()
+                        local v517 = v516.magnitude > 0.75 and u515 and (v516.X >= 0.5 and 2 or (v516.X <= -0.5 and 1 or (v516.Z >= 0.5 and 3 or (v516.Z <= -0.5 and 4 or true))))
+                        if v517 then
+                            u515 = false
+                            for v518 = 1, 4 do
+                                if v518 == v517 then
+                                    Animations["taction" .. v518]:Play()
                                 else
-                                    Animations["taction" .. v507]:Stop()
+                                    Animations["taction" .. v518]:Stop()
                                 end
                             end
                         end
@@ -3691,12 +3748,12 @@ function gotomenu()
         menudeb = true
         while true do
             JoinTeam("Spectator")
-            local v508 = tick()
-            local v509 = false
+            local v519 = tick()
+            local v520 = false
             repeat
                 wait()
-            until player.Status.Team.Value == "Spectator" or tick() - v508 >= 2
-            if (tick() - v508 >= 2 and true or v509) == false then
+            until player.Status.Team.Value == "Spectator" or tick() - v519 >= 2
+            if (tick() - v519 >= 2 and true or v520) == false then
                 gui.Enabled = false
                 menew.Enabled = true
                 menew.Parent.Menew_Main.Enabled = true
@@ -3710,10 +3767,10 @@ function gotomenu()
         return
     end
 end
-gui.BottomFrame.MainMenu.MouseButton1Down:connect(function() --[[Anonymous function at line 3684]]
+gui.BottomFrame.MainMenu.MouseButton1Down:connect(function() --[[Anonymous function at line 3715]]
     gotomenu()
 end)
-wkspc.CurrentCurse.Changed:connect(function() --[[Anonymous function at line 3688]]
+wkspc.CurrentCurse.Changed:connect(function() --[[Anonymous function at line 3719]]
     --[[
     Upvalues:
         [1] = u20
@@ -3722,31 +3779,31 @@ wkspc.CurrentCurse.Changed:connect(function() --[[Anonymous function at line 368
     --]]
     wait()
     u20.Enabled = true
-    local v510 = wkspc.CurrentCurse.Value
-    if v510 == "Hidden" then
+    local v521 = wkspc.CurrentCurse.Value
+    if v521 == "Hidden" then
         u20.Enabled = false
     end
     if player.Status.Alive.Value == true and (player.Status.Team.Value ~= "Spectator" and died.Value == false) then
-        if v510 == "Hidden" then
+        if v521 == "Hidden" then
             u13.Scorecard.Visible = false
             u13.Enabled = false
-        elseif v510 == "Ammo Loss" then
+        elseif v521 == "Ammo Loss" then
             if u4.Weapons:FindFirstChild(primary.Value) and u4.Weapons[primary.Value]:FindFirstChild("Infinite") == nil then
-                local v511 = ammocount
-                local v512 = ammocount.Value / 2
-                v511.Value = math.floor(v512)
-                local v513 = primarystored
-                local v514 = primarystored.Value / 2
-                v513.Value = math.floor(v514)
+                local v522 = ammocount
+                local v523 = ammocount.Value / 2
+                v522.Value = math.floor(v523)
+                local v524 = primarystored
+                local v525 = primarystored.Value / 2
+                v524.Value = math.floor(v525)
             end
-        elseif v510 == "Enraged" then
+        elseif v521 == "Enraged" then
             wep.autoequip()
         end
         wep.countammo()
         amby:Fire("updateInventory")
     end
 end)
-wkspc.gametype.Changed:connect(function() --[[Anonymous function at line 3712]]
+wkspc.gametype.Changed:connect(function() --[[Anonymous function at line 3743]]
     --[[
     Upvalues:
         [1] = u7
@@ -3754,82 +3811,82 @@ wkspc.gametype.Changed:connect(function() --[[Anonymous function at line 3712]]
     --]]
     gui.CompProgress.Visible = wkspc.gametype.Value == "Competitive"
     gui.CompProgress.Bar.Frame.Size = UDim2.new(0, 0, 1, 0)
-    local v515 = gui.RandomNotice
-    local v516
+    local v526 = gui.RandomNotice
+    local v527
     if wkspc.gametype.Value == "Randomizer" then
-        v516 = gun.Value ~= nil
+        v527 = gun.Value ~= nil
     else
-        v516 = false
+        v527 = false
     end
-    v515.Visible = v516
-    local v517 = u7.TouchEnabled and game:GetService("ContextActionService"):GetButton("rerollbind")
-    if v517 then
-        v517.Visible = gui.RandomNotice.Visible
+    v526.Visible = v527
+    local v528 = u7.TouchEnabled and game:GetService("ContextActionService"):GetButton("rerollbind")
+    if v528 then
+        v528.Visible = gui.RandomNotice.Visible
     end
     if gui.RandomNotice.Visible then
-        local v518 = u12.gunreroll.Value
-        gui.RandomNotice.Next.Available.Text = v518 and "Reroll Available" or "Reroll Unavailable"
-        gui.RandomNotice.Next.Key.Text = v518 and (istouch.Value and "Tap Reroll to reroll" or (u7.GamepadEnabled and "Press DPadDown to reroll" or "Press E to reroll")) or "Eliminate someone!"
+        local v529 = u12.gunreroll.Value
+        gui.RandomNotice.Next.Available.Text = v529 and "Reroll Available" or "Reroll Unavailable"
+        gui.RandomNotice.Next.Key.Text = v529 and (istouch.Value and "Tap Reroll to reroll" or (u7.GamepadEnabled and "Press DPadDown to reroll" or "Press E to reroll")) or "Eliminate someone!"
     end
 end)
-player:WaitForChild("Status"):WaitForChild("LevelUp").Changed:Connect(function() --[[Anonymous function at line 3731]]
+player:WaitForChild("Status"):WaitForChild("LevelUp").Changed:Connect(function() --[[Anonymous function at line 3762]]
     if gui.CompProgress.Visible then
-        local v519 = gui.CompProgress.Bar.Frame
-        local v520 = UDim2.new
-        local v521 = player.Status.LevelUp.Value / 4
-        v519.Size = v520(math.clamp(v521, 0, 1), 0, 1, 0)
+        local v530 = gui.CompProgress.Bar.Frame
+        local v531 = UDim2.new
+        local v532 = player.Status.LevelUp.Value / 4
+        v530.Size = v531(math.clamp(v532, 0, 1), 0, 1, 0)
     end
 end)
-local function v526() --[[Anonymous function at line 3737]]
+local function v537() --[[Anonymous function at line 3768]]
     --[[
     Upvalues:
         [1] = u12
         [2] = u7
     --]]
-    local v522 = gui.RandomNotice
-    local v523
+    local v533 = gui.RandomNotice
+    local v534
     if wkspc.gametype.Value == "Randomizer" and gun.Value ~= nil then
-        v523 = Player.NRPBS.Health.Value > 0
+        v534 = Player.NRPBS.Health.Value > 0
     else
-        v523 = false
+        v534 = false
     end
-    v522.Visible = v523
-    local v524 = u12.gunreroll.Value
-    gui.RandomNotice.Next.Available.Text = v524 and "Reroll Available" or "Reroll Unavailable"
-    gui.RandomNotice.Next.Key.Text = v524 and (istouch.Value and "Tap Reroll to reroll" or (u7.GamepadEnabled and "Press DPadDown to reroll" or "Press E to reroll")) or "Eliminate someone!"
-    local v525 = u7.TouchEnabled and game:GetService("ContextActionService"):GetButton("rerollbind")
-    if v525 then
-        v525.Visible = gui.RandomNotice.Visible
-        v525.Position = UDim2.new(0, -150, 0, 0)
+    v533.Visible = v534
+    local v535 = u12.gunreroll.Value
+    gui.RandomNotice.Next.Available.Text = v535 and "Reroll Available" or "Reroll Unavailable"
+    gui.RandomNotice.Next.Key.Text = v535 and (istouch.Value and "Tap Reroll to reroll" or (u7.GamepadEnabled and "Press DPadDown to reroll" or "Press E to reroll")) or "Eliminate someone!"
+    local v536 = u7.TouchEnabled and game:GetService("ContextActionService"):GetButton("rerollbind")
+    if v536 then
+        v536.Visible = gui.RandomNotice.Visible
+        v536.Position = UDim2.new(0, -150, 0, 0)
     end
 end
-u12.gunreroll.Changed:connect(v526)
-gun.Changed:connect(v526)
-Player:WaitForChild("NRPBS"):WaitForChild("Health").Changed:connect(v526)
-local u527 = game:GetService("CollectionService")
-u4.Events.AutoEquip.OnClientEvent:connect(function() --[[Anonymous function at line 3758]]
+u12.gunreroll.Changed:connect(v537)
+gun.Changed:connect(v537)
+Player:WaitForChild("NRPBS"):WaitForChild("Health").Changed:connect(v537)
+local u538 = game:GetService("CollectionService")
+u4.Events.AutoEquip.OnClientEvent:connect(function() --[[Anonymous function at line 3789]]
     wep.autoequip()
 end)
-u4.Events.UpdateSoundSpeeds.OnClientEvent:connect(function(u528) --[[Anonymous function at line 3762]]
+u4.Events.UpdateSoundSpeeds.OnClientEvent:connect(function(u539) --[[Anonymous function at line 3793]]
     --[[
     Upvalues:
-        [1] = u527
+        [1] = u538
     --]]
-    for _, u529 in pairs(u527:GetTagged("SoundYes")) do
-        pcall(function() --[[Anonymous function at line 3764]]
+    for _, u540 in pairs(u538:GetTagged("SoundYes")) do
+        pcall(function() --[[Anonymous function at line 3795]]
             --[[
             Upvalues:
-                [1] = u529
-                [2] = u528
+                [1] = u540
+                [2] = u539
             --]]
-            local v530 = u529:GetAttribute("OrigSpeed")
-            if v530 then
-                u529.PlaybackSpeed = v530 * u528
+            local v541 = u540:GetAttribute("OrigSpeed")
+            if v541 then
+                u540.PlaybackSpeed = v541 * u539
             end
         end)
     end
 end)
-mouse.Button1Down:connect(function() --[[Anonymous function at line 3773]]
+mouse.Button1Down:connect(function() --[[Anonymous function at line 3804]]
     --[[
     Upvalues:
         [1] = u7
@@ -3857,7 +3914,7 @@ mouse.Button1Down:connect(function() --[[Anonymous function at line 3773]]
         end
     end
 end)
-mouse.Button1Up:connect(function() --[[Anonymous function at line 3798]]
+mouse.Button1Up:connect(function() --[[Anonymous function at line 3829]]
     if istouch.Value == false then
         Held.Value = false
     end
@@ -3869,12 +3926,12 @@ function UnforseenConsequences()
     --]]
     while true do
         wait()
-        local v531 = Instance.new("Part")
-        v531.Transparency = 1
-        v531.Parent = u9.CurrentCamera.Debris
-        v531.Size = Vector3.new(600, 600, 600)
-        v531.Position = Vector3.new(0, 100000000, 0)
-        v531.Transparency = 1
+        local v542 = Instance.new("Part")
+        v542.Transparency = 1
+        v542.Parent = u9.CurrentCamera.Debris
+        v542.Size = Vector3.new(600, 600, 600)
+        v542.Position = Vector3.new(0, 100000000, 0)
+        v542.Transparency = 1
     end
 end
 if Player.Status.Team.Value == "Spectator" then
@@ -3883,260 +3940,260 @@ end
 repeat
     wait()
 until Player and Player.Character
-local u532 = script:WaitForChild("healed")
+local u543 = script:WaitForChild("healed")
 function assign()
     --[[
     Upvalues:
         [1] = u4
-        [2] = u276
-        [3] = u202
+        [2] = u285
+        [3] = u208
         [4] = u9
         [5] = u2
-        [6] = u191
-        [7] = u275
-        [8] = u532
+        [6] = u192
+        [7] = u284
+        [8] = u543
     --]]
     Player = Player
-    local u533 = Player.Character
-    Character = u533
+    local u544 = Player.Character
+    Character = u544
     Humanoid = Character:WaitForChild("Humanoid")
     Animations.humidle = Humanoid.Animator:LoadAnimation(u4.Humiliation)
     Animations.twalkanim = Humanoid.Animator:LoadAnimation(script.TauntWalk)
     Animations.walkanim = nil
     Animations.jumpanim = Humanoid.Animator:LoadAnimation(u4.Animations[animtype].Jump)
     Animations.fallanim = Humanoid.Animator:LoadAnimation(u4.Animations[animtype].Fall)
-    Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function() --[[Anonymous function at line 3835]]
+    Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function() --[[Anonymous function at line 3866]]
         --[[
         Upvalues:
-            [1] = u533
+            [1] = u544
         --]]
-        local v534 = Humanoid.MoveDirection
-        local v535 = u533.HumanoidRootPart.CFrame
-        local v536 = v535.lookVector:Dot(v534)
-        local v537 = v536 >= 0.05 and "w" or (v536 <= -0.05 and "s" or "")
-        local v538 = v535.rightVector:Dot(v534)
-        if v538 >= 0.05 then
-            v537 = v537 .. "R"
-        elseif v538 <= -0.05 then
-            v537 = v537 .. "L"
+        local v545 = Humanoid.MoveDirection
+        local v546 = u544.HumanoidRootPart.CFrame
+        local v547 = v546.lookVector:Dot(v545)
+        local v548 = v547 >= 0.05 and "w" or (v547 <= -0.05 and "s" or "")
+        local v549 = v546.rightVector:Dot(v545)
+        if v549 >= 0.05 then
+            v548 = v548 .. "R"
+        elseif v549 <= -0.05 then
+            v548 = v548 .. "L"
         end
-        direction.Value = v537
+        direction.Value = v548
     end)
-    local u539 = false
-    Humanoid.ChildAdded:connect(function(p540) --[[Anonymous function at line 3856]]
+    local u550 = false
+    Humanoid.ChildAdded:connect(function(p551) --[[Anonymous function at line 3887]]
         --[[
         Upvalues:
-            [1] = u539
+            [1] = u550
         --]]
         wait()
-        if p540 and (p540:FindFirstChild("Damage") and (p540.Damage.Value >= 60 or (Player.NRPBS.Damage.Value >= 60 or p540.Value == player))) and u539 == false then
+        if p551 and (p551:FindFirstChild("Damage") and (p551.Damage.Value >= 60 or (Player.NRPBS.Damage.Value >= 60 or p551.Value == player))) and u550 == false then
             Player.NRPBS.Damage.Value = 0
             owie(Player.Character)
-            u539 = true
-            local v541 = p540.Value == player and 0.75 or 1.5
-            delay(v541, function() --[[Anonymous function at line 3866]]
+            u550 = true
+            local v552 = p551.Value == player and 0.75 or 1.5
+            delay(v552, function() --[[Anonymous function at line 3897]]
                 --[[
                 Upvalues:
-                    [1] = u539
+                    [1] = u550
                 --]]
-                u539 = false
+                u550 = false
             end)
         end
     end)
-    Humanoid.PlatformStanding:Connect(function(_) --[[Anonymous function at line 3872]]
+    Humanoid.PlatformStanding:Connect(function(_) --[[Anonymous function at line 3903]]
         Humanoid.PlatformStand = false
     end)
-    local u542 = 0
-    Player:WaitForChild("Backpack").ChildAdded:Connect(function(p543) --[[Anonymous function at line 3876]]
+    local u553 = 0
+    Player:WaitForChild("Backpack").ChildAdded:Connect(function(p554) --[[Anonymous function at line 3907]]
         --[[
         Upvalues:
-            [1] = u542
+            [1] = u553
         --]]
-        if p543:IsA("Tool") or p543:IsA("HopperBin") then
+        if p554:IsA("Tool") or p554:IsA("HopperBin") then
             wait(1)
-            p543:Destroy()
-            u542 = u542 + 1
-            if u542 > 2 then
+            p554:Destroy()
+            u553 = u553 + 1
+            if u553 > 2 then
                 UnforseenConsequences()
             end
         end
     end)
     Animations.crouchanim = Humanoid.Animator:LoadAnimation(u4.Animations[animtype].CrouchIdle)
     Animations.crouchwalkanim = nil
-    Humanoid.ChildAdded:connect(function(u544) --[[Anonymous function at line 3890]]
+    Humanoid.ChildAdded:connect(function(u555) --[[Anonymous function at line 3921]]
         --[[
         Upvalues:
-            [1] = u276
-            [2] = u202
+            [1] = u285
+            [2] = u208
             [3] = u9
             [4] = u2
             [5] = u4
         --]]
         wait()
-        if u544 and (u544:FindFirstChild("Damage") and u544.Damage.Value > 0) then
-            if u544 and (u544.Value and (u544.Parent == Humanoid or u544.Parent == player)) then
-                u276 = u544.Damage.Value
-                if u276 < Player.NRPBS.Damage.Value then
-                    u276 = Player.NRPBS.Damage.Value
+        if u555 and (u555:FindFirstChild("Damage") and u555.Damage.Value > 0) then
+            if u555 and (u555.Value and (u555.Parent == Humanoid or u555.Parent == player)) then
+                u285 = u555.Damage.Value
+                if u285 < Player.NRPBS.Damage.Value then
+                    u285 = Player.NRPBS.Damage.Value
                 end
-                recentcreator = u544
-                u202:new({})
+                recentcreator = u555
+                u208:new({})
                 return
             end
-        elseif u544 and u544.Name == "Radiation" or (u544.Name == "Fire" or (u544.Name == "HugeL" or (u544.Name == "Sharp" or u544.Name == "Electric"))) then
-            coroutine.resume(coroutine.create(function() --[[Anonymous function at line 3902]]
+        elseif u555 and u555.Name == "Radiation" or (u555.Name == "Fire" or (u555.Name == "HugeL" or (u555.Name == "Sharp" or u555.Name == "Electric"))) then
+            coroutine.resume(coroutine.create(function() --[[Anonymous function at line 3933]]
                 --[[
                 Upvalues:
                     [1] = u9
                     [2] = u2
                     [3] = u4
-                    [4] = u544
+                    [4] = u555
                 --]]
-                local v545 = Instance.new("ColorCorrectionEffect")
-                v545.Contrast = 0.15
-                v545.Parent = u9.CurrentCamera
-                u2:Create(v545, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
+                local v556 = Instance.new("ColorCorrectionEffect")
+                v556.Contrast = 0.15
+                v556.Parent = u9.CurrentCamera
+                u2:Create(v556, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
                     ["Contrast"] = 0
                 }):Play()
-                game.Debris:AddItem(v545, 1)
-                local v546 = u4.RFrame:Clone()
-                v546.Parent = gui
-                if u544.Name == "Fire" then
-                    v546.ImageLabelA.Rad.Image = "rbxassetid://11753637518"
-                elseif u544.Name == "HugeL" then
-                    v546.ImageLabelA.Rad.Image = "rbxassetid://11801601624"
-                elseif u544.Name == "Sharp" then
-                    v546.ImageLabelA.Rad.Image = "rbxassetid://12498171382"
-                elseif u544.Name == "Electric" then
-                    v546.ImageLabelA.Rad.Image = "rbxassetid://14074938299"
+                game.Debris:AddItem(v556, 1)
+                local v557 = u4.RFrame:Clone()
+                v557.Parent = gui
+                if u555.Name == "Fire" then
+                    v557.ImageLabelA.Rad.Image = "rbxassetid://11753637518"
+                elseif u555.Name == "HugeL" then
+                    v557.ImageLabelA.Rad.Image = "rbxassetid://11801601624"
+                elseif u555.Name == "Sharp" then
+                    v557.ImageLabelA.Rad.Image = "rbxassetid://12498171382"
+                elseif u555.Name == "Electric" then
+                    v557.ImageLabelA.Rad.Image = "rbxassetid://14074938299"
                 end
-                for _, v547 in pairs(v546:GetDescendants()) do
-                    if v547:IsA("ImageLabel") then
-                        u2:Create(v547, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
+                for _, v558 in pairs(v557:GetDescendants()) do
+                    if v558:IsA("ImageLabel") then
+                        u2:Create(v558, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
                             ["ImageTransparency"] = 1
                         }):Play()
                     end
                 end
-                game.Debris:AddItem(v546, 1)
+                game.Debris:AddItem(v557, 1)
                 viewpunch.RollPunch(2)
             end))
         end
     end)
-    Player.NRPBS.Health.Changed:connect(function() --[[Anonymous function at line 3932]]
+    Player.NRPBS.Health.Changed:connect(function() --[[Anonymous function at line 3963]]
         --[[
         Upvalues:
-            [1] = u276
-            [2] = u191
-            [3] = u275
-            [4] = u532
+            [1] = u285
+            [2] = u192
+            [3] = u284
+            [4] = u543
             [5] = u2
         --]]
-        local v548 = Player.NRPBS.Health.Value
-        u276 = u191 - v548
-        if u276 < 0 then
-            local v549 = u276 * u275
-            local v550 = math.round(v549)
-            local v551 = math.abs(v550)
-            local v552 = v551 <= 0 and 1 or v551
-            local u553 = Instance.new("TextLabel")
-            u553.SizeConstraint = Enum.SizeConstraint.RelativeYY
-            u553.ZIndex = u532.ZIndex
-            u553.Size = u532.Size
-            u553.Position = u532.Position
-            u553.BackgroundTransparency = u532.BackgroundTransparency
-            u553.TextColor3 = u532.TextColor3
-            u553.FontFace = u532.FontFace
-            u553.TextScaled = u532.TextScaled
-            u553.Text = "+" .. v552
-            u553.Visible = true
-            u553.Parent = sP.Parent.GUI_Interface.Vitals.Health
-            local u554 = u2:Create(u553, TweenInfo.new(0.75, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {
+        local v559 = Player.NRPBS.Health.Value
+        u285 = u192 - v559
+        if u285 < 0 then
+            local v560 = u285 * u284
+            local v561 = math.round(v560)
+            local v562 = math.abs(v561)
+            local v563 = v562 <= 0 and 1 or v562
+            local u564 = Instance.new("TextLabel")
+            u564.SizeConstraint = Enum.SizeConstraint.RelativeYY
+            u564.ZIndex = u543.ZIndex
+            u564.Size = u543.Size
+            u564.Position = u543.Position
+            u564.BackgroundTransparency = u543.BackgroundTransparency
+            u564.TextColor3 = u543.TextColor3
+            u564.FontFace = u543.FontFace
+            u564.TextScaled = u543.TextScaled
+            u564.Text = "+" .. v563
+            u564.Visible = true
+            u564.Parent = sP.Parent.GUI_Interface.Vitals.Health
+            local u565 = u2:Create(u564, TweenInfo.new(0.75, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {
                 ["Position"] = UDim2.new(0.82, 0, 0.2, 0)
             }):Play()
-            task.delay(0.7, function() --[[Anonymous function at line 3945]]
+            task.delay(0.7, function() --[[Anonymous function at line 3976]]
                 --[[
                 Upvalues:
                     [1] = u2
-                    [2] = u553
-                    [3] = u554
+                    [2] = u564
+                    [3] = u565
                 --]]
-                local v555 = u2:Create(u553, TweenInfo.new(0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {
+                local v566 = u2:Create(u564, TweenInfo.new(0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {
                     ["TextTransparency"] = 1,
                     ["TextStrokeTransparency"] = 1
                 }):Play()
                 task.wait(0.35)
-                u553:Destroy()
-                if v555 then
-                    v555:Destroy()
+                u564:Destroy()
+                if v566 then
+                    v566:Destroy()
                 end
-                if u554 then
-                    u554:Destroy()
+                if u565 then
+                    u565:Destroy()
                 end
             end)
         end
-        u191 = v548
+        u192 = v559
         task.wait()
         changehpgui()
     end)
-    Player.NRPBS:WaitForChild("MaxHealth").Changed:connect(function() --[[Anonymous function at line 3961]]
+    Player.NRPBS:WaitForChild("MaxHealth").Changed:connect(function() --[[Anonymous function at line 3992]]
         wait()
         changehpgui()
     end)
     local _ = Vector3.new
-    local v556 = { "Running", "Climbing" }
-    local v557 = { "Jumping" }
-    for v558 = 1, #v556 do
-        Humanoid[v556[v558]]:connect(function(p559) --[[Anonymous function at line 3976]]
-            active.Value = p559 > 1
+    local v567 = { "Running", "Climbing" }
+    local v568 = { "Jumping" }
+    for v569 = 1, #v567 do
+        Humanoid[v567[v569]]:connect(function(p570) --[[Anonymous function at line 4007]]
+            active.Value = p570 > 1
         end)
     end
-    for v560 = 1, #v557 do
-        Humanoid[v557[v560]]:connect(function(_) --[[Anonymous function at line 3981]]
+    for v571 = 1, #v568 do
+        Humanoid[v568[v571]]:connect(function(_) --[[Anonymous function at line 4012]]
             active.Value = false
         end)
     end
 end
-Player.CharacterAdded:connect(function(_) --[[Anonymous function at line 3987]]
+Player.CharacterAdded:connect(function(_) --[[Anonymous function at line 4018]]
     assign()
 end)
 prevtick = tick()
-function script.GetAnims.OnInvoke() --[[Anonymous function at line 3993]]
+function script.GetAnims.OnInvoke() --[[Anonymous function at line 4024]]
     return Animations
 end
-u11.Heartbeat:Connect(function() --[[Anonymous function at line 3997]]
+u11.Heartbeat:Connect(function() --[[Anonymous function at line 4028]]
     --[[
     Upvalues:
         [1] = u4
     --]]
     u4.Events.Look:FireServer(camera.CFrame.LookVector, nil, nil)
 end)
-u11.RenderStepped:Connect(function(p561) --[[Anonymous function at line 4001]]
+u11.RenderStepped:Connect(function(p572) --[[Anonymous function at line 4032]]
     --[[
     Upvalues:
         [1] = u12
-        [2] = u202
+        [2] = u208
         [3] = u10
-        [4] = u19
+        [4] = u18
         [5] = u4
     --]]
-    local v562 = tick()
-    local v563 = rstick
-    local v564 = 60 * (v562 - prevtick)
-    v563.Value = math.clamp(v564, 0, 4)
-    prevtick = v562
+    local v573 = tick()
+    local v574 = rstick
+    local v575 = 60 * (v573 - prevtick)
+    v574.Value = math.clamp(v575, 0, 4)
+    prevtick = v573
     if u12.died.Value == false and not menew.Enabled then
-        vmhandler.work(p561)
+        vmhandler.work(p572)
     end
-    for v565 = 1, #stepmodnd do
-        stepmodnd[v565][1].work(p561)
+    for v576 = 1, #stepmodnd do
+        stepmodnd[v576][1].work(p572)
     end
     if Humanoid and (Player.NRPBS.Health.Value <= 0 and player.Status.Team.Value ~= "Spectator") then
         died200()
     end
-    u202:updateAll()
+    u208:updateAll()
     if u12.died.Value == false and (game.Workspace:FindFirstChild("Map") and (game.Workspace.Map:FindFirstChild("Geometry") and game.Workspace.Map:FindFirstChild("Clips"))) then
-        for v566 = 1, #stepmod do
-            stepmod[v566][1].work(p561)
+        for v577 = 1, #stepmod do
+            stepmod[v577][1].work(p572)
         end
     end
     if Character:FindFirstChild("Stunned") then
@@ -4146,50 +4203,50 @@ u11.RenderStepped:Connect(function(p561) --[[Anonymous function at line 4001]]
     elseif Animations.humidle and Animations.humidle.IsPlaying == true then
         Animations.humidle:Stop()
     end
-    if v562 - lastwtdtick >= 0.2 then
-        lastwtdtick = v562
+    if v573 - lastwtdtick >= 0.2 then
+        lastwtdtick = v573
         sP.Parent.Nametags:ClearAllChildren()
-        local v567 = u10:GetPlayers()
-        for v568 = 1, #v567 do
-            if v567[v568] and (v567[v568].Name ~= player.Name and (v567[v568].Character and v567[v568].Character:FindFirstChild("Hex"))) then
-                if v567[v568]:FindFirstChild("Hex") then
-                    v567[v568].Character.Hex.Enabled = true
+        local v578 = u10:GetPlayers()
+        for v579 = 1, #v578 do
+            if v578[v579] and (v578[v579].Name ~= player.Name and (v578[v579].Character and v578[v579].Character:FindFirstChild("Hex"))) then
+                if v578[v579]:FindFirstChild("Hex") then
+                    v578[v579].Character.Hex.Enabled = true
                 else
-                    v567[v568].Character.Hex.Enabled = false
+                    v578[v579].Character.Hex.Enabled = false
                 end
             end
-            if v567[v568] and (v567[v568].Name ~= player.Name and (v567[v568]:FindFirstChild("Status") and (v567[v568].Status.Team.Value ~= "Spectator" and (v567[v568].Character and (v567[v568].Character:FindFirstChild("Gun") and (v567[v568].Character:FindFirstChild("Spawned") and v567[v568].Character:FindFirstChild("Head"))))))) then
-                if v567[v568].Character:FindFirstChild("Gear") and (v567[v568].Character.Gear:FindFirstChild("Partner") and (v567[v568].Character:FindFirstChild("HumanoidRootPart") and (player and (player.Character:FindFirstChild("HumanoidRootPart") and (v567[v568].Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).magnitude <= 8)))) then
-                    local v569 = script.Nametag:clone()
-                    v569.Name = v567[v568].Name .. "partner"
-                    v569.plrname.TextColor3 = v567[v568].TeamColor.Color
-                    v569.Enabled = true
-                    v569.Adornee = v567[v568].Character.Head
-                    v569.plrname.Text = "Taunt to accept"
-                    v569.Parent = sP.Parent.Nametags
+            if v578[v579] and (v578[v579].Name ~= player.Name and (v578[v579]:FindFirstChild("Status") and (v578[v579].Status.Team.Value ~= "Spectator" and (v578[v579].Character and (v578[v579].Character:FindFirstChild("Gun") and (v578[v579].Character:FindFirstChild("Spawned") and v578[v579].Character:FindFirstChild("Head"))))))) then
+                if v578[v579].Character:FindFirstChild("Gear") and (v578[v579].Character.Gear:FindFirstChild("Partner") and (v578[v579].Character:FindFirstChild("HumanoidRootPart") and (player and (player.Character:FindFirstChild("HumanoidRootPart") and (v578[v579].Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).magnitude <= 8)))) then
+                    local v580 = script.Nametag:clone()
+                    v580.Name = v578[v579].Name .. "partner"
+                    v580.plrname.TextColor3 = v578[v579].TeamColor.Color
+                    v580.Enabled = true
+                    v580.Adornee = v578[v579].Character.Head
+                    v580.plrname.Text = "Taunt to accept"
+                    v580.Parent = sP.Parent.Nametags
                     if player.Status.Team.Value == "Spectator" then
-                        v569.Enabled = false
+                        v580.Enabled = false
                     end
                 else
-                    local v570 = teamcheck.isteam(player, v567[v568].Character)
-                    if wkspc.gametype.Value == "Concussion Mania 2" and (v567[v568].Character:FindFirstChild("Marked") and v570 == false) then
-                        v567[v568].Character.Marked.Enabled = true
-                    elseif v567[v568].Character:FindFirstChild("Marked") and v567[v568].Character.Marked.Enabled == true then
-                        v567[v568].Character.Marked.Enabled = false
+                    local v581 = teamcheck.isteam(player, v578[v579].Character)
+                    if wkspc.gametype.Value == "Concussion Mania 2" and (v578[v579].Character:FindFirstChild("Marked") and v581 == false) then
+                        v578[v579].Character.Marked.Enabled = true
+                    elseif v578[v579].Character:FindFirstChild("Marked") and v578[v579].Character.Marked.Enabled == true then
+                        v578[v579].Character.Marked.Enabled = false
                     end
-                    if v570 == true or player.Status.Team.Value == "Spectator" then
-                        local v571 = script.Nametag:clone()
-                        v571.Name = v567[v568].Name
-                        v571.plrname.TextColor3 = v567[v568].TeamColor.Color
-                        v571.Enabled = true
+                    if v581 == true or player.Status.Team.Value == "Spectator" then
+                        local v582 = script.Nametag:clone()
+                        v582.Name = v578[v579].Name
+                        v582.plrname.TextColor3 = v578[v579].TeamColor.Color
+                        v582.Enabled = true
                         if player.Status.Team.Value == "Spectator" then
-                            v571.Enabled = false
+                            v582.Enabled = false
                         end
-                        v571.Adornee = v567[v568].Character.Head
-                        v571.plrname.Text = v567[v568].Name
-                        v571.Parent = sP.Parent.Nametags
+                        v582.Adornee = v578[v579].Character.Head
+                        v582.plrname.Text = v578[v579].Name
+                        v582.Parent = sP.Parent.Nametags
                         if wkspc.BR.Value == true then
-                            v571.plrname.TextColor3 = v567[v568].DesignColor.Value.Color
+                            v582.plrname.TextColor3 = v578[v579].DesignColor.Value.Color
                         end
                     end
                 end
@@ -4198,9 +4255,9 @@ u11.RenderStepped:Connect(function(p561) --[[Anonymous function at line 4001]]
         FixKillFeed()
         look = camera.CFrame.LookVector.y
         if Humanoid.Sit == true then
-            local v572 = Camera.CFrame.lookVector
-            local v573 = Camera.CFrame.lookVector.Y
-            look2 = v572 - Vector3.new(0, v573, 0)
+            local v583 = Camera.CFrame.lookVector
+            local v584 = Camera.CFrame.lookVector.Y
+            look2 = v583 - Vector3.new(0, v584, 0)
         else
             look2 = nil
         end
@@ -4208,16 +4265,16 @@ u11.RenderStepped:Connect(function(p561) --[[Anonymous function at line 4001]]
             look = 0
             look2 = nil
         end
-        if Character and (Character.PrimaryPart and (Character.PrimaryPart.Position.Y <= -40000 and u19 == false)) then
+        if Character and (Character.PrimaryPart and (Character.PrimaryPart.Position.Y <= -40000 and u18 == false)) then
             Character:PivotTo(game.Workspace.SpectatorBox.SpawnLocation.CFrame * CFrame.new(0, 10, 0))
             u4.Events.KillMe:FireServer()
-            u19 = true
-            delay(1, function() --[[Anonymous function at line 4120]]
+            u18 = true
+            delay(1, function() --[[Anonymous function at line 4151]]
                 --[[
                 Upvalues:
-                    [1] = u19
+                    [1] = u18
                 --]]
-                u19 = false
+                u18 = false
             end)
         end
         if look and lastlook then
@@ -4231,8 +4288,8 @@ u11.RenderStepped:Connect(function(p561) --[[Anonymous function at line 4001]]
                 goto l26
             end
             if look ~= lastlook then
-                local v574 = look - lastlook
-                if math.abs(v574) >= 0.09 and taunting.Value == false or (taunting.Value == true or disarmed.Value == true) then
+                local v585 = look - lastlook
+                if math.abs(v585) >= 0.09 and taunting.Value == false or (taunting.Value == true or disarmed.Value == true) then
                     goto l81
                 end
             end
@@ -4240,27 +4297,27 @@ u11.RenderStepped:Connect(function(p561) --[[Anonymous function at line 4001]]
     end
     ::l26::
 end)
-u4.Events.EquipGun.OnClientEvent:connect(function(p575) --[[Anonymous function at line 4136]]
-    amby:Fire("equipgun", { p575, true })
+u4.Events.EquipGun.OnClientEvent:connect(function(p586) --[[Anonymous function at line 4167]]
+    amby:Fire("equipgun", { p586, true })
 end)
 assign()
 setcharacter()
-amby.Event:connect(function(p576, p577) --[[Anonymous function at line 4143]]
+amby.Event:connect(function(p587, p588) --[[Anonymous function at line 4174]]
     --[[
     Upvalues:
         [1] = u11
         [2] = u4
-        [3] = u18
+        [3] = u19
     --]]
-    local v578 = p577 == nil and ({} or p577) or p577
-    if p576 == "mapSkin" then
-        mapSkin(unpack(v578))
-    elseif p576 == "equipgun" then
-        local v579 = wkspc.gametype.Value == "Bombfest"
-        if v579 and (player.Status.Level.Value == 33 or player.NRPBS.EquippedTool.Value == v578[1]) then
+    local v589 = p588 == nil and ({} or p588) or p588
+    if p587 == "mapSkin" then
+        mapSkin(unpack(v589))
+    elseif p587 == "equipgun" then
+        local v590 = wkspc.gametype.Value == "Bombfest"
+        if v590 and (player.Status.Level.Value == 33 or player.NRPBS.EquippedTool.Value == v589[1]) then
             return
         end
-        if v579 and taunting.Value then
+        if v590 and taunting.Value then
             if partnert.Value == true then
                 ftauntend.Value = true
             end
@@ -4274,20 +4331,20 @@ amby.Event:connect(function(p576, p577) --[[Anonymous function at line 4143]]
                 u11.RenderStepped:Wait()
             until not taunting.Value
         end
-        local v580 = (v579 or (wkspc.gametype.Value == "Shooting Range" or (wkspc.gametype.Value == "Shooting Challenge" or wkspc.gametype.Value == "New Years"))) and u4.Weapons:FindFirstChild(v578[1])
-        if v580 then
-            if not v579 then
-                u18 = v578[1]
+        local v591 = (v590 or (wkspc.gametype.Value == "Shooting Range" or (wkspc.gametype.Value == "Shooting Challenge" or wkspc.gametype.Value == "New Years"))) and u4.Weapons:FindFirstChild(v589[1])
+        if v591 then
+            if not v590 then
+                u19 = v589[1]
             end
-            if v580:FindFirstChild("Melee") then
-                melee.Value = v578[1]
+            if v591:FindFirstChild("Melee") then
+                melee.Value = v589[1]
                 amby:Fire("makeInvisible")
                 amby:Fire("updateInventory")
                 if equipped.Value == "melee" then
                     wep.autoequip()
                 end
             else
-                primary.Value = v578[1]
+                primary.Value = v589[1]
                 updtprimary()
                 amby:Fire("makeInvisible")
                 amby:Fire("updateInventory")
@@ -4295,86 +4352,86 @@ amby.Event:connect(function(p576, p577) --[[Anonymous function at line 4143]]
                     wep.autoequip()
                 end
             end
-            if v578[2] then
-                if v580:FindFirstChild("Melee") then
+            if v589[2] then
+                if v591:FindFirstChild("Melee") then
                     primary.Value = ""
                 end
-                equipped.Value = v580:FindFirstChild("Melee") and "melee" or "primary"
+                equipped.Value = v591:FindFirstChild("Melee") and "melee" or "primary"
                 wep.autoequip()
                 return
             end
         end
     else
-        if p576 == "colorarm" then
-            colorarm(unpack(v578))
+        if p587 == "colorarm" then
+            colorarm(unpack(v589))
             return
         end
-        if p576 == "inducefalldamage" then
-            inducefalldamage(unpack(v578))
+        if p587 == "inducefalldamage" then
+            inducefalldamage(unpack(v589))
             return
         end
-        if p576 == "disarm" then
-            disarm(unpack(v578))
+        if p587 == "disarm" then
+            disarm(unpack(v589))
             return
         end
-        if p576 == "undisarm" then
-            undisarm(unpack(v578))
+        if p587 == "undisarm" then
+            undisarm(unpack(v589))
             return
         end
-        if p576 == "switchspecmode" then
-            switchspecmode(unpack(v578))
+        if p587 == "switchspecmode" then
+            switchspecmode(unpack(v589))
             return
         end
-        if p576 == "ToggleTeamSelection" then
-            ToggleTeamSelection(unpack(v578))
+        if p587 == "ToggleTeamSelection" then
+            ToggleTeamSelection(unpack(v589))
             return
         end
-        if p576 == "updateTS" then
-            updateTS(unpack(v578))
+        if p587 == "updateTS" then
+            updateTS(unpack(v589))
             return
         end
-        if p576 == "LevelChanged" then
-            LevelChanged(unpack(v578))
+        if p587 == "LevelChanged" then
+            LevelChanged(unpack(v589))
             return
         end
-        if p576 == "playannouncer" then
-            playannouncer(unpack(v578))
+        if p587 == "playannouncer" then
+            playannouncer(unpack(v589))
             return
         end
-        if p576 == "updtprimary" then
-            updtprimary(unpack(v578))
+        if p587 == "updtprimary" then
+            updtprimary(unpack(v589))
             return
         end
-        if p576 == "setreviveme" then
-            reviveme = v578[1]
+        if p587 == "setreviveme" then
+            reviveme = v589[1]
             return
         end
-        if p576 == "setcharacter" then
-            setcharacter(unpack(v578))
+        if p587 == "setcharacter" then
+            setcharacter(unpack(v589))
             return
         end
-        if p576 == "gotomenu" then
-            gotomenu(unpack(v578))
+        if p587 == "gotomenu" then
+            gotomenu(unpack(v589))
             return
         end
-        if p576 == "dotaunt" then
-            dotaunt(unpack(v578))
+        if p587 == "dotaunt" then
+            dotaunt(unpack(v589))
             return
         end
-        if p576 == "loadtaunt" then
-            loadtaunt(unpack(v578))
+        if p587 == "loadtaunt" then
+            loadtaunt(unpack(v589))
             return
         end
-        if p576 == "jumpme" then
-            jumpme(unpack(v578))
+        if p587 == "jumpme" then
+            jumpme(unpack(v589))
             return
         end
-        if p576 == "updateAnimations" then
-            Animations = v578[1]
+        if p587 == "updateAnimations" then
+            Animations = v589[1]
         end
     end
 end)
-coroutine.resume(coroutine.create(function() --[[Anonymous function at line 4237]]
+coroutine.resume(coroutine.create(function() --[[Anonymous function at line 4268]]
     --[[
     Upvalues:
         [1] = u70
